@@ -1,6 +1,7 @@
 package com.cuongnl.ridehailing.screens.permission
 
 import android.Manifest
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
@@ -27,6 +28,7 @@ import com.cuongnl.ridehailing.core.BaseActivity
 import com.cuongnl.ridehailing.custom_view.AppText
 import com.cuongnl.ridehailing.screens.permission.ui.BannerImage
 import com.cuongnl.ridehailing.screens.permission.ui.ContinueButton
+import com.cuongnl.ridehailing.screens.phone_entering.PhoneEnteringScreen
 import com.cuongnl.ridehailing.utils.PermissionUtils
 import ir.kaaveh.sdpcompose.sdp
 import ir.kaaveh.sdpcompose.ssp
@@ -67,11 +69,14 @@ class PermissionActivity : BaseActivity(), IPermissionActivityBehavior {
 
     override fun onResume() {
         super.onResume()
-        navigateToNextActivity()
+        if(PermissionUtils.isPermissionGranted(this, Manifest.permission.ACCESS_FINE_LOCATION)){
+            navigateToNextActivity()
+        }
     }
 
     private fun navigateToNextActivity(){
-        
+        val intent = Intent(this, PhoneEnteringScreen::class.java)
+        startActivity(intent)
     }
 }
 
