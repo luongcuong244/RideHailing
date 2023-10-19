@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Theme.RideHailing" parent="android:Theme.Material.Light.NoActionBar" >
+    <style name="Theme.RideHailing" parent="Theme.AppCompat.Light.NoActionBar" >
         <item name="colorPrimaryDark">#ffffff</item>
         <item name="android:navigationBarColor">#ffffff</item>
         <item name="windowActionBar">false</item>
