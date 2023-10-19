@@ -16,7 +16,7 @@ fun BoxScope.BannerImage(){
     Image(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(top = 90.sdp, start = 50.sdp, end = 50.sdp)
+            .padding(top = 75.sdp, start = 50.sdp, end = 50.sdp)
             .align(Alignment.TopCenter),
         painter = painterResource(R.drawable.banner_req_permis),
         contentDescription = null
