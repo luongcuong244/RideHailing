@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.ContextWrapper
 import android.os.Bundle
 import android.view.View
+import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import com.cuongnl.ridehailing.extensions.setAppLocale
 import com.cuongnl.ridehailing.utils.Constant
@@ -17,6 +18,8 @@ abstract class BaseActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         activityLang = LocalStorageUtils.readData(this, Constant.KEY_LANGUAGE) as String?
+
+        window.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
     }
 
     override fun attachBaseContext(newBase: Context) {

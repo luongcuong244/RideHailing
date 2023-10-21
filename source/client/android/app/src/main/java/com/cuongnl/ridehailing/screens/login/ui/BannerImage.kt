@@ -1,0 +1,47 @@
+package com.cuongnl.ridehailing.screens.login.ui
+
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxScope
+import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
+import com.cuongnl.ridehailing.R
+import com.cuongnl.ridehailing.custom_view.AppText
+import ir.kaaveh.sdpcompose.sdp
+import ir.kaaveh.sdpcompose.ssp
+
+@Composable
+fun ColumnScope.BannerImage(){
+    Box(
+        modifier = Modifier
+            .wrapContentSize()
+    ) {
+        Image(
+            modifier = Modifier
+                .align(Alignment.TopCenter)
+                .fillMaxWidth(),
+            painter = painterResource(id = R.drawable.banner_login),
+            contentDescription = null,
+            contentScale = ContentScale.FillWidth
+        )
+        AppText(
+            modifier = Modifier
+                .align(Alignment.TopStart)
+                .padding(top = 50.sdp, start = 10.sdp),
+            text = stringResource(id = R.string.log_in_text_banner),
+            fontSize = 16.ssp,
+            color = Color.Black,
+            fontWeight = FontWeight.Medium
+        )
+    }
+}

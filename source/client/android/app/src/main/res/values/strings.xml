@@ -5,4 +5,8 @@
     <string name="continue_text">Tiếp tục</string>
     <string name="dialog_permission_rationale_header">Xin quyền truy cập vị trí</string>
     <string name="dialog_permission_rationale_des">Ứng dụng cần xin quyền truy cập vị trí để tự động xác định điểm đón khách</string>
+    <string name="log_in_text_banner">Gọi một chiếc\nxe CAM!</string>
+    <string name="log_in_text_title_part_1">Sử dụng số điện thoại của bạn\nđể</string>
+    <string name="log_in_text_title_part_2">đăng nhập/ đăng ký</string>
+    <string name="log_in_text_title_part_3">tài khoản</string>
 </resources>

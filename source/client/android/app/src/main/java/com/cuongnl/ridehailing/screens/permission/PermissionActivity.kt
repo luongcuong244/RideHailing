@@ -22,13 +22,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import com.cuongnl.ridehailing.R
 import com.cuongnl.ridehailing.activity_behavior.IPermissionActivityBehavior
 import com.cuongnl.ridehailing.core.BaseActivity
 import com.cuongnl.ridehailing.custom_view.AppText
 import com.cuongnl.ridehailing.screens.permission.ui.BannerImage
 import com.cuongnl.ridehailing.screens.permission.ui.ContinueButton
-import com.cuongnl.ridehailing.screens.phone_entering.PhoneEnteringScreen
+import com.cuongnl.ridehailing.screens.login.LoginScreen
 import com.cuongnl.ridehailing.utils.PermissionUtils
 import ir.kaaveh.sdpcompose.sdp
 import ir.kaaveh.sdpcompose.ssp
@@ -39,6 +40,11 @@ class PermissionActivity : BaseActivity(), IPermissionActivityBehavior {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        if(PermissionUtils.isPermissionGranted(this, Manifest.permission.ACCESS_FINE_LOCATION)){
+            navigateToNextActivity()
+            return
+        }
 
         setContent {
             CompositionLocalProvider(LocalActivityBehavior provides this) {
@@ -75,7 +81,7 @@ class PermissionActivity : BaseActivity(), IPermissionActivityBehavior {
     }
 
     private fun navigateToNextActivity(){
-        val intent = Intent(this, PhoneEnteringScreen::class.java)
+        val intent = Intent(this, LoginScreen::class.java)
         startActivity(intent)
     }
 }
