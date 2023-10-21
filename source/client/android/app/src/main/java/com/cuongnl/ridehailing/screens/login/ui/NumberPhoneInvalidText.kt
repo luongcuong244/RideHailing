@@ -1,10 +1,12 @@
 package com.cuongnl.ridehailing.screens.login.ui
 
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.cuongnl.ridehailing.custom_view.AppText
 import com.cuongnl.ridehailing.viewmodel.NumberPhoneSelectedViewModel
@@ -23,15 +25,17 @@ fun NumberPhoneInvalidText(
     val textEnteredLength = textEnteredViewModel.text.value.length
     val maxLength = phoneSelectedViewModel.currentNumberPhone.value.maxLength
 
-    val isInvalidTextVisible = textEnteredLength <= maxLength
+    val isInvalidTextVisible = textEnteredLength > maxLength
 
     if(isInvalidTextVisible){
         AppText(
             modifier = Modifier
-                .padding(bottom = 5.sdp),
+                .padding(top = 7.sdp, bottom = 12.sdp)
+                .fillMaxWidth(),
             text = stringResource(id = R.string.number_phone_invalid),
             color = Color.Red,
             fontSize = 10.ssp,
+            textAlign = TextAlign.Center
         )
     }
 }
