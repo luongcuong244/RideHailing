@@ -16,6 +16,7 @@ import androidx.compose.ui.graphics.Color
 import com.cuongnl.ridehailing.activity_behavior.ILoginActivityBehavior
 import com.cuongnl.ridehailing.core.BaseActivity
 import com.cuongnl.ridehailing.screens.login.ui.BannerImage
+import com.cuongnl.ridehailing.screens.login.ui.NumberPhoneInvalidText
 import com.cuongnl.ridehailing.screens.login.ui.PhoneEditText
 import com.cuongnl.ridehailing.screens.login.ui.TitleText
 import ir.kaaveh.sdpcompose.sdp
@@ -54,6 +55,7 @@ private fun Screen(){
                 ) {
                     TitleText()
                     PhoneEditText()
+                    NumberPhoneInvalidText()
                 }
             }
         }
