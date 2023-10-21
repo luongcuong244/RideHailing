@@ -11,4 +11,6 @@
     <string name="log_in_text_title_part_3">tài khoản</string>
     <string name="your_number_hint">Số điện thoại của bạn</string>
     <string name="number_phone_invalid">Vui lòng nhập số điện thoại hợp lệ!</string>
+    <string name="policy_text_part_1">Bằng việc nhấn nút tiếp tục, bạn đã đồng ý với các </string>
+    <string name="policy_text_part_2">Điều khoản dịch vụ &amp; Chính sách bảo mật</string>
 </resources>
