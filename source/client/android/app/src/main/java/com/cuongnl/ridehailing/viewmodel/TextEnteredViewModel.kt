@@ -1,4 +1,4 @@
-package com.cuongnl.viewmodel
+package com.cuongnl.ridehailing.viewmodel
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf

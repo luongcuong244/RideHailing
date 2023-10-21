@@ -1,4 +1,4 @@
-package com.cuongnl.enums
+package com.cuongnl.ridehailing.enums
 
 import com.cuongnl.ridehailing.R
 

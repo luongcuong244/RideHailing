@@ -1,9 +1,9 @@
-package com.cuongnl.viewmodel
+package com.cuongnl.ridehailing.viewmodel
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
-import com.cuongnl.enums.NumberPhone
+import com.cuongnl.ridehailing.enums.NumberPhone
 
 class NumberPhoneSelectedViewModel : ViewModel() {
 

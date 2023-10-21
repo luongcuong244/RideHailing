@@ -39,8 +39,8 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.cuongnl.ridehailing.custom_view.AppText
 import com.cuongnl.ridehailing.utils.beVietNamFamily
-import com.cuongnl.viewmodel.NumberPhoneSelectedViewModel
-import com.cuongnl.viewmodel.TextEnteredViewModel
+import com.cuongnl.ridehailing.viewmodel.NumberPhoneSelectedViewModel
+import com.cuongnl.ridehailing.viewmodel.TextEnteredViewModel
 import ir.kaaveh.sdpcompose.sdp
 import ir.kaaveh.sdpcompose.ssp
 
