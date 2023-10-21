@@ -9,5 +9,13 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="transparent">#00000000</color>
-    <color name="gray_600">#747474</color>
+    <color name="gray_100">#f8f9fa</color>
+    <color name="gray_200">#e9ecef</color>
+    <color name="gray_300">#dee2e6</color>
+    <color name="gray_400">#ced4da</color>
+    <color name="gray_500">#adb5bd</color>
+    <color name="gray_600">#6c757d</color>
+    <color name="gray_700">#495057</color>
+    <color name="gray_800">#343a40</color>
+    <color name="gray_900">#212529</color>
 </resources>

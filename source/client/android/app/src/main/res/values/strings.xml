@@ -9,4 +9,5 @@
     <string name="log_in_text_title_part_1">Sử dụng số điện thoại của bạn\nđể</string>
     <string name="log_in_text_title_part_2">đăng nhập/ đăng ký</string>
     <string name="log_in_text_title_part_3">tài khoản</string>
+    <string name="your_number_hint">Số điện thoại của bạn</string>
 </resources>
