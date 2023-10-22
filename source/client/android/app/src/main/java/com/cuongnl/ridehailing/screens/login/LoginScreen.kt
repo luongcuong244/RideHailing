@@ -8,6 +8,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -69,6 +70,7 @@ private fun Screen(){
                 Column(
                     modifier = Modifier
                         .padding(horizontal = 15.sdp)
+                        .imePadding()
                 ) {
                     TitleText()
                     PhoneEditText()

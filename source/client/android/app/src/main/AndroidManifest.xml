@@ -30,6 +30,7 @@
 
         <activity
             android:name=".screens.login.LoginScreen"
+            android:windowSoftInputMode="adjustResize"
             android:exported="false" />
 
         <service
