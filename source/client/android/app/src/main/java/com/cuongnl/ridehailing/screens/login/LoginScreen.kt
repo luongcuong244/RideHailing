@@ -60,11 +60,11 @@ private fun Screen(){
         Surface(
             modifier = Modifier
                 .fillMaxSize()
-                .background(Color.White)
         ) {
             Column(
                 modifier = Modifier
                     .fillMaxSize()
+                    .background(Color.White)
             ) {
                 BannerImage()
                 Column(

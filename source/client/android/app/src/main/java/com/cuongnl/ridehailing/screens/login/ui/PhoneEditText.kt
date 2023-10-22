@@ -134,7 +134,7 @@ private fun PhoneTextField(
                 AppText(
                     text = stringResource(id = R.string.your_number_hint),
                     fontSize = 13.ssp,
-                    color = colorResource(R.color.gray_500),
+                    color = colorResource(R.color.gray_600),
                     lineHeight = 24.ssp,
                     fontWeight = FontWeight.SemiBold
                 )

@@ -15,6 +15,8 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.cuongnl.ridehailing.R
 import com.cuongnl.ridehailing.custom_view.AppText
 import ir.kaaveh.sdpcompose.sdp
@@ -37,11 +39,12 @@ fun ColumnScope.BannerImage(){
         AppText(
             modifier = Modifier
                 .align(Alignment.TopStart)
-                .padding(top = 50.sdp, start = 10.sdp),
+                .padding(top = 50.dp, start = 10.sdp),
             text = stringResource(id = R.string.log_in_text_banner),
-            fontSize = 16.ssp,
+            fontSize = 20.sp,
             color = Color.Black,
-            fontWeight = FontWeight.Medium
+            fontWeight = FontWeight.SemiBold,
+            lineHeight = 30.sp
         )
     }
 }

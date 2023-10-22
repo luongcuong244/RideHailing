@@ -13,6 +13,7 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
+import androidx.compose.ui.unit.sp
 import com.cuongnl.ridehailing.R
 import com.cuongnl.ridehailing.custom_view.AppText
 import com.cuongnl.ridehailing.screens.login.LocalActivityBehavior
@@ -30,7 +31,7 @@ fun PolicyText(){
                 style = SpanStyle(
                     fontWeight = FontWeight.Normal, 
                     color = colorResource(id = R.color.gray_500), 
-                    fontSize = 10.ssp
+                    fontSize = 12.sp
                 )
             ) {
                 append(stringResource(id = R.string.policy_text_part_1))
@@ -40,20 +41,21 @@ fun PolicyText(){
                 style = SpanStyle(
                     fontWeight = FontWeight.Medium, 
                     color = colorResource(id = R.color.app_color), 
-                    fontSize = 10.ssp
+                    fontSize = 12.sp
                 )
             ) {
                 append(stringResource(id = R.string.policy_text_part_2))
             }
         },
         modifier = Modifier
-            .padding(bottom = 15.sdp)
+            .padding(bottom = 10.sdp)
             .fillMaxWidth()
             .pointerInput(Unit) {
                 detectTapGestures {
                     actions.openPolicy()
                 }
             },
-        textAlign = TextAlign.Center
+        textAlign = TextAlign.Center,
+        lineHeight = 16.ssp
     )
 }
