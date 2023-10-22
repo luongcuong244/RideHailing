@@ -29,13 +29,7 @@ fun ContinueButton(
 
     val actions = LocalActivityBehavior.current
 
-    val textEnteredLength = textEnteredViewModel.text.value.length
-    val maxLength = phoneSelectedViewModel.currentNumberPhone.value.maxLength
-    val minLength = phoneSelectedViewModel.currentNumberPhone.value.minLength
-
-    val isPhoneValid = textEnteredLength in minLength..maxLength
-
-    val buttonColor = if (isPhoneValid) {
+    val buttonColor = if (actions.canClickContinueButton()) {
         colorResource(id = R.color.app_color)
     } else {
         colorResource(id = R.color.gray_600)
@@ -49,10 +43,9 @@ fun ContinueButton(
             .background(buttonColor)
             .padding(vertical = 8.sdp),
         onClick = {
-            if(isPhoneValid){
-                actions.onContinueButtonClicked()
-            }
-        }
+            actions.onContinueButtonClicked()
+        },
+        opacity = if (actions.canClickContinueButton()) 0.7f else 1f
     ) {
         AppText(
             modifier = Modifier.align(Alignment.Center),

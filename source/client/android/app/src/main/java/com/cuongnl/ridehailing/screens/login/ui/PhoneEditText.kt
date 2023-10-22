@@ -3,7 +3,6 @@ package com.cuongnl.ridehailing.screens.login.ui
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -15,7 +14,6 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.KeyboardArrowDown
 import androidx.compose.material3.Icon
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -38,6 +36,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.cuongnl.ridehailing.custom_view.AppText
+import com.cuongnl.ridehailing.utils.CheckerUtils
 import com.cuongnl.ridehailing.utils.beVietNamFamily
 import com.cuongnl.ridehailing.viewmodel.NumberPhoneSelectedViewModel
 import com.cuongnl.ridehailing.viewmodel.TextEnteredViewModel
@@ -115,8 +114,11 @@ private fun PhoneTextField(
     BasicTextField(
         value = textFieldValue,
         onValueChange = {
-            textFieldValue = it
-            textEnteredViewModel.setText(textFieldValue.text)
+            val text = it.text
+            if(CheckerUtils.isOnlyNumbers(text)){
+                textFieldValue = it
+                textEnteredViewModel.setText(text)
+            }
         },
         modifier = Modifier
             .padding(bottom = 4.sdp, start = 8.sdp, end = 8.sdp)

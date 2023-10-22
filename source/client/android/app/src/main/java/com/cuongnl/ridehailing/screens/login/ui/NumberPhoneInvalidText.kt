@@ -8,27 +8,18 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.cuongnl.ridehailing.custom_view.AppText
-import com.cuongnl.ridehailing.viewmodel.NumberPhoneSelectedViewModel
-import com.cuongnl.ridehailing.viewmodel.TextEnteredViewModel
 
 import com.cuongnl.ridehailing.R
+import com.cuongnl.ridehailing.screens.login.LocalActivityBehavior
 import ir.kaaveh.sdpcompose.sdp
-import ir.kaaveh.sdpcompose.ssp
 
 @Composable
-fun NumberPhoneInvalidText(
-    textEnteredViewModel: TextEnteredViewModel = viewModel(),
-    phoneSelectedViewModel: NumberPhoneSelectedViewModel = viewModel()
-){
+fun NumberPhoneInvalidText(){
 
-    val textEnteredLength = textEnteredViewModel.text.value.length
-    val maxLength = phoneSelectedViewModel.currentNumberPhone.value.maxLength
+    val actions = LocalActivityBehavior.current
 
-    val isInvalidTextVisible = textEnteredLength > maxLength
-
-    if(isInvalidTextVisible){
+    if(actions.isInvalidTextVisible()){
         AppText(
             modifier = Modifier
                 .padding(top = 7.sdp, bottom = 12.sdp)

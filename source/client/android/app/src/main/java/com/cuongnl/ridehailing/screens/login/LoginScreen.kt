@@ -17,6 +17,7 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.lifecycle.ViewModelProvider
 import com.cuongnl.ridehailing.activity_behavior.ILoginActivityBehavior
 import com.cuongnl.ridehailing.core.BaseActivity
 import com.cuongnl.ridehailing.screens.login.ui.BannerImage
@@ -26,6 +27,8 @@ import com.cuongnl.ridehailing.screens.login.ui.PhoneEditText
 import com.cuongnl.ridehailing.screens.login.ui.PolicyText
 import com.cuongnl.ridehailing.screens.login.ui.TitleText
 import com.cuongnl.ridehailing.utils.Constant
+import com.cuongnl.ridehailing.viewmodel.NumberPhoneSelectedViewModel
+import com.cuongnl.ridehailing.viewmodel.TextEnteredViewModel
 import ir.kaaveh.sdpcompose.sdp
 
 
@@ -43,6 +46,24 @@ class LoginScreen : BaseActivity(), ILoginActivityBehavior {
         }
     }
 
+    override fun isInvalidTextVisible(): Boolean {
+        val textEnteredViewModel = ViewModelProvider(this)[TextEnteredViewModel::class.java]
+        val textEnteredLength = textEnteredViewModel.text.value.length
+
+        return !canClickContinueButton() && textEnteredLength != 0
+    }
+
+    override fun canClickContinueButton(): Boolean {
+        val textEnteredViewModel = ViewModelProvider(this)[TextEnteredViewModel::class.java]
+        val phoneSelectedViewModel = ViewModelProvider(this)[NumberPhoneSelectedViewModel::class.java]
+
+        val textEnteredLength = textEnteredViewModel.text.value.length
+        val maxLength = phoneSelectedViewModel.currentNumberPhone.value.maxLength
+        val minLength = phoneSelectedViewModel.currentNumberPhone.value.minLength
+
+        return textEnteredLength in minLength..maxLength
+    }
+
     override fun openPolicy() {
         val uri = Uri.parse(Constant.POLICY_URL)
         val intent = Intent(Intent.ACTION_VIEW, uri)
@@ -50,7 +71,9 @@ class LoginScreen : BaseActivity(), ILoginActivityBehavior {
     }
 
     override fun onContinueButtonClicked() {
+        if(canClickContinueButton()){
 
+        }
     }
 }
 
