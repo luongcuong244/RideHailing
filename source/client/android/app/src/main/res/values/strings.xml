@@ -13,4 +13,6 @@
     <string name="number_phone_invalid">Vui lòng nhập số điện thoại hợp lệ!</string>
     <string name="policy_text_part_1">Bằng việc nhấn nút tiếp tục, bạn đã đồng ý với các </string>
     <string name="policy_text_part_2">Điều khoản dịch vụ &amp; Chính sách bảo mật</string>
+    <string name="select_country_code_text">Chọn mã quốc gia</string>
+    <string name="search_text">Tìm kiếm</string>
 </resources>

@@ -38,8 +38,10 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.cuongnl.ridehailing.custom_view.AppText
 import com.cuongnl.ridehailing.utils.CheckerUtils
 import com.cuongnl.ridehailing.utils.beVietNamFamily
+import com.cuongnl.ridehailing.viewmodel.CountryCodeBottomSheetViewModel
 import com.cuongnl.ridehailing.viewmodel.NumberPhoneSelectedViewModel
 import com.cuongnl.ridehailing.viewmodel.TextEnteredViewModel
+import com.translator.voicechanger.monster.voicetranslator.ui.common.TouchableOpacityButton
 import ir.kaaveh.sdpcompose.sdp
 import ir.kaaveh.sdpcompose.ssp
 
@@ -64,32 +66,41 @@ fun PhoneEditText(){
 }
 
 @Composable
-private fun PhoneCode(numberPhoneSelectedViewModel: NumberPhoneSelectedViewModel = viewModel()){
-    Row(
-        modifier = Modifier
-            .fillMaxHeight()
-            .background(colorResource(id = R.color.gray_100))
-            .padding(start = 10.sdp, end = 4.sdp),
-        verticalAlignment = Alignment.CenterVertically
+private fun PhoneCode(
+    numberPhoneSelectedViewModel: NumberPhoneSelectedViewModel = viewModel(),
+    bottomSheetViewModel: CountryCodeBottomSheetViewModel = viewModel()
+){
+    TouchableOpacityButton(
+        onClick = {
+            bottomSheetViewModel.setBottomSheetVisible(true)
+        }
     ) {
-        Image(
+        Row(
             modifier = Modifier
-                .height(18.sdp),
-            painter = painterResource(numberPhoneSelectedViewModel.currentNumberPhone.value.countryFlag),
-            contentDescription = null
-        )
-        AppText(
-            modifier = Modifier
-                .padding(start = 3.sdp, bottom = 4.sdp),
-            text = numberPhoneSelectedViewModel.currentNumberPhone.value.phoneCode,
-            color = Color.Black,
-            fontSize = 13.ssp,
-            fontWeight = FontWeight.SemiBold,
-        )
-        Icon(
-            Icons.Outlined.KeyboardArrowDown,
-            contentDescription = null
-        )
+                .fillMaxHeight()
+                .background(colorResource(id = R.color.gray_100))
+                .padding(start = 10.sdp, end = 4.sdp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Image(
+                modifier = Modifier
+                    .height(18.sdp),
+                painter = painterResource(numberPhoneSelectedViewModel.currentNumberPhone.value.countryFlag),
+                contentDescription = null
+            )
+            AppText(
+                modifier = Modifier
+                    .padding(start = 3.sdp, bottom = 4.sdp),
+                text = numberPhoneSelectedViewModel.currentNumberPhone.value.phoneCode,
+                color = Color.Black,
+                fontSize = 13.ssp,
+                fontWeight = FontWeight.SemiBold,
+            )
+            Icon(
+                Icons.Outlined.KeyboardArrowDown,
+                contentDescription = null
+            )
+        }
     }
 }
 
