@@ -8,15 +8,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.ModalBottomSheet
-import androidx.compose.material3.ModalDrawerSheet
-import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.staticCompositionLocalOf
@@ -32,6 +25,7 @@ import com.cuongnl.ridehailing.screens.login.ui.PhoneCodeBottomSheet
 import com.cuongnl.ridehailing.screens.login.ui.PhoneEditText
 import com.cuongnl.ridehailing.screens.login.ui.PolicyText
 import com.cuongnl.ridehailing.screens.login.ui.TitleText
+import com.cuongnl.ridehailing.theme.AppTheme
 import com.cuongnl.ridehailing.utils.Constant
 import com.cuongnl.ridehailing.viewmodel.NumberPhoneSelectedViewModel
 import com.cuongnl.ridehailing.viewmodel.TextEnteredViewModel
@@ -85,37 +79,32 @@ class LoginScreen : BaseActivity(), ILoginActivityBehavior {
 
 @Composable
 private fun Screen(){
-    MaterialTheme {
-        Surface(
+    AppTheme {
+        Column(
             modifier = Modifier
                 .fillMaxSize()
+                .background(Color.White)
         ) {
+            BannerImage()
             Column(
                 modifier = Modifier
-                    .fillMaxSize()
-                    .background(Color.White)
+                    .padding(horizontal = 15.sdp)
+                    .imePadding()
             ) {
-                BannerImage()
+                TitleText()
+                PhoneEditText()
+                NumberPhoneInvalidText()
+
                 Column(
                     modifier = Modifier
-                        .padding(horizontal = 15.sdp)
-                        .imePadding()
+                        .fillMaxSize(),
+                    verticalArrangement = Arrangement.Bottom
                 ) {
-                    TitleText()
-                    PhoneEditText()
-                    NumberPhoneInvalidText()
-
-                    Column(
-                        modifier = Modifier
-                            .fillMaxSize(),
-                        verticalArrangement = Arrangement.Bottom
-                    ) {
-                        ContinueButton()
-                        PolicyText()
-                    }
-
-                    PhoneCodeBottomSheet()
+                    ContinueButton()
+                    PolicyText()
                 }
+
+                PhoneCodeBottomSheet()
             }
         }
     }
