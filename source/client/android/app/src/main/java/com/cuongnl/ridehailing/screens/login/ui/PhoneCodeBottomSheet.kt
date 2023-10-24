@@ -35,6 +35,10 @@ fun PhoneCodeBottomSheet(countryCodeBottomSheetViewModel: CountryCodeBottomSheet
             }
         }
 
+        LaunchedEffect(Unit){
+            countryCodeBottomSheetViewModel.resetList()
+        }
+
         ModalBottomSheet(
             onDismissRequest = {
                 countryCodeBottomSheetViewModel.setBottomSheetVisible(false)

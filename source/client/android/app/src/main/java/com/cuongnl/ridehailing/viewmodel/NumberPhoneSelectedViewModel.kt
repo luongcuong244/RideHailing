@@ -7,7 +7,7 @@ import com.cuongnl.ridehailing.enums.CountryCode
 
 class NumberPhoneSelectedViewModel : ViewModel() {
 
-    private val _currentCountryCode = mutableStateOf(CountryCode.VIET_NAM)
+    private val _currentCountryCode = mutableStateOf(CountryCode.VIETNAM)
 
     val currentCountryCode : State<CountryCode> = _currentCountryCode
 

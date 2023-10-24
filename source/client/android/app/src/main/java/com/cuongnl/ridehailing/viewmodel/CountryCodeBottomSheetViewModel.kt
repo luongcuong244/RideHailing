@@ -22,15 +22,20 @@ class CountryCodeBottomSheetViewModel : ViewModel() {
     }
 
     fun filterCountryCodeList(query: String){
-        phoneCountryCodes.clear()
 
         if(query.isEmpty()){
-            phoneCountryCodes.addAll(CountryCode.values().toList())
+            resetList();
             return
         }
 
+        phoneCountryCodes.clear()
         phoneCountryCodes.addAll(CountryCode.values().filter {
             it.countryName.contains(query.trim(), true) || it.phoneCode.contains(query.trim(), true)
         })
+    }
+
+    fun resetList(){
+        phoneCountryCodes.clear()
+        phoneCountryCodes.addAll(CountryCode.values().toList())
     }
 }
