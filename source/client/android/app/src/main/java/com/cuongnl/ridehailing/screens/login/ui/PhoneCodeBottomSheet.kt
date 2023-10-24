@@ -8,8 +8,6 @@ import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.cuongnl.ridehailing.viewmodel.CountryCodeBottomSheetViewModel
@@ -19,30 +17,33 @@ import ir.kaaveh.sdpcompose.sdp
 @Composable
 fun PhoneCodeBottomSheet(countryCodeBottomSheetViewModel: CountryCodeBottomSheetViewModel = viewModel()) {
 
-    val sheetState = rememberModalBottomSheetState()
+    if(countryCodeBottomSheetViewModel.isBottomSheetVisible.value){
 
-    ModalBottomSheet(
-        onDismissRequest = {
+        val sheetState = rememberModalBottomSheetState()
 
-        },
-        sheetState = sheetState
-    ) {
-        Column(
-            modifier = Modifier
-                .padding(start = 15.sdp, end = 15.sdp)
-                .fillMaxWidth()
+        LaunchedEffect(countryCodeBottomSheetViewModel.isBottomSheetVisible.value){
+            if(countryCodeBottomSheetViewModel.isBottomSheetVisible.value){
+                sheetState.show()
+            } else {
+                sheetState.hide()
+            }
+        }
+
+        ModalBottomSheet(
+            onDismissRequest = {
+                countryCodeBottomSheetViewModel.setBottomSheetVisible(false)
+            },
+            sheetState = sheetState
         ) {
-            SelectCountryCodeText()
-            SearchBar()
-            CountryCodeList()
-        }   
-    }
-
-    LaunchedEffect(countryCodeBottomSheetViewModel.isBottomSheetVisible.value){
-        if(countryCodeBottomSheetViewModel.isBottomSheetVisible.value){
-            sheetState.show()
-        } else {
-            sheetState.hide()
+            Column(
+                modifier = Modifier
+                    .padding(start = 15.sdp, end = 15.sdp)
+                    .fillMaxWidth()
+            ) {
+                SelectCountryCodeText()
+                SearchBar()
+                CountryCodeList()
+            }
         }
     }
 }

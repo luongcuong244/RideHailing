@@ -1,6 +1,7 @@
 package com.cuongnl.ridehailing.screens.login.ui
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -51,21 +52,18 @@ private fun CountryCodeItem(
 
     val item = NumberPhone.values()[index]
 
-    TouchableOpacityButton(
-        onClick = {
-            numberPhoneSelectedViewModel.setCurrentNumberPhone(item)
-            countryCodeBottomSheetViewModel.setBottomSheetVisible(false)
-        }
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier
+            .padding(bottom = 10.sdp)
+            .clickable {
+                numberPhoneSelectedViewModel.setCurrentNumberPhone(item)
+                countryCodeBottomSheetViewModel.setBottomSheetVisible(false)
+            }
     ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier
-                .padding(bottom = 10.sdp)
-        ) {
-            CountryFlag(item.countryFlag)
-            CountryName(item.countryName)
-            CountryCode(item.phoneCode)
-        }
+        CountryFlag(item.countryFlag)
+        CountryName(item.countryName)
+        CountryCode(item.phoneCode)
     }
 }
 

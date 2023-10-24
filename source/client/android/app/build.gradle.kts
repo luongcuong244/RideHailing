@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace = "com.cuongnl.ridehailing"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.cuongnl.ridehailing"
@@ -58,7 +58,6 @@ dependencies {
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")
-    implementation("androidx.compose.material3:material3")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
@@ -81,7 +80,7 @@ dependencies {
 
     implementation("androidx.appcompat:appcompat:1.6.1")
 
-    implementation("androidx.compose.material3:material3:1.1.1")
+    implementation("androidx.compose.material3:material3-android:1.2.0-alpha10")
 
     implementation("androidx.compose.runtime:runtime-livedata:1.4.3")
 }
