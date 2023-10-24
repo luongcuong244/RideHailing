@@ -15,4 +15,5 @@
     <string name="policy_text_part_2">Điều khoản dịch vụ &amp; Chính sách bảo mật</string>
     <string name="select_country_code_text">Chọn mã quốc gia</string>
     <string name="search_text">Tìm kiếm</string>
+    <string name="cannot_connect_to_server">Can\'t connect to the server!</string>
 </resources>

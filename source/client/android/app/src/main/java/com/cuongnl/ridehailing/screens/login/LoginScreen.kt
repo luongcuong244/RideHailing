@@ -3,6 +3,7 @@ package com.cuongnl.ridehailing.screens.login
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -15,7 +16,9 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.ViewModelProvider
+import com.cuongnl.ridehailing.R
 import com.cuongnl.ridehailing.activity_behavior.ILoginActivityBehavior
 import com.cuongnl.ridehailing.core.BaseActivity
 import com.cuongnl.ridehailing.screens.login.ui.BannerImage
@@ -25,8 +28,10 @@ import com.cuongnl.ridehailing.screens.login.ui.PhoneCodeBottomSheet
 import com.cuongnl.ridehailing.screens.login.ui.PhoneEditText
 import com.cuongnl.ridehailing.screens.login.ui.PolicyText
 import com.cuongnl.ridehailing.screens.login.ui.TitleText
+import com.cuongnl.ridehailing.screens.otp_verification.OtpVerificationActivity
 import com.cuongnl.ridehailing.theme.AppTheme
 import com.cuongnl.ridehailing.utils.Constant
+import com.cuongnl.ridehailing.viewmodel.AuthServiceViewModel
 import com.cuongnl.ridehailing.viewmodel.NumberPhoneSelectedViewModel
 import com.cuongnl.ridehailing.viewmodel.TextEnteredViewModel
 import ir.kaaveh.sdpcompose.sdp
@@ -36,8 +41,14 @@ val LocalActivityBehavior = staticCompositionLocalOf<ILoginActivityBehavior> { e
 
 class LoginScreen : BaseActivity(), ILoginActivityBehavior {
 
+    private lateinit var authServiceViewModel: AuthServiceViewModel
+    private lateinit var textEnteredViewModel: TextEnteredViewModel
+    private lateinit var numberPhoneSelectedViewModel: NumberPhoneSelectedViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        createViewModels()
 
         setContent {
             CompositionLocalProvider(LocalActivityBehavior provides this) {
@@ -46,20 +57,22 @@ class LoginScreen : BaseActivity(), ILoginActivityBehavior {
         }
     }
 
+    private fun createViewModels(){
+        authServiceViewModel = ViewModelProvider(this)[AuthServiceViewModel::class.java]
+        textEnteredViewModel = ViewModelProvider(this)[TextEnteredViewModel::class.java]
+        numberPhoneSelectedViewModel = ViewModelProvider(this)[NumberPhoneSelectedViewModel::class.java]
+    }
+
     override fun isInvalidTextVisible(): Boolean {
-        val textEnteredViewModel = ViewModelProvider(this)[TextEnteredViewModel::class.java]
         val textEnteredLength = textEnteredViewModel.text.value.length
 
         return !canClickContinueButton() && textEnteredLength != 0
     }
 
     override fun canClickContinueButton(): Boolean {
-        val textEnteredViewModel = ViewModelProvider(this)[TextEnteredViewModel::class.java]
-        val phoneSelectedViewModel = ViewModelProvider(this)[NumberPhoneSelectedViewModel::class.java]
-
         val textEnteredLength = textEnteredViewModel.text.value.length
-        val maxLength = phoneSelectedViewModel.currentCountryCode.value.maxLength
-        val minLength = phoneSelectedViewModel.currentCountryCode.value.minLength
+        val maxLength = numberPhoneSelectedViewModel.currentCountryCode.value.maxLength
+        val minLength = numberPhoneSelectedViewModel.currentCountryCode.value.minLength
 
         return textEnteredLength in minLength..maxLength
     }
@@ -73,6 +86,22 @@ class LoginScreen : BaseActivity(), ILoginActivityBehavior {
     override fun onContinueButtonClicked() {
         if(canClickContinueButton()){
 
+            val numberPhone = textEnteredViewModel.text.value
+
+            authServiceViewModel.checkExistingUser(
+                numberPhone,
+                onUserExisting = {
+
+                },
+                onUserNotExisting = {
+                    val intent = Intent(this, OtpVerificationActivity::class.java)
+                    intent.putExtra(Constant.BUNDLE_NUMBER_PHONE, numberPhone)
+                    startActivity(intent)
+                },
+                onError = {
+                    Toast.makeText(this, getString(R.string.cannot_connect_to_server), Toast.LENGTH_SHORT).show()
+                }
+            )
         }
     }
 }
