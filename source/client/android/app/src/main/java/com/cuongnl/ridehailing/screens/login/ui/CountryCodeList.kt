@@ -1,5 +1,6 @@
 package com.cuongnl.ridehailing.screens.login.ui
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
@@ -21,6 +22,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.cuongnl.ridehailing.R
 import com.cuongnl.ridehailing.custom_view.AppText
+import com.cuongnl.ridehailing.custom_view.MovableView
 import com.cuongnl.ridehailing.enums.CountryCode
 import com.cuongnl.ridehailing.viewmodel.CountryCodeBottomSheetViewModel
 import com.cuongnl.ridehailing.viewmodel.NumberPhoneSelectedViewModel
@@ -50,7 +52,7 @@ private fun CountryCodeItem(
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
-            .padding(bottom = 10.sdp)
+            .padding(bottom = 15.sdp)
             .clickable {
                 numberPhoneSelectedViewModel.setCurrentCountryCode(item)
                 countryCodeBottomSheetViewModel.setBottomSheetVisible(false)
@@ -72,25 +74,30 @@ private fun CountryFlag(imageId: Int){
     )
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
-private fun CountryName(name: String){
-    AppText(
-        text = name,
-        fontSize = 15.sp,
-        color = colorResource(id = R.color.black),
+private fun RowScope.CountryName(name: String){
+    MovableView(
         modifier = Modifier
-            .padding(start = 10.sdp)
-    )
+            .weight(1f)
+            .padding(start = 10.sdp, end = 20.sdp)
+    ) {
+        AppText(
+            text = name,
+            fontSize = 15.sp,
+            color = colorResource(id = R.color.black),
+            modifier = Modifier
+                .fillMaxWidth()
+        )
+    }
 }
 
 @Composable
-private fun RowScope.CountryCode(code: String){
+private fun CountryCode(code: String){
     AppText(
         text = code,
         fontSize = 16.sp,
         color = colorResource(id = R.color.black),
-        modifier = Modifier
-            .weight(1f),
         textAlign = TextAlign.End,
         fontWeight = FontWeight.Bold,
     )
