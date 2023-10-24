@@ -1,3 +1,18 @@
 <resources>
     <string name="app_name">RideHailing</string>
+    <string name="header_req_per">Sử dụng vị trí của bạn và cho phép nhận thông báo</string>
+    <string name="des_req_per">Cho phép Ride Hailing sử dụng vị trí của bạn và nhận thông báo phục vụ việc đặt xe được tốt hơn.\nBạn hoàn toàn có thể thay đổi cấp quyền trong phần Cài đặt điện thoại bất cứ lúc nào.</string>
+    <string name="continue_text">Tiếp tục</string>
+    <string name="dialog_permission_rationale_header">Xin quyền truy cập vị trí</string>
+    <string name="dialog_permission_rationale_des">Ứng dụng cần xin quyền truy cập vị trí để tự động xác định điểm đón khách</string>
+    <string name="log_in_text_banner">Gọi một chiếc\nxe CAM!</string>
+    <string name="log_in_text_title_part_1">Sử dụng số điện thoại của bạn\nđể</string>
+    <string name="log_in_text_title_part_2">đăng nhập/ đăng ký</string>
+    <string name="log_in_text_title_part_3">tài khoản</string>
+    <string name="your_number_hint">Số điện thoại của bạn</string>
+    <string name="number_phone_invalid">Vui lòng nhập số điện thoại hợp lệ!</string>
+    <string name="policy_text_part_1">Bằng việc nhấn nút tiếp tục, bạn đã đồng ý với các </string>
+    <string name="policy_text_part_2">Điều khoản dịch vụ &amp; Chính sách bảo mật</string>
+    <string name="select_country_code_text">Chọn mã quốc gia</string>
+    <string name="search_text">Tìm kiếm</string>
 </resources>
