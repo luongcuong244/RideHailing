@@ -76,7 +76,6 @@ fun SearchBar(){
                 color = colorResource(R.color.black),
                 lineHeight = 24.ssp,
             ),
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
             decorationBox = {innerTextField ->
                 if (textFieldValue.text.isEmpty()) {
                     AppText(
@@ -88,6 +87,7 @@ fun SearchBar(){
                 }
                 innerTextField()
             },
+            maxLines = 1
         )
     }
 }
