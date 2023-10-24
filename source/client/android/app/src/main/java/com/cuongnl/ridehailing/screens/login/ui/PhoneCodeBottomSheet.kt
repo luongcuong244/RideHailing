@@ -1,8 +1,14 @@
 package com.cuongnl.ridehailing.screens.login.ui
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.navigationBars
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBars
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.rememberModalBottomSheetState
@@ -33,7 +39,9 @@ fun PhoneCodeBottomSheet(countryCodeBottomSheetViewModel: CountryCodeBottomSheet
             onDismissRequest = {
                 countryCodeBottomSheetViewModel.setBottomSheetVisible(false)
             },
-            sheetState = sheetState
+            sheetState = sheetState,
+            windowInsets = WindowInsets.navigationBars,
+            modifier = Modifier.navigationBarsPadding(),
         ) {
             Column(
                 modifier = Modifier
