@@ -3,15 +3,15 @@ package com.cuongnl.ridehailing.viewmodel
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
-import com.cuongnl.ridehailing.enums.NumberPhone
+import com.cuongnl.ridehailing.enums.CountryCode
 
 class NumberPhoneSelectedViewModel : ViewModel() {
 
-    private val _currentNumberPhone = mutableStateOf(NumberPhone.VIET_NAM)
+    private val _currentCountryCode = mutableStateOf(CountryCode.VIET_NAM)
 
-    val currentNumberPhone : State<NumberPhone> = _currentNumberPhone
+    val currentCountryCode : State<CountryCode> = _currentCountryCode
 
-    fun setCurrentNumberPhone(numberPhone: NumberPhone){
-        _currentNumberPhone.value = numberPhone
+    fun setCurrentCountryCode(countryCode: CountryCode){
+        _currentCountryCode.value = countryCode
     }
 }

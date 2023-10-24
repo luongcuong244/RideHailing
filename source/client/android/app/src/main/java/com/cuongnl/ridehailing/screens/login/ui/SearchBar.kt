@@ -23,14 +23,16 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.cuongnl.ridehailing.R
 import com.cuongnl.ridehailing.custom_view.AppText
 import com.cuongnl.ridehailing.utils.beVietNamFamily
+import com.cuongnl.ridehailing.viewmodel.CountryCodeBottomSheetViewModel
 import ir.kaaveh.sdpcompose.sdp
 import ir.kaaveh.sdpcompose.ssp
 
 @Composable
-fun SearchBar(){
+fun SearchBar(countryCodeBottomSheetViewModel: CountryCodeBottomSheetViewModel = viewModel()){
 
     var textFieldValue by remember {
         mutableStateOf(
@@ -58,6 +60,7 @@ fun SearchBar(){
             value = textFieldValue,
             onValueChange = {
                 textFieldValue = it
+                countryCodeBottomSheetViewModel.filterCountryCodeList(it.text)
             },
             modifier = Modifier
                 .padding(horizontal = 10.sdp)
@@ -65,7 +68,7 @@ fun SearchBar(){
                 .fillMaxWidth()
                 .onFocusChanged {
                     borderColorId.value =
-                        if(it.isFocused)
+                        if (it.isFocused)
                             R.color.app_color
                         else
                             R.color.gray_300

@@ -58,8 +58,8 @@ class LoginScreen : BaseActivity(), ILoginActivityBehavior {
         val phoneSelectedViewModel = ViewModelProvider(this)[NumberPhoneSelectedViewModel::class.java]
 
         val textEnteredLength = textEnteredViewModel.text.value.length
-        val maxLength = phoneSelectedViewModel.currentNumberPhone.value.maxLength
-        val minLength = phoneSelectedViewModel.currentNumberPhone.value.minLength
+        val maxLength = phoneSelectedViewModel.currentCountryCode.value.maxLength
+        val minLength = phoneSelectedViewModel.currentCountryCode.value.minLength
 
         return textEnteredLength in minLength..maxLength
     }

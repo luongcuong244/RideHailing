@@ -2,7 +2,7 @@ package com.cuongnl.ridehailing.enums
 
 import com.cuongnl.ridehailing.R
 
-enum class NumberPhone(
+enum class CountryCode(
     val countryFlag: Int,
     val countryName: String,
     val phoneCode: String,

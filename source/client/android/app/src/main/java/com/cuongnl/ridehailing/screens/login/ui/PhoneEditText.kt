@@ -85,13 +85,13 @@ private fun PhoneCode(
             Image(
                 modifier = Modifier
                     .height(18.sdp),
-                painter = painterResource(numberPhoneSelectedViewModel.currentNumberPhone.value.countryFlag),
+                painter = painterResource(numberPhoneSelectedViewModel.currentCountryCode.value.countryFlag),
                 contentDescription = null
             )
             AppText(
                 modifier = Modifier
                     .padding(start = 3.sdp, bottom = 4.sdp),
-                text = numberPhoneSelectedViewModel.currentNumberPhone.value.phoneCode,
+                text = numberPhoneSelectedViewModel.currentCountryCode.value.phoneCode,
                 color = Color.Black,
                 fontSize = 13.ssp,
                 fontWeight = FontWeight.SemiBold,
@@ -115,8 +115,8 @@ private fun PhoneTextField(
             TextFieldValue(
                 textEnteredViewModel.text.value,
                 TextRange(
-                    numberPhoneSelectedViewModel.currentNumberPhone.value.minLength,
-                    numberPhoneSelectedViewModel.currentNumberPhone.value.maxLength
+                    numberPhoneSelectedViewModel.currentCountryCode.value.minLength,
+                    numberPhoneSelectedViewModel.currentCountryCode.value.maxLength
                 )
             )
         )
