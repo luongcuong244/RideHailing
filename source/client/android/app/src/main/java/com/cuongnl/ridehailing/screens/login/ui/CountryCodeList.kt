@@ -25,7 +25,7 @@ import com.cuongnl.ridehailing.custom_view.AppText
 import com.cuongnl.ridehailing.custom_view.MovableView
 import com.cuongnl.ridehailing.enums.CountryCode
 import com.cuongnl.ridehailing.viewmodel.CountryCodeBottomSheetViewModel
-import com.cuongnl.ridehailing.viewmodel.NumberPhoneSelectedViewModel
+import com.cuongnl.ridehailing.viewmodel.CountryCodeSelectedViewModel
 import ir.kaaveh.sdpcompose.sdp
 
 @Composable
@@ -46,7 +46,7 @@ fun CountryCodeList(countryCodeBottomSheetViewModel: CountryCodeBottomSheetViewM
 @Composable
 private fun CountryCodeItem(
     item: CountryCode,
-    numberPhoneSelectedViewModel: NumberPhoneSelectedViewModel = viewModel(),
+    countryCodeSelectedViewModel: CountryCodeSelectedViewModel = viewModel(),
     countryCodeBottomSheetViewModel: CountryCodeBottomSheetViewModel = viewModel()
 ){
     Row(
@@ -54,7 +54,7 @@ private fun CountryCodeItem(
         modifier = Modifier
             .padding(bottom = 15.sdp)
             .clickable {
-                numberPhoneSelectedViewModel.setCurrentCountryCode(item)
+                countryCodeSelectedViewModel.setCurrentCountryCode(item)
                 countryCodeBottomSheetViewModel.setBottomSheetVisible(false)
             }
     ) {

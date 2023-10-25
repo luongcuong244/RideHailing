@@ -5,7 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.cuongnl.ridehailing.enums.CountryCode
 
-class NumberPhoneSelectedViewModel : ViewModel() {
+class CountryCodeSelectedViewModel : ViewModel() {
 
     private val _currentCountryCode = mutableStateOf(CountryCode.VIETNAM)
 

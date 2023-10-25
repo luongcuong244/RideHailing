@@ -15,7 +15,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.cuongnl.ridehailing.R
 import com.cuongnl.ridehailing.custom_view.AppText
 import com.cuongnl.ridehailing.screens.login.LocalActivityBehavior
-import com.cuongnl.ridehailing.viewmodel.NumberPhoneSelectedViewModel
+import com.cuongnl.ridehailing.viewmodel.CountryCodeSelectedViewModel
 import com.cuongnl.ridehailing.viewmodel.TextEnteredViewModel
 import com.translator.voicechanger.monster.voicetranslator.ui.common.TouchableOpacityButton
 import ir.kaaveh.sdpcompose.sdp
@@ -24,7 +24,7 @@ import ir.kaaveh.sdpcompose.ssp
 @Composable
 fun ContinueButton(
     textEnteredViewModel: TextEnteredViewModel = viewModel(),
-    phoneSelectedViewModel: NumberPhoneSelectedViewModel = viewModel()
+    phoneSelectedViewModel: CountryCodeSelectedViewModel = viewModel()
 ){
 
     val actions = LocalActivityBehavior.current

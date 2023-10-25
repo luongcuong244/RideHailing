@@ -39,7 +39,7 @@ import com.cuongnl.ridehailing.custom_view.AppText
 import com.cuongnl.ridehailing.utils.CheckerUtils
 import com.cuongnl.ridehailing.utils.beVietNamFamily
 import com.cuongnl.ridehailing.viewmodel.CountryCodeBottomSheetViewModel
-import com.cuongnl.ridehailing.viewmodel.NumberPhoneSelectedViewModel
+import com.cuongnl.ridehailing.viewmodel.CountryCodeSelectedViewModel
 import com.cuongnl.ridehailing.viewmodel.TextEnteredViewModel
 import com.translator.voicechanger.monster.voicetranslator.ui.common.TouchableOpacityButton
 import ir.kaaveh.sdpcompose.sdp
@@ -67,7 +67,7 @@ fun PhoneEditText(){
 
 @Composable
 private fun PhoneCode(
-    numberPhoneSelectedViewModel: NumberPhoneSelectedViewModel = viewModel(),
+    countryCodeSelectedViewModel: CountryCodeSelectedViewModel = viewModel(),
     bottomSheetViewModel: CountryCodeBottomSheetViewModel = viewModel()
 ){
     TouchableOpacityButton(
@@ -85,13 +85,13 @@ private fun PhoneCode(
             Image(
                 modifier = Modifier
                     .height(18.sdp),
-                painter = painterResource(numberPhoneSelectedViewModel.currentCountryCode.value.countryFlag),
+                painter = painterResource(countryCodeSelectedViewModel.currentCountryCode.value.countryFlag),
                 contentDescription = null
             )
             AppText(
                 modifier = Modifier
                     .padding(start = 3.sdp, bottom = 4.sdp),
-                text = numberPhoneSelectedViewModel.currentCountryCode.value.phoneCode,
+                text = countryCodeSelectedViewModel.currentCountryCode.value.phoneCode,
                 color = Color.Black,
                 fontSize = 13.ssp,
                 fontWeight = FontWeight.SemiBold,
@@ -106,7 +106,7 @@ private fun PhoneCode(
 
 @Composable
 private fun PhoneTextField(
-    numberPhoneSelectedViewModel: NumberPhoneSelectedViewModel = viewModel(),
+    countryCodeSelectedViewModel: CountryCodeSelectedViewModel = viewModel(),
     textEnteredViewModel: TextEnteredViewModel = viewModel()
 ){
 
@@ -115,8 +115,8 @@ private fun PhoneTextField(
             TextFieldValue(
                 textEnteredViewModel.text.value,
                 TextRange(
-                    numberPhoneSelectedViewModel.currentCountryCode.value.minLength,
-                    numberPhoneSelectedViewModel.currentCountryCode.value.maxLength
+                    countryCodeSelectedViewModel.currentCountryCode.value.minLength,
+                    countryCodeSelectedViewModel.currentCountryCode.value.maxLength
                 )
             )
         )

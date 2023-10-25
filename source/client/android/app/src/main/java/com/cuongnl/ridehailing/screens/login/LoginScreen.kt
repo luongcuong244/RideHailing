@@ -16,7 +16,6 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.ViewModelProvider
 import com.cuongnl.ridehailing.R
 import com.cuongnl.ridehailing.activity_behavior.ILoginActivityBehavior
@@ -32,7 +31,7 @@ import com.cuongnl.ridehailing.screens.otp_verification.OtpVerificationActivity
 import com.cuongnl.ridehailing.theme.AppTheme
 import com.cuongnl.ridehailing.utils.Constant
 import com.cuongnl.ridehailing.viewmodel.AuthServiceViewModel
-import com.cuongnl.ridehailing.viewmodel.NumberPhoneSelectedViewModel
+import com.cuongnl.ridehailing.viewmodel.CountryCodeSelectedViewModel
 import com.cuongnl.ridehailing.viewmodel.TextEnteredViewModel
 import ir.kaaveh.sdpcompose.sdp
 
@@ -43,7 +42,7 @@ class LoginScreen : BaseActivity(), ILoginActivityBehavior {
 
     private lateinit var authServiceViewModel: AuthServiceViewModel
     private lateinit var textEnteredViewModel: TextEnteredViewModel
-    private lateinit var numberPhoneSelectedViewModel: NumberPhoneSelectedViewModel
+    private lateinit var countryCodeSelectedViewModel: CountryCodeSelectedViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,7 +59,7 @@ class LoginScreen : BaseActivity(), ILoginActivityBehavior {
     private fun createViewModels(){
         authServiceViewModel = ViewModelProvider(this)[AuthServiceViewModel::class.java]
         textEnteredViewModel = ViewModelProvider(this)[TextEnteredViewModel::class.java]
-        numberPhoneSelectedViewModel = ViewModelProvider(this)[NumberPhoneSelectedViewModel::class.java]
+        countryCodeSelectedViewModel = ViewModelProvider(this)[CountryCodeSelectedViewModel::class.java]
     }
 
     override fun isInvalidTextVisible(): Boolean {
@@ -71,8 +70,8 @@ class LoginScreen : BaseActivity(), ILoginActivityBehavior {
 
     override fun canClickContinueButton(): Boolean {
         val textEnteredLength = textEnteredViewModel.text.value.length
-        val maxLength = numberPhoneSelectedViewModel.currentCountryCode.value.maxLength
-        val minLength = numberPhoneSelectedViewModel.currentCountryCode.value.minLength
+        val maxLength = countryCodeSelectedViewModel.currentCountryCode.value.maxLength
+        val minLength = countryCodeSelectedViewModel.currentCountryCode.value.minLength
 
         return textEnteredLength in minLength..maxLength
     }
