@@ -9,8 +9,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.sp
 import com.cuongnl.ridehailing.R
-import com.cuongnl.ridehailing.custom_view.AppText
-import ir.kaaveh.sdpcompose.ssp
+import com.cuongnl.ridehailing.widgets.AppText
 
 @Composable
 fun TitleText(){

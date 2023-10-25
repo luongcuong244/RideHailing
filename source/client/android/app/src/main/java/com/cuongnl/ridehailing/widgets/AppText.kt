@@ -1,4 +1,4 @@
-package com.cuongnl.ridehailing.custom_view
+package com.cuongnl.ridehailing.widgets
 
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.Text

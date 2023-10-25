@@ -5,9 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
@@ -21,7 +19,7 @@ import androidx.compose.ui.text.font.FontWeight
 import com.cuongnl.ridehailing.R
 import com.cuongnl.ridehailing.activity_behavior.IPermissionActivityBehavior
 import com.cuongnl.ridehailing.core.BaseActivity
-import com.cuongnl.ridehailing.custom_view.AppText
+import com.cuongnl.ridehailing.widgets.AppText
 import com.cuongnl.ridehailing.screens.permission.ui.BannerImage
 import com.cuongnl.ridehailing.screens.permission.ui.ContinueButton
 import com.cuongnl.ridehailing.screens.login.LoginScreen

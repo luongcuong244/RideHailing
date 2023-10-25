@@ -8,7 +8,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
-import com.cuongnl.ridehailing.custom_view.AppText
+import com.cuongnl.ridehailing.widgets.AppText
 
 import com.cuongnl.ridehailing.R
 import com.cuongnl.ridehailing.screens.login.LocalActivityBehavior

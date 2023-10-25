@@ -1,4 +1,4 @@
-package com.cuongnl.ridehailing.custom_view
+package com.cuongnl.ridehailing.widgets
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.MarqueeAnimationMode

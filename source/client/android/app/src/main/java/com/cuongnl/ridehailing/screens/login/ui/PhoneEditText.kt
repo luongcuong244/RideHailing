@@ -35,7 +35,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.cuongnl.ridehailing.custom_view.AppText
+import com.cuongnl.ridehailing.widgets.AppText
 import com.cuongnl.ridehailing.utils.CheckerUtils
 import com.cuongnl.ridehailing.utils.beVietNamFamily
 import com.cuongnl.ridehailing.viewmodel.CountryCodeBottomSheetViewModel
