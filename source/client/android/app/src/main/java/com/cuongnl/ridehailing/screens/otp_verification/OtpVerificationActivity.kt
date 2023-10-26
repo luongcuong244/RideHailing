@@ -39,7 +39,7 @@ private fun Screen(){
                 otpText = "",
                 onOtpTextChange = { _, otpInputFilled ->
                     if(otpInputFilled){
-                        
+
                     }
                 }
             )
