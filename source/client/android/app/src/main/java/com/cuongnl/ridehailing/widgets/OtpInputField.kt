@@ -16,12 +16,15 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.TextRange
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.cuongnl.ridehailing.R
+import com.cuongnl.ridehailing.utils.CheckerUtils
 import com.cuongnl.ridehailing.widgets.AppText
 import ir.kaaveh.sdpcompose.sdp
 
@@ -48,7 +51,7 @@ fun OtpTextField(
         modifier = modifier,
         value = textFieldValue,
         onValueChange = {
-            if (it.text.length <= otpCount) {
+            if (it.text.length <= otpCount && CheckerUtils.isOnlyNumbers(it.text)) {
                 textFieldValue = it
                 onOtpTextChange.invoke(it.text, it.text.length == otpCount)
             }
@@ -82,22 +85,28 @@ private fun RowScope.CharView(
     }
 
     val backgroundColor = if(isFocused){
-        colorResource(id = R.color.orange_100)
+        colorResource(id = R.color.amber_50)
     } else {
         colorResource(id = R.color.gray_200)
     }
 
-    AppText(
+    Box(
         modifier = Modifier
             .weight(1f)
             .aspectRatio(0.75f)
             .clip(RoundedCornerShape(25))
             .background(backgroundColor)
-            .padding(2.dp),
-        text = char,
-        color = Color.Black,
-        textAlign = TextAlign.Center
-    )
+    ) {
+        AppText(
+            modifier = Modifier
+                .align(Alignment.Center),
+            text = char,
+            color = Color.Black,
+            textAlign = TextAlign.Center,
+            fontWeight = FontWeight.SemiBold,
+            fontSize = 24.sp,
+        )
+    }
 }
 
 @Preview

@@ -35,7 +35,14 @@ private fun Screen(){
         ) {
             OtpVerificationText()
             OtpDescriptionText()
-            OtpTextField(otpText = "", onOtpTextChange = { _, _ ->})
+            OtpTextField(
+                otpText = "",
+                onOtpTextChange = { _, otpInputFilled ->
+                    if(otpInputFilled){
+                        
+                    }
+                }
+            )
         }
     }
 }
