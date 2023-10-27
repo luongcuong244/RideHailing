@@ -15,7 +15,7 @@ import com.cuongnl.ridehailing.screens.login.LocalActivityBehavior
 import ir.kaaveh.sdpcompose.sdp
 
 @Composable
-fun NumberPhoneInvalidText(){
+fun PhoneNumberInvalidText(){
 
     val actions = LocalActivityBehavior.current
 

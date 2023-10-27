@@ -12,7 +12,7 @@ class AuthServiceViewModel : ViewModel() {
     private var authRepository: AuthRepository = AuthRepository()
 
     fun checkExistingUser(
-        numberPhone: String,
+        phoneNumber: String,
         onError: () -> Unit = {},
         onUserExisting: () -> Unit = {},
         onUserNotExisting: () -> Unit = {}
@@ -21,7 +21,7 @@ class AuthServiceViewModel : ViewModel() {
         onUserNotExisting()
         return
 
-        authRepository.checkExistingUser(numberPhone, object: Callback<ScalarsBooleanResponse> {
+        authRepository.checkExistingUser(phoneNumber, object: Callback<ScalarsBooleanResponse> {
             override fun onResponse(call: Call<ScalarsBooleanResponse>, response: Response<ScalarsBooleanResponse>) {
                 if(response.isSuccessful){
                     response.body()?.data?.let {

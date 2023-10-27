@@ -6,6 +6,6 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 
 interface AuthApi {
-    @GET("phones/{numberPhone}")
-    fun checkExistingUser(@Path("numberPhone") numberPhone: String): Call<ScalarsBooleanResponse>
+    @GET("phones/{phoneNumber}")
+    fun checkExistingUser(@Path("phoneNumber") phoneNumber: String): Call<ScalarsBooleanResponse>
 }

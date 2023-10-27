@@ -22,7 +22,7 @@ import com.cuongnl.ridehailing.activity_behavior.ILoginActivityBehavior
 import com.cuongnl.ridehailing.core.BaseActivity
 import com.cuongnl.ridehailing.screens.login.ui.BannerImage
 import com.cuongnl.ridehailing.screens.login.ui.ContinueButton
-import com.cuongnl.ridehailing.screens.login.ui.NumberPhoneInvalidText
+import com.cuongnl.ridehailing.screens.login.ui.PhoneNumberInvalidText
 import com.cuongnl.ridehailing.screens.login.ui.PhoneCodeBottomSheet
 import com.cuongnl.ridehailing.screens.login.ui.PhoneEditText
 import com.cuongnl.ridehailing.screens.login.ui.PolicyText
@@ -85,16 +85,16 @@ class LoginScreen : BaseActivity(), ILoginActivityBehavior {
     override fun onContinueButtonClicked() {
         if(canClickContinueButton()){
 
-            val numberPhone = textEnteredViewModel.text.value
+            val phoneNumber = textEnteredViewModel.text.value
 
             authServiceViewModel.checkExistingUser(
-                numberPhone,
+                phoneNumber,
                 onUserExisting = {
 
                 },
                 onUserNotExisting = {
                     val intent = Intent(this, OtpVerificationActivity::class.java)
-                    intent.putExtra(Constant.BUNDLE_NUMBER_PHONE, numberPhone)
+                    intent.putExtra(Constant.BUNDLE_NUMBER_PHONE, phoneNumber)
                     startActivity(intent)
                 },
                 onError = {
@@ -121,7 +121,7 @@ private fun Screen(){
             ) {
                 TitleText()
                 PhoneEditText()
-                NumberPhoneInvalidText()
+                PhoneNumberInvalidText()
 
                 Column(
                     modifier = Modifier

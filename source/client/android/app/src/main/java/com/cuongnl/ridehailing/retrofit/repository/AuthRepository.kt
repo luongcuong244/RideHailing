@@ -9,7 +9,7 @@ class AuthRepository {
 
     private val authApi : AuthApi = RetrofitClient.getClient().create(AuthApi::class.java)
 
-    fun checkExistingUser(numberPhone: String, callback: Callback<ScalarsBooleanResponse>) {
-        authApi.checkExistingUser(numberPhone).enqueue(callback)
+    fun checkExistingUser(phoneNumber: String, callback: Callback<ScalarsBooleanResponse>) {
+        authApi.checkExistingUser(phoneNumber).enqueue(callback)
     }
 }
