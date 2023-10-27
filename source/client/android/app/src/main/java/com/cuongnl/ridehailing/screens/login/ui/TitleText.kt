@@ -12,7 +12,7 @@ import com.cuongnl.ridehailing.R
 import com.cuongnl.ridehailing.widgets.AppText
 
 @Composable
-fun TitleText(){
+fun TitleText() {
     AppText(
         buildAnnotatedString {
             withStyle(style = SpanStyle(fontWeight = FontWeight.Normal, color = Color.Black, fontSize = 14.sp)) {

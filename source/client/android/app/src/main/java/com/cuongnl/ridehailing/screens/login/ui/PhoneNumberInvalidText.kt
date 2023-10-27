@@ -15,11 +15,11 @@ import com.cuongnl.ridehailing.screens.login.LocalActivityBehavior
 import ir.kaaveh.sdpcompose.sdp
 
 @Composable
-fun PhoneNumberInvalidText(){
+fun PhoneNumberInvalidText() {
 
     val actions = LocalActivityBehavior.current
 
-    if(actions.isInvalidTextVisible()){
+    if(actions.isInvalidTextVisible()) {
         AppText(
             modifier = Modifier
                 .padding(top = 7.sdp, bottom = 12.sdp)

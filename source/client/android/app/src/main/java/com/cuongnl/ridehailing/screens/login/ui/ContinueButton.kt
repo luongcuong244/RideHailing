@@ -25,7 +25,7 @@ import ir.kaaveh.sdpcompose.ssp
 fun ContinueButton(
     textEnteredViewModel: TextEnteredViewModel = viewModel(),
     phoneSelectedViewModel: CountryCodeSelectedViewModel = viewModel()
-){
+) {
 
     val actions = LocalActivityBehavior.current
 

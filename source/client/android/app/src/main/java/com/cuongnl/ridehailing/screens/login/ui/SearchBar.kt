@@ -30,7 +30,7 @@ import ir.kaaveh.sdpcompose.sdp
 import ir.kaaveh.sdpcompose.ssp
 
 @Composable
-fun SearchBar(countryCodeBottomSheetViewModel: CountryCodeBottomSheetViewModel = viewModel()){
+fun SearchBar(countryCodeBottomSheetViewModel: CountryCodeBottomSheetViewModel = viewModel()) {
 
     var textFieldValue by remember {
         mutableStateOf(

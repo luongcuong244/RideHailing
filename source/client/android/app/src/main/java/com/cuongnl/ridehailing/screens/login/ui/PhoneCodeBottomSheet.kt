@@ -23,19 +23,19 @@ import ir.kaaveh.sdpcompose.sdp
 @Composable
 fun PhoneCodeBottomSheet(countryCodeBottomSheetViewModel: CountryCodeBottomSheetViewModel = viewModel()) {
 
-    if(countryCodeBottomSheetViewModel.isBottomSheetVisible.value){
+    if(countryCodeBottomSheetViewModel.isBottomSheetVisible.value) {
 
         val sheetState = rememberModalBottomSheetState()
 
-        LaunchedEffect(countryCodeBottomSheetViewModel.isBottomSheetVisible.value){
-            if(countryCodeBottomSheetViewModel.isBottomSheetVisible.value){
+        LaunchedEffect(countryCodeBottomSheetViewModel.isBottomSheetVisible.value) {
+            if(countryCodeBottomSheetViewModel.isBottomSheetVisible.value) {
                 sheetState.show()
             } else {
                 sheetState.hide()
             }
         }
 
-        LaunchedEffect(Unit){
+        LaunchedEffect(Unit) {
             countryCodeBottomSheetViewModel.resetList()
         }
 

@@ -9,7 +9,7 @@ class TextEnteredViewModel : ViewModel() {
 
     val text : State<String> = _text
 
-    fun setText(text: String){
+    fun setText(text: String) {
         _text.value = text
     }
 }

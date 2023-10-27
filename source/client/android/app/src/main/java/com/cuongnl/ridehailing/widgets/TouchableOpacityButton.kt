@@ -43,7 +43,7 @@ fun TouchableOpacityButton(
             .pointerInput(Unit) {
                 detectTapGestures(
                     onPress = {
-                        if(!updatedEnable.value){
+                        if(!updatedEnable.value) {
                             return@detectTapGestures
                         }
                         try {

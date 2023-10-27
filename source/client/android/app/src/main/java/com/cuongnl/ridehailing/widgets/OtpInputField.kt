@@ -84,7 +84,7 @@ private fun RowScope.CharView(
         else -> text[index].toString()
     }
 
-    val backgroundColor = if(isFocused){
+    val backgroundColor = if(isFocused) {
         colorResource(id = R.color.amber_50)
     } else {
         colorResource(id = R.color.gray_200)
@@ -111,6 +111,6 @@ private fun RowScope.CharView(
 
 @Preview
 @Composable
-fun Preview(){
+fun Preview() {
     OtpTextField(otpText = "", onOtpTextChange = { _, _ ->})
 }

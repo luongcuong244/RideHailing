@@ -11,7 +11,7 @@ class CountryCodeSelectedViewModel : ViewModel() {
 
     val currentCountryCode : State<CountryCode> = _currentCountryCode
 
-    fun setCurrentCountryCode(countryCode: CountryCode){
+    fun setCurrentCountryCode(countryCode: CountryCode) {
         _currentCountryCode.value = countryCode
     }
 }

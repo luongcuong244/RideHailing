@@ -21,7 +21,7 @@ import ir.kaaveh.sdpcompose.sdp
 import ir.kaaveh.sdpcompose.ssp
 
 @Composable
-fun PolicyText(){
+fun PolicyText() {
 
     val actions = LocalActivityBehavior.current
 

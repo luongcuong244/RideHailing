@@ -56,7 +56,7 @@ class LoginScreen : BaseActivity(), ILoginActivityBehavior {
         }
     }
 
-    private fun createViewModels(){
+    private fun createViewModels() {
         authServiceViewModel = ViewModelProvider(this)[AuthServiceViewModel::class.java]
         textEnteredViewModel = ViewModelProvider(this)[TextEnteredViewModel::class.java]
         countryCodeSelectedViewModel = ViewModelProvider(this)[CountryCodeSelectedViewModel::class.java]
@@ -83,7 +83,7 @@ class LoginScreen : BaseActivity(), ILoginActivityBehavior {
     }
 
     override fun onContinueButtonClicked() {
-        if(canClickContinueButton()){
+        if(canClickContinueButton()) {
 
             val phoneNumber = textEnteredViewModel.text.value
 
@@ -106,7 +106,7 @@ class LoginScreen : BaseActivity(), ILoginActivityBehavior {
 }
 
 @Composable
-private fun Screen(){
+private fun Screen() {
     AppTheme {
         Column(
             modifier = Modifier

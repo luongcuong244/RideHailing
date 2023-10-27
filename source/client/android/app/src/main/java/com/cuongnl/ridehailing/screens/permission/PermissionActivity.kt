@@ -35,7 +35,7 @@ class PermissionActivity : BaseActivity(), IPermissionActivityBehavior {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        if(PermissionUtils.isPermissionGranted(this, Manifest.permission.ACCESS_FINE_LOCATION)){
+        if(PermissionUtils.isPermissionGranted(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
             navigateToNextActivity()
             return
         }
@@ -58,8 +58,8 @@ class PermissionActivity : BaseActivity(), IPermissionActivityBehavior {
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
-        if(requestCode == PermissionUtils.LOCATION_REQUEST_CODE && grantResults.isNotEmpty()){
-            if(PermissionUtils.isPermissionGranted(this, Manifest.permission.ACCESS_FINE_LOCATION)){
+        if(requestCode == PermissionUtils.LOCATION_REQUEST_CODE && grantResults.isNotEmpty()) {
+            if(PermissionUtils.isPermissionGranted(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
                 navigateToNextActivity()
             } else {
                 PermissionUtils.requestPreciseLocationPermission(this, PermissionUtils.LOCATION_REQUEST_CODE)
@@ -69,19 +69,19 @@ class PermissionActivity : BaseActivity(), IPermissionActivityBehavior {
 
     override fun onResume() {
         super.onResume()
-        if(PermissionUtils.isPermissionGranted(this, Manifest.permission.ACCESS_FINE_LOCATION)){
+        if(PermissionUtils.isPermissionGranted(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
             navigateToNextActivity()
         }
     }
 
-    private fun navigateToNextActivity(){
+    private fun navigateToNextActivity() {
         val intent = Intent(this, LoginScreen::class.java)
         startActivity(intent)
     }
 }
 
 @Composable
-private fun Screen(){
+private fun Screen() {
     AppTheme {
         BannerImage()
         Column(

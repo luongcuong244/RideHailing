@@ -46,7 +46,7 @@ import ir.kaaveh.sdpcompose.sdp
 import ir.kaaveh.sdpcompose.ssp
 
 @Composable
-fun PhoneEditText(){
+fun PhoneEditText() {
     Row(
         modifier = Modifier
             .padding(top = 25.dp)
@@ -69,7 +69,7 @@ fun PhoneEditText(){
 private fun PhoneCode(
     countryCodeSelectedViewModel: CountryCodeSelectedViewModel = viewModel(),
     bottomSheetViewModel: CountryCodeBottomSheetViewModel = viewModel()
-){
+) {
     TouchableOpacityButton(
         onClick = {
             bottomSheetViewModel.setBottomSheetVisible(true)
@@ -108,7 +108,7 @@ private fun PhoneCode(
 private fun PhoneTextField(
     countryCodeSelectedViewModel: CountryCodeSelectedViewModel = viewModel(),
     textEnteredViewModel: TextEnteredViewModel = viewModel()
-){
+) {
 
     var textFieldValue by remember {
         mutableStateOf(
@@ -126,7 +126,7 @@ private fun PhoneTextField(
         value = textFieldValue,
         onValueChange = {
             val text = it.text
-            if(CheckerUtils.isOnlyNumbers(text)){
+            if(CheckerUtils.isOnlyNumbers(text)) {
                 textFieldValue = it
                 textEnteredViewModel.setText(text)
             }
@@ -159,6 +159,6 @@ private fun PhoneTextField(
 
 @Preview
 @Composable
-fun Preview(){
+fun Preview() {
     PhoneEditText()
 }

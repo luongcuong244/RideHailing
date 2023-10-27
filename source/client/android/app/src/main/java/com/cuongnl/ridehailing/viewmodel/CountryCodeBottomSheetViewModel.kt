@@ -17,13 +17,13 @@ class CountryCodeBottomSheetViewModel : ViewModel() {
 
     val isBottomSheetVisible : State<Boolean> = _isBottomSheetVisible
 
-    fun setBottomSheetVisible(isVisible: Boolean){
+    fun setBottomSheetVisible(isVisible: Boolean) {
         _isBottomSheetVisible.value = isVisible
     }
 
-    fun filterCountryCodeList(query: String){
+    fun filterCountryCodeList(query: String) {
 
-        if(query.isEmpty()){
+        if(query.isEmpty()) {
             resetList();
             return
         }
@@ -34,7 +34,7 @@ class CountryCodeBottomSheetViewModel : ViewModel() {
         })
     }
 
-    fun resetList(){
+    fun resetList() {
         phoneCountryCodes.clear()
         phoneCountryCodes.addAll(CountryCode.values().toList())
     }

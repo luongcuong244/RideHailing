@@ -36,7 +36,7 @@ fun AppText(
     minLines: Int = 1,
     onTextLayout: (TextLayoutResult) -> Unit = {},
     style: TextStyle = LocalTextStyle.current
-){
+) {
     Text(
         text = text,
         modifier = modifier,
@@ -77,7 +77,7 @@ fun AppText(
     minLines: Int = 1,
     onTextLayout: (TextLayoutResult) -> Unit = {},
     style: TextStyle = LocalTextStyle.current
-){
+) {
     Text(
         text = text,
         modifier = modifier,

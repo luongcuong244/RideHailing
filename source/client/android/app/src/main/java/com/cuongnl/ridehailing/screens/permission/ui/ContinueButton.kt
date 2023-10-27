@@ -18,7 +18,7 @@ import ir.kaaveh.sdpcompose.sdp
 import ir.kaaveh.sdpcompose.ssp
 
 @Composable
-fun ContinueButton(){
+fun ContinueButton() {
 
     val actions = LocalActivityBehavior.current
 

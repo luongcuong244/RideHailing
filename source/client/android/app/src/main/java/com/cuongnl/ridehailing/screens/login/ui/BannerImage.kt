@@ -21,7 +21,7 @@ import com.cuongnl.ridehailing.widgets.AppText
 import ir.kaaveh.sdpcompose.sdp
 
 @Composable
-fun ColumnScope.BannerImage(){
+fun ColumnScope.BannerImage() {
     Box(
         modifier = Modifier
             .wrapContentSize()

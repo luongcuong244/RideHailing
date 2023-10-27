@@ -17,7 +17,7 @@ fun MovableView(
     animationMode: MarqueeAnimationMode = Immediately,
     delayMillis: Int = 0,
     content: @Composable BoxScope.() -> Unit,
-){
+) {
     Box(
         modifier = modifier.basicMarquee(
             iterations = iterations,

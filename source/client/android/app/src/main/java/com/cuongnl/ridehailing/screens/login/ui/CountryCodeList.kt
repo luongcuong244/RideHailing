@@ -48,7 +48,7 @@ private fun CountryCodeItem(
     item: CountryCode,
     countryCodeSelectedViewModel: CountryCodeSelectedViewModel = viewModel(),
     countryCodeBottomSheetViewModel: CountryCodeBottomSheetViewModel = viewModel()
-){
+) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
@@ -65,7 +65,7 @@ private fun CountryCodeItem(
 }
 
 @Composable
-private fun CountryFlag(imageId: Int){
+private fun CountryFlag(imageId: Int) {
     Image(
         painter = painterResource(id = imageId),
         contentDescription = null,
@@ -76,7 +76,7 @@ private fun CountryFlag(imageId: Int){
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-private fun RowScope.CountryName(name: String){
+private fun RowScope.CountryName(name: String) {
     MovableView(
         modifier = Modifier
             .weight(1f)
@@ -93,7 +93,7 @@ private fun RowScope.CountryName(name: String){
 }
 
 @Composable
-private fun CountryCode(code: String){
+private fun CountryCode(code: String) {
     AppText(
         text = code,
         fontSize = 16.sp,
