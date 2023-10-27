@@ -24,7 +24,7 @@ class CountryCodeBottomSheetViewModel : ViewModel() {
     fun filterCountryCodeList(query: String) {
 
         if (query.isEmpty()) {
-            resetList();
+            resetList()
             return
         }
 

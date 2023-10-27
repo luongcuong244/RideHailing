@@ -62,7 +62,4 @@ class LocationService : Service() {
         return null
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-    }
 }

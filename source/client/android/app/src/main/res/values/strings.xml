@@ -19,4 +19,11 @@
     <string name="otp_verification_text">Xác thực mã OTP</string>
     <string name="otp_des_text">đã gửi cho bạn mã OTP 6 số tới số điện thoại</string>
     <string name="send_otp_again">Gửi lại mã OTP</string>
+    <string name="otp_time_remaining">Còn </string>
+    <string name="incorrect_otp">Mã OTP không chính xác!</string>
+    <string name="otp_not_sent_yet">Mã OTP chưa được gửi!</string>
+    <string name="ok_text">OK</string>
+    <string name="dismiss_text">Bỏ qua</string>
+    <string name="an_error_occurred">An error occurred!</string>
+    <string name="otp_expired_and_send_again">Mã OTP đã hết hạn. Hãy thử gửi lại!</string>
 </resources>

@@ -8,5 +8,5 @@ object Constant {
     const val BUNDLE_NUMBER_PHONE = "bundle_number_phone"
     const val BUNDLE_COUNTRY_CODE = "bundle_country_code"
 
-    const val OTP_TIMEOUT_IN_SECOND = 10L
+    const val OTP_TIMEOUT_IN_SECOND = 40L
 }

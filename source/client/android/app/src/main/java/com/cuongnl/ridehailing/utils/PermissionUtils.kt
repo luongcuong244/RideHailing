@@ -10,7 +10,7 @@ import com.cuongnl.ridehailing.extensions.showDialog
 
 object PermissionUtils {
 
-    val LOCATION_REQUEST_CODE = 1;
+    val LOCATION_REQUEST_CODE = 1
 
     fun isPermissionGranted(context: Context, permission: String): Boolean {
         return context.checkSelfPermission(permission) == PackageManager.PERMISSION_GRANTED
