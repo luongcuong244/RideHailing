@@ -13,6 +13,8 @@ import com.cuongnl.ridehailing.core.BaseActivity
 import com.cuongnl.ridehailing.screens.otp_verification.ui.OtpDescriptionText
 import com.cuongnl.ridehailing.screens.otp_verification.ui.OtpVerificationText
 import com.cuongnl.ridehailing.theme.AppTheme
+import com.cuongnl.ridehailing.utils.Constant
+import com.cuongnl.ridehailing.utils.FormatterUtils
 import com.cuongnl.ridehailing.viewmodel.OtpVerificationViewModel
 import ir.kaaveh.sdpcompose.sdp
 
@@ -27,13 +29,18 @@ class OtpVerificationActivity : BaseActivity() {
             Screen()
         }
 
+        val phoneNumber = intent.getStringExtra(Constant.BUNDLE_NUMBER_PHONE)
+        val countryCode = intent.getStringExtra(Constant.BUNDLE_COUNTRY_CODE)
+        val internationalPhoneNumber = FormatterUtils.formatPhoneNumberToInternationalFormation(phoneNumber!!, countryCode!!)
+
         otpVerificationViewModel = ViewModelProvider(this)[OtpVerificationViewModel::class.java]
+        otpVerificationViewModel.setInternationalPhoneNumber(internationalPhoneNumber)
 
         initiateOtp()
     }
 
     private fun initiateOtp() {
-        otpVerificationViewModel.initiateOtp(this, "+84 972 085 801")
+        otpVerificationViewModel.initiateOtp(this)
     }
     
     override fun onBackPressed() {}

@@ -2,6 +2,8 @@ package com.cuongnl.ridehailing.viewmodel
 
 import android.app.Activity
 import android.util.Log
+import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.cuongnl.ridehailing.firebase.auth.FirebasePhoneNumberAuth
 import com.google.firebase.FirebaseException
@@ -11,10 +13,19 @@ import com.google.firebase.auth.PhoneAuthProvider
 
 class OtpVerificationViewModel : ViewModel() {
 
+    private var _internationalPhoneNumber = mutableStateOf("")
+
+    val internationalPhoneNumber : State<String> = _internationalPhoneNumber
+
     private var otpId : String? = null
 
-    fun initiateOtp(activity: Activity, phoneNumber: String) {
-        FirebasePhoneNumberAuth.verifyPhoneNumber(activity, phoneNumber, object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
+    fun initiateOtp(activity: Activity) {
+
+        if(internationalPhoneNumber.value.isEmpty()) {
+            throw Exception("Phone number can't be empty")
+        }
+
+        FirebasePhoneNumberAuth.verifyPhoneNumber(activity, internationalPhoneNumber.value, object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
             override fun onCodeSent(p0: String, p1: PhoneAuthProvider.ForceResendingToken) {
                 super.onCodeSent(p0, p1)
                 otpId = p0
@@ -48,5 +59,9 @@ class OtpVerificationViewModel : ViewModel() {
                     }
                 }
         }
+    }
+
+    fun setInternationalPhoneNumber(phoneNumber: String) {
+        _internationalPhoneNumber.value = phoneNumber
     }
 }

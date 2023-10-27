@@ -10,12 +10,14 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.cuongnl.ridehailing.R
+import com.cuongnl.ridehailing.viewmodel.OtpVerificationViewModel
 import com.cuongnl.ridehailing.widgets.AppText
 import ir.kaaveh.sdpcompose.sdp
 
 @Composable
-fun OtpDescriptionText() {
+fun OtpDescriptionText(otpVerificationViewModel: OtpVerificationViewModel = viewModel()) {
     AppText(
         buildAnnotatedString {
             withStyle(style = SpanStyle(fontWeight = FontWeight.Normal, color = colorResource(id = R.color.gray_600), fontSize = 14.sp)) {
@@ -27,7 +29,7 @@ fun OtpDescriptionText() {
             }
             append(" ")
             withStyle(style = SpanStyle(fontWeight = FontWeight.SemiBold, color = colorResource(id = R.color.gray_800), fontSize = 14.sp)) {
-                append("0972085801")
+                append(otpVerificationViewModel.internationalPhoneNumber.value)
             }
         },
         modifier = Modifier

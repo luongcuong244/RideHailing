@@ -86,6 +86,7 @@ class LoginScreen : BaseActivity(), ILoginActivityBehavior {
         if(canClickContinueButton()) {
 
             val phoneNumber = textEnteredViewModel.text.value
+            val countryCode = countryCodeSelectedViewModel.currentCountryCode.value.countryCode
 
             authServiceViewModel.checkExistingUser(
                 phoneNumber,
@@ -95,6 +96,7 @@ class LoginScreen : BaseActivity(), ILoginActivityBehavior {
                 onUserNotExisting = {
                     val intent = Intent(this, OtpVerificationActivity::class.java)
                     intent.putExtra(Constant.BUNDLE_NUMBER_PHONE, phoneNumber)
+                    intent.putExtra(Constant.BUNDLE_COUNTRY_CODE, countryCode)
                     startActivity(intent)
                 },
                 onError = {
