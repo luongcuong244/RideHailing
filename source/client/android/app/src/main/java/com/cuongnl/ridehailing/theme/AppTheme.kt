@@ -11,7 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 
 @Composable
-fun AppTheme(content: @Composable BoxScope.() -> Unit){
+fun AppTheme(content: @Composable BoxScope.() -> Unit) {
     MaterialTheme {
         Surface(
             modifier = Modifier

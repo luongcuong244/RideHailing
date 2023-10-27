@@ -6,7 +6,7 @@ object LocalStorageUtils {
 
     private const val BUNDLE_NAME = "APP_BUNDLE_NAME"
 
-    fun writeData(context: Context, key: String, data: Any) : Boolean{
+    fun writeData(context: Context, key: String, data: Any): Boolean {
         val sharedPref = context.getSharedPreferences(BUNDLE_NAME, Context.MODE_PRIVATE)
         val editor = sharedPref.edit()
 

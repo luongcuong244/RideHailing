@@ -21,11 +21,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.cuongnl.ridehailing.R
-import com.cuongnl.ridehailing.custom_view.AppText
-import com.cuongnl.ridehailing.custom_view.MovableView
 import com.cuongnl.ridehailing.enums.CountryCode
 import com.cuongnl.ridehailing.viewmodel.CountryCodeBottomSheetViewModel
-import com.cuongnl.ridehailing.viewmodel.NumberPhoneSelectedViewModel
+import com.cuongnl.ridehailing.viewmodel.CountryCodeSelectedViewModel
+import com.cuongnl.ridehailing.widgets.AppText
+import com.cuongnl.ridehailing.widgets.MovableView
 import ir.kaaveh.sdpcompose.sdp
 
 @Composable
@@ -46,15 +46,15 @@ fun CountryCodeList(countryCodeBottomSheetViewModel: CountryCodeBottomSheetViewM
 @Composable
 private fun CountryCodeItem(
     item: CountryCode,
-    numberPhoneSelectedViewModel: NumberPhoneSelectedViewModel = viewModel(),
+    countryCodeSelectedViewModel: CountryCodeSelectedViewModel = viewModel(),
     countryCodeBottomSheetViewModel: CountryCodeBottomSheetViewModel = viewModel()
-){
+) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
             .padding(bottom = 15.sdp)
             .clickable {
-                numberPhoneSelectedViewModel.setCurrentCountryCode(item)
+                countryCodeSelectedViewModel.setCurrentCountryCode(item)
                 countryCodeBottomSheetViewModel.setBottomSheetVisible(false)
             }
     ) {
@@ -65,7 +65,7 @@ private fun CountryCodeItem(
 }
 
 @Composable
-private fun CountryFlag(imageId: Int){
+private fun CountryFlag(imageId: Int) {
     Image(
         painter = painterResource(id = imageId),
         contentDescription = null,
@@ -76,7 +76,7 @@ private fun CountryFlag(imageId: Int){
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-private fun RowScope.CountryName(name: String){
+private fun RowScope.CountryName(name: String) {
     MovableView(
         modifier = Modifier
             .weight(1f)
@@ -93,7 +93,7 @@ private fun RowScope.CountryName(name: String){
 }
 
 @Composable
-private fun CountryCode(code: String){
+private fun CountryCode(code: String) {
     AppText(
         text = code,
         fontSize = 16.sp,

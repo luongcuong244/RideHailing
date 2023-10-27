@@ -7,9 +7,9 @@ import androidx.lifecycle.ViewModel
 class TextEnteredViewModel : ViewModel() {
     private val _text = mutableStateOf("")
 
-    val text : State<String> = _text
+    val text: State<String> = _text
 
-    fun setText(text: String){
+    fun setText(text: String) {
         _text.value = text
     }
 }

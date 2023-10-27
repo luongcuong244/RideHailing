@@ -12,7 +12,7 @@ import com.cuongnl.ridehailing.R
 import ir.kaaveh.sdpcompose.sdp
 
 @Composable
-fun BoxScope.BannerImage(){
+fun BoxScope.BannerImage() {
     Image(
         modifier = Modifier
             .fillMaxWidth()

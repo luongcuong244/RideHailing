@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -20,19 +19,18 @@ import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.cuongnl.ridehailing.R
-import com.cuongnl.ridehailing.custom_view.AppText
 import com.cuongnl.ridehailing.utils.beVietNamFamily
 import com.cuongnl.ridehailing.viewmodel.CountryCodeBottomSheetViewModel
+import com.cuongnl.ridehailing.widgets.AppText
 import ir.kaaveh.sdpcompose.sdp
 import ir.kaaveh.sdpcompose.ssp
 
 @Composable
-fun SearchBar(countryCodeBottomSheetViewModel: CountryCodeBottomSheetViewModel = viewModel()){
+fun SearchBar(countryCodeBottomSheetViewModel: CountryCodeBottomSheetViewModel = viewModel()) {
 
     var textFieldValue by remember {
         mutableStateOf(
@@ -79,7 +77,7 @@ fun SearchBar(countryCodeBottomSheetViewModel: CountryCodeBottomSheetViewModel =
                 color = colorResource(R.color.black),
                 lineHeight = 24.ssp,
             ),
-            decorationBox = {innerTextField ->
+            decorationBox = { innerTextField ->
                 if (textFieldValue.text.isEmpty()) {
                     AppText(
                         text = stringResource(id = R.string.search_text),

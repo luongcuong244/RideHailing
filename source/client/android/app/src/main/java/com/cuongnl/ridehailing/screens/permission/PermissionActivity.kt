@@ -5,9 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
@@ -19,25 +17,26 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import com.cuongnl.ridehailing.R
-import com.cuongnl.ridehailing.activity_behavior.IPermissionActivityBehavior
+import com.cuongnl.ridehailing.activitybehavior.IPermissionActivityBehavior
 import com.cuongnl.ridehailing.core.BaseActivity
-import com.cuongnl.ridehailing.custom_view.AppText
+import com.cuongnl.ridehailing.screens.login.LoginScreen
 import com.cuongnl.ridehailing.screens.permission.ui.BannerImage
 import com.cuongnl.ridehailing.screens.permission.ui.ContinueButton
-import com.cuongnl.ridehailing.screens.login.LoginScreen
 import com.cuongnl.ridehailing.theme.AppTheme
 import com.cuongnl.ridehailing.utils.PermissionUtils
+import com.cuongnl.ridehailing.widgets.AppText
 import ir.kaaveh.sdpcompose.sdp
 import ir.kaaveh.sdpcompose.ssp
 
-val LocalActivityBehavior = staticCompositionLocalOf<IPermissionActivityBehavior> { error("No LocalActivityActionsClass provided") }
+val LocalActivityBehavior =
+    staticCompositionLocalOf<IPermissionActivityBehavior> { error("No LocalActivityActionsClass provided") }
 
 class PermissionActivity : BaseActivity(), IPermissionActivityBehavior {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        if(PermissionUtils.isPermissionGranted(this, Manifest.permission.ACCESS_FINE_LOCATION)){
+        if (PermissionUtils.isPermissionGranted(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
             navigateToNextActivity()
             return
         }
@@ -60,30 +59,37 @@ class PermissionActivity : BaseActivity(), IPermissionActivityBehavior {
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
-        if(requestCode == PermissionUtils.LOCATION_REQUEST_CODE && grantResults.isNotEmpty()){
-            if(PermissionUtils.isPermissionGranted(this, Manifest.permission.ACCESS_FINE_LOCATION)){
+        if (requestCode == PermissionUtils.LOCATION_REQUEST_CODE && grantResults.isNotEmpty()) {
+            if (PermissionUtils.isPermissionGranted(
+                    this,
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                )
+            ) {
                 navigateToNextActivity()
             } else {
-                PermissionUtils.requestPreciseLocationPermission(this, PermissionUtils.LOCATION_REQUEST_CODE)
+                PermissionUtils.requestPreciseLocationPermission(
+                    this,
+                    PermissionUtils.LOCATION_REQUEST_CODE
+                )
             }
         }
     }
 
     override fun onResume() {
         super.onResume()
-        if(PermissionUtils.isPermissionGranted(this, Manifest.permission.ACCESS_FINE_LOCATION)){
+        if (PermissionUtils.isPermissionGranted(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
             navigateToNextActivity()
         }
     }
 
-    private fun navigateToNextActivity(){
+    private fun navigateToNextActivity() {
         val intent = Intent(this, LoginScreen::class.java)
         startActivity(intent)
     }
 }
 
 @Composable
-private fun Screen(){
+private fun Screen() {
     AppTheme {
         BannerImage()
         Column(

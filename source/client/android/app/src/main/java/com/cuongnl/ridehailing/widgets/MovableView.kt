@@ -1,4 +1,4 @@
-package com.cuongnl.ridehailing.custom_view
+package com.cuongnl.ridehailing.widgets
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.MarqueeAnimationMode
@@ -17,7 +17,7 @@ fun MovableView(
     animationMode: MarqueeAnimationMode = Immediately,
     delayMillis: Int = 0,
     content: @Composable BoxScope.() -> Unit,
-){
+) {
     Box(
         modifier = modifier.basicMarquee(
             iterations = iterations,

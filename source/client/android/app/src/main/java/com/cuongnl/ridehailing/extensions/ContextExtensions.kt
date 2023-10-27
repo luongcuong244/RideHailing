@@ -22,12 +22,12 @@ fun Context.showDialog(
     textOfPositiveButton: String,
     positiveButtonFunction: () -> Unit,
     negativeButtonFunction: (() -> Unit)? = null
-){
+) {
     val builder = AlertDialog.Builder(this)
     builder.setTitle(title)
     builder.setMessage(message)
 
-    if(textOfNegativeButton != null){
+    if (textOfNegativeButton != null) {
         builder.setNegativeButton(
             textOfNegativeButton
         ) { dialog, id ->

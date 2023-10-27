@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">RideHailing</string>
+    <string name="app_name">Ride Hailing</string>
     <string name="header_req_per">Sử dụng vị trí của bạn và cho phép nhận thông báo</string>
     <string name="des_req_per">Cho phép Ride Hailing sử dụng vị trí của bạn và nhận thông báo phục vụ việc đặt xe được tốt hơn.\nBạn hoàn toàn có thể thay đổi cấp quyền trong phần Cài đặt điện thoại bất cứ lúc nào.</string>
     <string name="continue_text">Tiếp tục</string>
@@ -15,4 +15,15 @@
     <string name="policy_text_part_2">Điều khoản dịch vụ &amp; Chính sách bảo mật</string>
     <string name="select_country_code_text">Chọn mã quốc gia</string>
     <string name="search_text">Tìm kiếm</string>
+    <string name="cannot_connect_to_server">Can\'t connect to the server!</string>
+    <string name="otp_verification_text">Xác thực mã OTP</string>
+    <string name="otp_des_text">đã gửi cho bạn mã OTP 6 số tới số điện thoại</string>
+    <string name="send_otp_again">Gửi lại mã OTP</string>
+    <string name="otp_time_remaining">Còn </string>
+    <string name="incorrect_otp">Mã OTP không chính xác!</string>
+    <string name="otp_not_sent_yet">Mã OTP chưa được gửi!</string>
+    <string name="ok_text">OK</string>
+    <string name="dismiss_text">Bỏ qua</string>
+    <string name="an_error_occurred">An error occurred!</string>
+    <string name="otp_expired_and_send_again">Mã OTP đã hết hạn. Hãy thử gửi lại!</string>
 </resources>

@@ -1,4 +1,4 @@
-package com.cuongnl.ridehailing.activity_behavior
+package com.cuongnl.ridehailing.activitybehavior
 
 interface IPermissionActivityBehavior {
     fun requestPermissions()

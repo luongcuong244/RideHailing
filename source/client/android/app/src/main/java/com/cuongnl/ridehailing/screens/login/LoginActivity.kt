@@ -3,6 +3,7 @@ package com.cuongnl.ridehailing.screens.login
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -16,28 +17,38 @@ import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModelProvider
-import com.cuongnl.ridehailing.activity_behavior.ILoginActivityBehavior
+import com.cuongnl.ridehailing.R
+import com.cuongnl.ridehailing.activitybehavior.ILoginActivityBehavior
 import com.cuongnl.ridehailing.core.BaseActivity
 import com.cuongnl.ridehailing.screens.login.ui.BannerImage
 import com.cuongnl.ridehailing.screens.login.ui.ContinueButton
-import com.cuongnl.ridehailing.screens.login.ui.NumberPhoneInvalidText
 import com.cuongnl.ridehailing.screens.login.ui.PhoneCodeBottomSheet
 import com.cuongnl.ridehailing.screens.login.ui.PhoneEditText
+import com.cuongnl.ridehailing.screens.login.ui.PhoneNumberInvalidText
 import com.cuongnl.ridehailing.screens.login.ui.PolicyText
 import com.cuongnl.ridehailing.screens.login.ui.TitleText
+import com.cuongnl.ridehailing.screens.otpverification.OtpVerificationActivity
 import com.cuongnl.ridehailing.theme.AppTheme
 import com.cuongnl.ridehailing.utils.Constant
-import com.cuongnl.ridehailing.viewmodel.NumberPhoneSelectedViewModel
+import com.cuongnl.ridehailing.viewmodel.AuthServiceViewModel
+import com.cuongnl.ridehailing.viewmodel.CountryCodeSelectedViewModel
 import com.cuongnl.ridehailing.viewmodel.TextEnteredViewModel
 import ir.kaaveh.sdpcompose.sdp
 
 
-val LocalActivityBehavior = staticCompositionLocalOf<ILoginActivityBehavior> { error("No LocalActivityActionsClass provided") }
+val LocalActivityBehavior =
+    staticCompositionLocalOf<ILoginActivityBehavior> { error("No LocalActivityActionsClass provided") }
 
 class LoginScreen : BaseActivity(), ILoginActivityBehavior {
 
+    private lateinit var authServiceViewModel: AuthServiceViewModel
+    private lateinit var textEnteredViewModel: TextEnteredViewModel
+    private lateinit var countryCodeSelectedViewModel: CountryCodeSelectedViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        createViewModels()
 
         setContent {
             CompositionLocalProvider(LocalActivityBehavior provides this) {
@@ -46,20 +57,23 @@ class LoginScreen : BaseActivity(), ILoginActivityBehavior {
         }
     }
 
+    private fun createViewModels() {
+        authServiceViewModel = ViewModelProvider(this)[AuthServiceViewModel::class.java]
+        textEnteredViewModel = ViewModelProvider(this)[TextEnteredViewModel::class.java]
+        countryCodeSelectedViewModel =
+            ViewModelProvider(this)[CountryCodeSelectedViewModel::class.java]
+    }
+
     override fun isInvalidTextVisible(): Boolean {
-        val textEnteredViewModel = ViewModelProvider(this)[TextEnteredViewModel::class.java]
         val textEnteredLength = textEnteredViewModel.text.value.length
 
         return !canClickContinueButton() && textEnteredLength != 0
     }
 
     override fun canClickContinueButton(): Boolean {
-        val textEnteredViewModel = ViewModelProvider(this)[TextEnteredViewModel::class.java]
-        val phoneSelectedViewModel = ViewModelProvider(this)[NumberPhoneSelectedViewModel::class.java]
-
         val textEnteredLength = textEnteredViewModel.text.value.length
-        val maxLength = phoneSelectedViewModel.currentCountryCode.value.maxLength
-        val minLength = phoneSelectedViewModel.currentCountryCode.value.minLength
+        val maxLength = countryCodeSelectedViewModel.currentCountryCode.value.maxLength
+        val minLength = countryCodeSelectedViewModel.currentCountryCode.value.minLength
 
         return textEnteredLength in minLength..maxLength
     }
@@ -71,14 +85,36 @@ class LoginScreen : BaseActivity(), ILoginActivityBehavior {
     }
 
     override fun onContinueButtonClicked() {
-        if(canClickContinueButton()){
+        if (canClickContinueButton()) {
 
+            val phoneNumber = textEnteredViewModel.text.value
+            val countryCode = countryCodeSelectedViewModel.currentCountryCode.value.countryCode
+
+            authServiceViewModel.checkExistingUser(
+                phoneNumber,
+                onUserExisting = {
+
+                },
+                onUserNotExisting = {
+                    val intent = Intent(this, OtpVerificationActivity::class.java)
+                    intent.putExtra(Constant.BUNDLE_NUMBER_PHONE, phoneNumber)
+                    intent.putExtra(Constant.BUNDLE_COUNTRY_CODE, countryCode)
+                    startActivity(intent)
+                },
+                onError = {
+                    Toast.makeText(
+                        this,
+                        getString(R.string.cannot_connect_to_server),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            )
         }
     }
 }
 
 @Composable
-private fun Screen(){
+private fun Screen() {
     AppTheme {
         Column(
             modifier = Modifier
@@ -93,7 +129,7 @@ private fun Screen(){
             ) {
                 TitleText()
                 PhoneEditText()
-                NumberPhoneInvalidText()
+                PhoneNumberInvalidText()
 
                 Column(
                     modifier = Modifier

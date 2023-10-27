@@ -10,13 +10,13 @@ import com.cuongnl.ridehailing.extensions.showDialog
 
 object PermissionUtils {
 
-    val LOCATION_REQUEST_CODE = 1;
+    val LOCATION_REQUEST_CODE = 1
 
-    fun isPermissionGranted(context: Context, permission: String) : Boolean{
+    fun isPermissionGranted(context: Context, permission: String): Boolean {
         return context.checkSelfPermission(permission) == PackageManager.PERMISSION_GRANTED
     }
 
-    fun requestPreciseLocationPermission(activity: Activity, requestCode: Int){
+    fun requestPreciseLocationPermission(activity: Activity, requestCode: Int) {
         requestPermissions(
             activity,
             arrayOf(
@@ -26,7 +26,7 @@ object PermissionUtils {
         )
     }
 
-    fun requestLocationPermissions(activity: Activity, requestCode: Int){
+    fun requestLocationPermissions(activity: Activity, requestCode: Int) {
         requestPermissions(
             activity,
             arrayOf(
@@ -37,11 +37,12 @@ object PermissionUtils {
         )
     }
 
-    fun requestPermission(activity: Activity, permission: String, requestCode: Int){
+    fun requestPermission(activity: Activity, permission: String, requestCode: Int) {
 
-        val showRationale = ActivityCompat.shouldShowRequestPermissionRationale(activity, permission)
+        val showRationale =
+            ActivityCompat.shouldShowRequestPermissionRationale(activity, permission)
 
-        if(showRationale){
+        if (showRationale) {
             showLocationPermissionRationaleDialog(activity)
         } else {
             ActivityCompat.requestPermissions(
@@ -52,12 +53,12 @@ object PermissionUtils {
         }
     }
 
-    fun requestPermissions(activity: Activity, permissions: Array<String>, requestCode: Int){
+    fun requestPermissions(activity: Activity, permissions: Array<String>, requestCode: Int) {
         val showRationale = permissions.any {
             ActivityCompat.shouldShowRequestPermissionRationale(activity, it)
         }
 
-        if(showRationale){
+        if (showRationale) {
             showLocationPermissionRationaleDialog(activity)
         } else {
             ActivityCompat.requestPermissions(
@@ -68,7 +69,7 @@ object PermissionUtils {
         }
     }
 
-    private fun showLocationPermissionRationaleDialog(context: Context){
+    private fun showLocationPermissionRationaleDialog(context: Context) {
         context.showDialog(
             title = context.getString(R.string.dialog_permission_rationale_header),
             message = context.getString(R.string.dialog_permission_rationale_des),
