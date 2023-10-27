@@ -7,7 +7,7 @@ class RetrofitClient {
 
     companion object {
         private var retrofit: Retrofit? = null
-        fun getClient() : Retrofit {
+        fun getClient(): Retrofit {
             if (retrofit == null) {
                 retrofit = Retrofit.Builder()
                     .baseUrl("https://api.example.com/")

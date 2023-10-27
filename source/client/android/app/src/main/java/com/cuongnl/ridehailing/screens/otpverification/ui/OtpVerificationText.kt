@@ -1,4 +1,4 @@
-package com.cuongnl.ridehailing.screens.otp_verification.ui
+package com.cuongnl.ridehailing.screens.otpverification.ui
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable

@@ -23,9 +23,9 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.cuongnl.ridehailing.R
-import com.cuongnl.ridehailing.widgets.AppText
 import com.cuongnl.ridehailing.utils.beVietNamFamily
 import com.cuongnl.ridehailing.viewmodel.CountryCodeBottomSheetViewModel
+import com.cuongnl.ridehailing.widgets.AppText
 import ir.kaaveh.sdpcompose.sdp
 import ir.kaaveh.sdpcompose.ssp
 
@@ -77,7 +77,7 @@ fun SearchBar(countryCodeBottomSheetViewModel: CountryCodeBottomSheetViewModel =
                 color = colorResource(R.color.black),
                 lineHeight = 24.ssp,
             ),
-            decorationBox = {innerTextField ->
+            decorationBox = { innerTextField ->
                 if (textFieldValue.text.isEmpty()) {
                     AppText(
                         text = stringResource(id = R.string.search_text),

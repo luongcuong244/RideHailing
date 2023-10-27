@@ -15,15 +15,33 @@ import com.cuongnl.ridehailing.widgets.AppText
 fun TitleText() {
     AppText(
         buildAnnotatedString {
-            withStyle(style = SpanStyle(fontWeight = FontWeight.Normal, color = Color.Black, fontSize = 14.sp)) {
+            withStyle(
+                style = SpanStyle(
+                    fontWeight = FontWeight.Normal,
+                    color = Color.Black,
+                    fontSize = 14.sp
+                )
+            ) {
                 append(stringResource(id = R.string.log_in_text_title_part_1))
             }
             append(" ")
-            withStyle(style = SpanStyle(fontWeight = FontWeight.SemiBold, color = Color.Black, fontSize = 14.sp)) {
+            withStyle(
+                style = SpanStyle(
+                    fontWeight = FontWeight.SemiBold,
+                    color = Color.Black,
+                    fontSize = 14.sp
+                )
+            ) {
                 append(stringResource(id = R.string.log_in_text_title_part_2))
             }
             append(" ")
-            withStyle(style = SpanStyle(fontWeight = FontWeight.Normal, color = Color.Black, fontSize = 14.sp)) {
+            withStyle(
+                style = SpanStyle(
+                    fontWeight = FontWeight.Normal,
+                    color = Color.Black,
+                    fontSize = 14.sp
+                )
+            ) {
                 append(stringResource(id = R.string.log_in_text_title_part_3))
             }
         },

@@ -14,7 +14,7 @@ fun NoRippleButton(
     onClick: (() -> Unit)? = null,
     enable: Boolean = true,
     content: @Composable BoxScope.() -> Unit
-){
+) {
     val interactionSource = remember { MutableInteractionSource() }
     Box(
         modifier = modifier
@@ -22,11 +22,11 @@ fun NoRippleButton(
                 interactionSource = interactionSource,
                 indication = null
             ) {
-                if(enable){
+                if (enable) {
                     onClick?.let { it() }
                 }
             }
-    ){
+    ) {
         content()
     }
 }

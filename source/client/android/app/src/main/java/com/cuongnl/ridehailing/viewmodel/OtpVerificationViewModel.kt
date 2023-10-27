@@ -19,46 +19,49 @@ class OtpVerificationViewModel : ViewModel() {
     private var _internationalPhoneNumber = mutableStateOf("")
     private var _otpTimeoutValue = mutableLongStateOf(Constant.OTP_TIMEOUT_IN_SECOND);
 
-    val internationalPhoneNumber : State<String> = _internationalPhoneNumber
-    val otpTimeoutValue : State<Long> = _otpTimeoutValue
+    val internationalPhoneNumber: State<String> = _internationalPhoneNumber
+    val otpTimeoutValue: State<Long> = _otpTimeoutValue
 
-    private var otpCountdown : CountDownTimer? = null
-    private var otpId : String? = null
+    private var otpCountdown: CountDownTimer? = null
+    private var otpId: String? = null
 
     fun initiateOtp(activity: Activity) {
 
-        if(internationalPhoneNumber.value.isEmpty()) {
+        if (internationalPhoneNumber.value.isEmpty()) {
             throw Exception("Phone number can't be empty")
         }
 
-        FirebasePhoneNumberAuth.verifyPhoneNumber(activity, internationalPhoneNumber.value, object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
-            override fun onCodeSent(p0: String, p1: PhoneAuthProvider.ForceResendingToken) {
-                super.onCodeSent(p0, p1)
-                otpId = p0
-                Log.d("DSDSD", "onCodeSent")
-            }
+        FirebasePhoneNumberAuth.verifyPhoneNumber(
+            activity,
+            internationalPhoneNumber.value,
+            object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
+                override fun onCodeSent(p0: String, p1: PhoneAuthProvider.ForceResendingToken) {
+                    super.onCodeSent(p0, p1)
+                    otpId = p0
+                    Log.d("DSDSD", "onCodeSent")
+                }
 
-            override fun onVerificationCompleted(p0: PhoneAuthCredential) {
-                Log.d("DSDSD", "onVerificationCompleted: ${p0.smsCode}")
-            }
+                override fun onVerificationCompleted(p0: PhoneAuthCredential) {
+                    Log.d("DSDSD", "onVerificationCompleted: ${p0.smsCode}")
+                }
 
-            override fun onVerificationFailed(p0: FirebaseException) {
-                Log.d("DSDSD", "onVerificationFailed")
-            }
+                override fun onVerificationFailed(p0: FirebaseException) {
+                    Log.d("DSDSD", "onVerificationFailed")
+                }
 
-            override fun onCodeAutoRetrievalTimeOut(p0: String) {
-                super.onCodeAutoRetrievalTimeOut(p0)
-                Log.d("DSDSD", "onCodeAutoRetrievalTimeOut: ${p0}")
-            }
-        })
+                override fun onCodeAutoRetrievalTimeOut(p0: String) {
+                    super.onCodeAutoRetrievalTimeOut(p0)
+                    Log.d("DSDSD", "onCodeAutoRetrievalTimeOut: ${p0}")
+                }
+            })
     }
 
     fun verifyOtp(otp: String) {
-        if(otpId != null){
+        if (otpId != null) {
             val credential = PhoneAuthProvider.getCredential(otpId!!, otp)
             FirebaseAuth.getInstance().signInWithCredential(credential)
                 .addOnCompleteListener {
-                    if(it.isSuccessful) {
+                    if (it.isSuccessful) {
                         Log.d("DSDSD", "verifyOtp: success")
                     } else {
                         Log.d("DSDSD", "verifyOtp: fail ${it.exception?.message}")

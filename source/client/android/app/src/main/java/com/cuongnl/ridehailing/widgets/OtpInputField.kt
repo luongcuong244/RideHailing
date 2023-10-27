@@ -1,6 +1,9 @@
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
@@ -21,7 +24,6 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.cuongnl.ridehailing.R
 import com.cuongnl.ridehailing.utils.CheckerUtils
@@ -84,7 +86,7 @@ private fun RowScope.CharView(
         else -> text[index].toString()
     }
 
-    val backgroundColor = if(isFocused) {
+    val backgroundColor = if (isFocused) {
         colorResource(id = R.color.amber_50)
     } else {
         colorResource(id = R.color.gray_200)
@@ -112,5 +114,5 @@ private fun RowScope.CharView(
 @Preview
 @Composable
 fun Preview() {
-    OtpTextField(otpText = "", onOtpTextChange = { _, _ ->})
+    OtpTextField(otpText = "", onOtpTextChange = { _, _ -> })
 }

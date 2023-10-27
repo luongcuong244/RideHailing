@@ -15,8 +15,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.sp
 import com.cuongnl.ridehailing.R
-import com.cuongnl.ridehailing.widgets.AppText
 import com.cuongnl.ridehailing.screens.login.LocalActivityBehavior
+import com.cuongnl.ridehailing.widgets.AppText
 import ir.kaaveh.sdpcompose.sdp
 import ir.kaaveh.sdpcompose.ssp
 
@@ -29,8 +29,8 @@ fun PolicyText() {
         buildAnnotatedString {
             withStyle(
                 style = SpanStyle(
-                    fontWeight = FontWeight.Normal, 
-                    color = colorResource(id = R.color.gray_500), 
+                    fontWeight = FontWeight.Normal,
+                    color = colorResource(id = R.color.gray_500),
                     fontSize = 12.sp
                 )
             ) {
@@ -39,8 +39,8 @@ fun PolicyText() {
             append(" ")
             withStyle(
                 style = SpanStyle(
-                    fontWeight = FontWeight.Medium, 
-                    color = colorResource(id = R.color.app_color), 
+                    fontWeight = FontWeight.Medium,
+                    color = colorResource(id = R.color.app_color),
                     fontSize = 12.sp
                 )
             ) {

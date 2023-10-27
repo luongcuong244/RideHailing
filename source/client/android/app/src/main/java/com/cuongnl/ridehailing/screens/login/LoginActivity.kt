@@ -18,16 +18,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModelProvider
 import com.cuongnl.ridehailing.R
-import com.cuongnl.ridehailing.activity_behavior.ILoginActivityBehavior
+import com.cuongnl.ridehailing.activitybehavior.ILoginActivityBehavior
 import com.cuongnl.ridehailing.core.BaseActivity
 import com.cuongnl.ridehailing.screens.login.ui.BannerImage
 import com.cuongnl.ridehailing.screens.login.ui.ContinueButton
-import com.cuongnl.ridehailing.screens.login.ui.PhoneNumberInvalidText
 import com.cuongnl.ridehailing.screens.login.ui.PhoneCodeBottomSheet
 import com.cuongnl.ridehailing.screens.login.ui.PhoneEditText
+import com.cuongnl.ridehailing.screens.login.ui.PhoneNumberInvalidText
 import com.cuongnl.ridehailing.screens.login.ui.PolicyText
 import com.cuongnl.ridehailing.screens.login.ui.TitleText
-import com.cuongnl.ridehailing.screens.otp_verification.OtpVerificationActivity
+import com.cuongnl.ridehailing.screens.otpverification.OtpVerificationActivity
 import com.cuongnl.ridehailing.theme.AppTheme
 import com.cuongnl.ridehailing.utils.Constant
 import com.cuongnl.ridehailing.viewmodel.AuthServiceViewModel
@@ -36,7 +36,8 @@ import com.cuongnl.ridehailing.viewmodel.TextEnteredViewModel
 import ir.kaaveh.sdpcompose.sdp
 
 
-val LocalActivityBehavior = staticCompositionLocalOf<ILoginActivityBehavior> { error("No LocalActivityActionsClass provided") }
+val LocalActivityBehavior =
+    staticCompositionLocalOf<ILoginActivityBehavior> { error("No LocalActivityActionsClass provided") }
 
 class LoginScreen : BaseActivity(), ILoginActivityBehavior {
 
@@ -59,7 +60,8 @@ class LoginScreen : BaseActivity(), ILoginActivityBehavior {
     private fun createViewModels() {
         authServiceViewModel = ViewModelProvider(this)[AuthServiceViewModel::class.java]
         textEnteredViewModel = ViewModelProvider(this)[TextEnteredViewModel::class.java]
-        countryCodeSelectedViewModel = ViewModelProvider(this)[CountryCodeSelectedViewModel::class.java]
+        countryCodeSelectedViewModel =
+            ViewModelProvider(this)[CountryCodeSelectedViewModel::class.java]
     }
 
     override fun isInvalidTextVisible(): Boolean {
@@ -83,7 +85,7 @@ class LoginScreen : BaseActivity(), ILoginActivityBehavior {
     }
 
     override fun onContinueButtonClicked() {
-        if(canClickContinueButton()) {
+        if (canClickContinueButton()) {
 
             val phoneNumber = textEnteredViewModel.text.value
             val countryCode = countryCodeSelectedViewModel.currentCountryCode.value.countryCode
@@ -100,7 +102,11 @@ class LoginScreen : BaseActivity(), ILoginActivityBehavior {
                     startActivity(intent)
                 },
                 onError = {
-                    Toast.makeText(this, getString(R.string.cannot_connect_to_server), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this,
+                        getString(R.string.cannot_connect_to_server),
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             )
         }

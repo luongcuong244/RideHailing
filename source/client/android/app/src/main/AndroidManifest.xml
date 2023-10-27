@@ -35,7 +35,7 @@
             android:exported="false" />
 
         <activity
-            android:name=".screens.otp_verification.OtpVerificationActivity"
+            android:name=".screens.otpverification.OtpVerificationActivity"
             android:windowSoftInputMode="adjustResize"
             android:exported="false" />
 

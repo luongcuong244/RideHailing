@@ -39,7 +39,12 @@ enum class CountryCode(
     BOSNIA_AND_HERZEGOVINA(R.drawable.flag_ba, "Bosnia and Herzegovina", "BA", "+387"),
     BOTSWANA(R.drawable.flag_bw, "Botswana", "BW", "+267"),
     BRAZIL(R.drawable.flag_br, "Brazil", "BR", "+55"),
-    BRITISH_INDIAN_OCEAN_TERRITORY(R.drawable.flag_io, "British Indian Ocean Territory", "IO", "+246"),
+    BRITISH_INDIAN_OCEAN_TERRITORY(
+        R.drawable.flag_io,
+        "British Indian Ocean Territory",
+        "IO",
+        "+246"
+    ),
     BRITISH_VIRGIN_ISLANDS(R.drawable.flag_vg, "British Virgin Islands", "VG", "+1284"),
     BRUNEI(R.drawable.flag_bn, "Brunei", "BN", "+673"),
     BULGARIA(R.drawable.flag_bg, "Bulgaria", "BG", "+359"),
@@ -65,7 +70,12 @@ enum class CountryCode(
     CURACAO(R.drawable.flag_cw, "Curacao", "CW", "+599"),
     CYPRUS(R.drawable.flag_cy, "Cyprus", "CY", "+357"),
     CZECH_REPUBLIC(R.drawable.flag_cz, "Czech Republic", "CZ", "+420"),
-    DEMOCRATIC_REPUBLIC_OF_THE_CONGO(R.drawable.flag_cd, "Democratic Republic of the Congo", "CD", "+243"),
+    DEMOCRATIC_REPUBLIC_OF_THE_CONGO(
+        R.drawable.flag_cd,
+        "Democratic Republic of the Congo",
+        "CD",
+        "+243"
+    ),
     DENMARK(R.drawable.flag_dk, "Denmark", "DK", "+45"),
     DJIBOUTI(R.drawable.flag_dj, "Djibouti", "DJ", "+253"),
     DOMINICA(R.drawable.flag_dm, "Dominica", "DM", "+1767"),
@@ -192,7 +202,12 @@ enum class CountryCode(
     SAINT_LUCIA(R.drawable.flag_lc, "Saint Lucia", "LC", "+1758"),
     SAINT_MARTIN(R.drawable.flag_mf, "Saint Martin", "MF", "+590"),
     SAINT_PIERRE_AND_MIQUELON(R.drawable.flag_pm, "Saint Pierre and Miquelon", "PM", "+508"),
-    SAINT_VINCENT_AND_THE_GRENADINES(R.drawable.flag_vc, "Saint Vincent and the Grenadines", "VC", "+1784"),
+    SAINT_VINCENT_AND_THE_GRENADINES(
+        R.drawable.flag_vc,
+        "Saint Vincent and the Grenadines",
+        "VC",
+        "+1784"
+    ),
     SAMOA(R.drawable.flag_ws, "Samoa", "WS", "+685"),
     SAN_MARINO(R.drawable.flag_sm, "San Marino", "SM", "+378"),
     SAO_TOME_AND_PRINCIPE(R.drawable.flag_st, "Sao Tome and Principe", "ST", "+239"),

@@ -10,7 +10,7 @@ import java.util.concurrent.TimeUnit
 object FirebasePhoneNumberAuth {
     fun verifyPhoneNumber(
         activity: Activity,
-        phoneNumber : String,
+        phoneNumber: String,
         callbacks: PhoneAuthProvider.OnVerificationStateChangedCallbacks
     ) {
         val options = PhoneAuthOptions.newBuilder(FirebaseAuth.getInstance())

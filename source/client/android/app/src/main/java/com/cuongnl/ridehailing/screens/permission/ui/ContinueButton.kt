@@ -11,8 +11,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import com.cuongnl.ridehailing.R
-import com.cuongnl.ridehailing.widgets.AppText
 import com.cuongnl.ridehailing.screens.permission.LocalActivityBehavior
+import com.cuongnl.ridehailing.widgets.AppText
 import com.translator.voicechanger.monster.voicetranslator.ui.common.TouchableOpacityButton
 import ir.kaaveh.sdpcompose.sdp
 import ir.kaaveh.sdpcompose.ssp

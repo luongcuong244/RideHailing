@@ -28,9 +28,9 @@ fun TouchableOpacityButton(
     val isPressed = remember { mutableStateOf(false) }
 
     val alpha by animateFloatAsState(
-        targetValue = if(updatedEnable.value)
-            if(isPressed.value) opacity else 1.0f
-            else 0.5f,
+        targetValue = if (updatedEnable.value)
+            if (isPressed.value) opacity else 1.0f
+        else 0.5f,
         label = ""
     )
 
@@ -43,7 +43,7 @@ fun TouchableOpacityButton(
             .pointerInput(Unit) {
                 detectTapGestures(
                     onPress = {
-                        if(!updatedEnable.value) {
+                        if (!updatedEnable.value) {
                             return@detectTapGestures
                         }
                         try {

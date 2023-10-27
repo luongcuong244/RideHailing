@@ -27,7 +27,7 @@ fun Context.showDialog(
     builder.setTitle(title)
     builder.setMessage(message)
 
-    if(textOfNegativeButton != null) {
+    if (textOfNegativeButton != null) {
         builder.setNegativeButton(
             textOfNegativeButton
         ) { dialog, id ->

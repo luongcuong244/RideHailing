@@ -1,4 +1,4 @@
-package com.cuongnl.ridehailing.screens.otp_verification.ui
+package com.cuongnl.ridehailing.screens.otpverification.ui
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
@@ -20,15 +20,33 @@ import ir.kaaveh.sdpcompose.sdp
 fun OtpDescriptionText(otpVerificationViewModel: OtpVerificationViewModel = viewModel()) {
     AppText(
         buildAnnotatedString {
-            withStyle(style = SpanStyle(fontWeight = FontWeight.Normal, color = colorResource(id = R.color.gray_600), fontSize = 14.sp)) {
+            withStyle(
+                style = SpanStyle(
+                    fontWeight = FontWeight.Normal,
+                    color = colorResource(id = R.color.gray_600),
+                    fontSize = 14.sp
+                )
+            ) {
                 append(stringResource(id = R.string.app_name))
             }
             append(" ")
-            withStyle(style = SpanStyle(fontWeight = FontWeight.Normal, color = colorResource(id = R.color.gray_600), fontSize = 14.sp)) {
+            withStyle(
+                style = SpanStyle(
+                    fontWeight = FontWeight.Normal,
+                    color = colorResource(id = R.color.gray_600),
+                    fontSize = 14.sp
+                )
+            ) {
                 append(stringResource(id = R.string.otp_des_text))
             }
             append(" ")
-            withStyle(style = SpanStyle(fontWeight = FontWeight.SemiBold, color = colorResource(id = R.color.gray_800), fontSize = 14.sp)) {
+            withStyle(
+                style = SpanStyle(
+                    fontWeight = FontWeight.SemiBold,
+                    color = colorResource(id = R.color.gray_800),
+                    fontSize = 14.sp
+                )
+            ) {
                 append(otpVerificationViewModel.internationalPhoneNumber.value)
             }
         },

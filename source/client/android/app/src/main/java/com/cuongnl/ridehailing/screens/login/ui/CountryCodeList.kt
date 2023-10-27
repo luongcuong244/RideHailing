@@ -21,11 +21,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.cuongnl.ridehailing.R
-import com.cuongnl.ridehailing.widgets.AppText
-import com.cuongnl.ridehailing.widgets.MovableView
 import com.cuongnl.ridehailing.enums.CountryCode
 import com.cuongnl.ridehailing.viewmodel.CountryCodeBottomSheetViewModel
 import com.cuongnl.ridehailing.viewmodel.CountryCodeSelectedViewModel
+import com.cuongnl.ridehailing.widgets.AppText
+import com.cuongnl.ridehailing.widgets.MovableView
 import ir.kaaveh.sdpcompose.sdp
 
 @Composable

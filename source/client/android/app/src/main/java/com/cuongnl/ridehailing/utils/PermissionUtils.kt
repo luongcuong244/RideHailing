@@ -12,7 +12,7 @@ object PermissionUtils {
 
     val LOCATION_REQUEST_CODE = 1;
 
-    fun isPermissionGranted(context: Context, permission: String) : Boolean{
+    fun isPermissionGranted(context: Context, permission: String): Boolean {
         return context.checkSelfPermission(permission) == PackageManager.PERMISSION_GRANTED
     }
 
@@ -39,9 +39,10 @@ object PermissionUtils {
 
     fun requestPermission(activity: Activity, permission: String, requestCode: Int) {
 
-        val showRationale = ActivityCompat.shouldShowRequestPermissionRationale(activity, permission)
+        val showRationale =
+            ActivityCompat.shouldShowRequestPermissionRationale(activity, permission)
 
-        if(showRationale) {
+        if (showRationale) {
             showLocationPermissionRationaleDialog(activity)
         } else {
             ActivityCompat.requestPermissions(
@@ -57,7 +58,7 @@ object PermissionUtils {
             ActivityCompat.shouldShowRequestPermissionRationale(activity, it)
         }
 
-        if(showRationale) {
+        if (showRationale) {
             showLocationPermissionRationaleDialog(activity)
         } else {
             ActivityCompat.requestPermissions(

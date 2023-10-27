@@ -15,7 +15,7 @@ class CountryCodeBottomSheetViewModel : ViewModel() {
 
     private val _isBottomSheetVisible = mutableStateOf(false)
 
-    val isBottomSheetVisible : State<Boolean> = _isBottomSheetVisible
+    val isBottomSheetVisible: State<Boolean> = _isBottomSheetVisible
 
     fun setBottomSheetVisible(isVisible: Boolean) {
         _isBottomSheetVisible.value = isVisible
@@ -23,7 +23,7 @@ class CountryCodeBottomSheetViewModel : ViewModel() {
 
     fun filterCountryCodeList(query: String) {
 
-        if(query.isEmpty()) {
+        if (query.isEmpty()) {
             resetList();
             return
         }

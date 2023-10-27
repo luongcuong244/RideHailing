@@ -23,7 +23,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import com.cuongnl.ridehailing.R
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -35,12 +34,13 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.cuongnl.ridehailing.widgets.AppText
+import com.cuongnl.ridehailing.R
 import com.cuongnl.ridehailing.utils.CheckerUtils
 import com.cuongnl.ridehailing.utils.beVietNamFamily
 import com.cuongnl.ridehailing.viewmodel.CountryCodeBottomSheetViewModel
 import com.cuongnl.ridehailing.viewmodel.CountryCodeSelectedViewModel
 import com.cuongnl.ridehailing.viewmodel.TextEnteredViewModel
+import com.cuongnl.ridehailing.widgets.AppText
 import com.translator.voicechanger.monster.voicetranslator.ui.common.TouchableOpacityButton
 import ir.kaaveh.sdpcompose.sdp
 import ir.kaaveh.sdpcompose.ssp
@@ -126,7 +126,7 @@ private fun PhoneTextField(
         value = textFieldValue,
         onValueChange = {
             val text = it.text
-            if(CheckerUtils.isOnlyNumbers(text)) {
+            if (CheckerUtils.isOnlyNumbers(text)) {
                 textFieldValue = it
                 textEnteredViewModel.setText(text)
             }
@@ -142,7 +142,7 @@ private fun PhoneTextField(
             fontWeight = FontWeight.SemiBold
         ),
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-        decorationBox = {innerTextField ->
+        decorationBox = { innerTextField ->
             if (textFieldValue.text.isEmpty()) {
                 AppText(
                     text = stringResource(id = R.string.your_number_hint),

@@ -1,13 +1,13 @@
-package com.cuongnl.ridehailing.screens.otp_verification.ui
+package com.cuongnl.ridehailing.screens.otpverification.ui
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
+import com.cuongnl.ridehailing.R
 import com.cuongnl.ridehailing.widgets.AppText
 import com.cuongnl.ridehailing.widgets.NoRippleButton
-import com.cuongnl.ridehailing.R
 
 @Composable
-fun SendOtpButton(){
+fun SendOtpButton() {
     NoRippleButton(
         onClick = {
 

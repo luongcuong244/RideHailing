@@ -9,7 +9,7 @@ class CountryCodeSelectedViewModel : ViewModel() {
 
     private val _currentCountryCode = mutableStateOf(CountryCode.VIETNAM)
 
-    val currentCountryCode : State<CountryCode> = _currentCountryCode
+    val currentCountryCode: State<CountryCode> = _currentCountryCode
 
     fun setCurrentCountryCode(countryCode: CountryCode) {
         _currentCountryCode.value = countryCode

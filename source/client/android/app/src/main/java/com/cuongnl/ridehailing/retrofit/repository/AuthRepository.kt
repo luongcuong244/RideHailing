@@ -7,7 +7,7 @@ import retrofit2.Callback
 
 class AuthRepository {
 
-    private val authApi : AuthApi = RetrofitClient.getClient().create(AuthApi::class.java)
+    private val authApi: AuthApi = RetrofitClient.getClient().create(AuthApi::class.java)
 
     fun checkExistingUser(phoneNumber: String, callback: Callback<ScalarsBooleanResponse>) {
         authApi.checkExistingUser(phoneNumber).enqueue(callback)

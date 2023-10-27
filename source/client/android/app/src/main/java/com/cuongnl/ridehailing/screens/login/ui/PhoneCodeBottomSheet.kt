@@ -3,12 +3,9 @@ package com.cuongnl.ridehailing.screens.login.ui
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.statusBars
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.rememberModalBottomSheetState
@@ -23,12 +20,12 @@ import ir.kaaveh.sdpcompose.sdp
 @Composable
 fun PhoneCodeBottomSheet(countryCodeBottomSheetViewModel: CountryCodeBottomSheetViewModel = viewModel()) {
 
-    if(countryCodeBottomSheetViewModel.isBottomSheetVisible.value) {
+    if (countryCodeBottomSheetViewModel.isBottomSheetVisible.value) {
 
         val sheetState = rememberModalBottomSheetState()
 
         LaunchedEffect(countryCodeBottomSheetViewModel.isBottomSheetVisible.value) {
-            if(countryCodeBottomSheetViewModel.isBottomSheetVisible.value) {
+            if (countryCodeBottomSheetViewModel.isBottomSheetVisible.value) {
                 sheetState.show()
             } else {
                 sheetState.hide()
