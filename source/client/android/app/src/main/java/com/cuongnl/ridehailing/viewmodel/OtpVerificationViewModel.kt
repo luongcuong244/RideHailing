@@ -1,11 +1,14 @@
 package com.cuongnl.ridehailing.viewmodel
 
 import android.app.Activity
+import android.os.CountDownTimer
 import android.util.Log
 import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.cuongnl.ridehailing.firebase.auth.FirebasePhoneNumberAuth
+import com.cuongnl.ridehailing.utils.Constant
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.PhoneAuthCredential
@@ -14,9 +17,12 @@ import com.google.firebase.auth.PhoneAuthProvider
 class OtpVerificationViewModel : ViewModel() {
 
     private var _internationalPhoneNumber = mutableStateOf("")
+    private var _otpTimeoutValue = mutableLongStateOf(Constant.OTP_TIMEOUT_IN_SECOND);
 
     val internationalPhoneNumber : State<String> = _internationalPhoneNumber
+    val otpTimeoutValue : State<Long> = _otpTimeoutValue
 
+    private var otpCountdown : CountDownTimer? = null
     private var otpId : String? = null
 
     fun initiateOtp(activity: Activity) {
@@ -61,7 +67,27 @@ class OtpVerificationViewModel : ViewModel() {
         }
     }
 
+    fun startOtpTimer() {
+
+        setOtpTimeoutValue(Constant.OTP_TIMEOUT_IN_SECOND)
+
+        otpCountdown = object : CountDownTimer(otpTimeoutValue.value, 1000) {
+
+            override fun onTick(millisUntilFinished: Long) {
+                setOtpTimeoutValue(millisUntilFinished / 1000)
+            }
+
+            override fun onFinish() {
+                setOtpTimeoutValue(0L)
+            }
+        }
+    }
+
     fun setInternationalPhoneNumber(phoneNumber: String) {
         _internationalPhoneNumber.value = phoneNumber
+    }
+
+    fun setOtpTimeoutValue(newValue: Long) {
+        _otpTimeoutValue.longValue = newValue
     }
 }

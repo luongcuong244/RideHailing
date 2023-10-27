@@ -18,4 +18,5 @@
     <string name="cannot_connect_to_server">Can\'t connect to the server!</string>
     <string name="otp_verification_text">Xác thực mã OTP</string>
     <string name="otp_des_text">đã gửi cho bạn mã OTP 6 số tới số điện thoại</string>
+    <string name="send_otp_again">Gửi lại mã OTP</string>
 </resources>
