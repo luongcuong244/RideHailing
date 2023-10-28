@@ -1,4 +1,4 @@
-package com.cuongnl.ridehailing.screens.otpverification.ui
+package com.cuongnl.ridehailing.widgets
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -8,25 +8,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.cuongnl.ridehailing.R
-import com.cuongnl.ridehailing.screens.otpverification.LocalActivityBehavior
-import com.cuongnl.ridehailing.widgets.NoRippleButton
 import ir.kaaveh.sdpcompose.sdp
 
 @Composable
-fun BackButton() {
-
-    val actions = LocalActivityBehavior.current
+fun BackButton(onClick: () -> Unit) {
 
     NoRippleButton(
-        onClick = {
-            actions.popActivity()
-        }
+        onClick = onClick
     ) {
         Icon(
             painter = painterResource(id = R.drawable.arrow_back),
             contentDescription = null,
             modifier = Modifier
-                .padding(bottom = 30.sdp)
+                .padding(vertical = 25.sdp)
                 .size(25.dp),
         )
     }
