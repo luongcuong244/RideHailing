@@ -95,9 +95,6 @@ class OtpVerificationActivity : BaseActivity(), IOtpVerificationActivityBehavior
             throw Exception("Must provide otp auth type")
         }
     }
-
-    override fun onBackPressed() {
-    }
 }
 
 @Composable
