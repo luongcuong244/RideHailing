@@ -30,7 +30,7 @@ fun TouchableOpacityButton(
     val alpha by animateFloatAsState(
         targetValue = if (updatedEnable.value)
             if (isPressed.value) opacity else 1.0f
-        else 0.5f,
+        else 1f,
         label = ""
     )
 
