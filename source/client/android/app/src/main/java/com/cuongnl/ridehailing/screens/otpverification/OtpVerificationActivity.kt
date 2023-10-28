@@ -20,7 +20,6 @@ import com.cuongnl.ridehailing.activitybehavior.IOtpVerificationActivityBehavior
 import com.cuongnl.ridehailing.core.BaseActivity
 import com.cuongnl.ridehailing.enums.OtpAuthType
 import com.cuongnl.ridehailing.extensions.findActivity
-import com.cuongnl.ridehailing.screens.otpverification.ui.BackButton
 import com.cuongnl.ridehailing.screens.otpverification.ui.OtpDescriptionText
 import com.cuongnl.ridehailing.screens.otpverification.ui.OtpTimeout
 import com.cuongnl.ridehailing.screens.otpverification.ui.OtpVerificationText
@@ -29,6 +28,7 @@ import com.cuongnl.ridehailing.theme.AppTheme
 import com.cuongnl.ridehailing.utils.Constant
 import com.cuongnl.ridehailing.utils.FormatterUtils
 import com.cuongnl.ridehailing.viewmodel.OtpVerificationViewModel
+import com.cuongnl.ridehailing.widgets.BackButton
 import com.cuongnl.ridehailing.widgets.SimpleAlertDialog
 import ir.kaaveh.sdpcompose.sdp
 
@@ -106,9 +106,11 @@ private fun Screen(otpVerificationViewModel: OtpVerificationViewModel = viewMode
     AppTheme {
         Column(
             modifier = Modifier
-                .padding(top = 30.sdp, start = 15.sdp, end = 15.sdp),
+                .padding(horizontal = 15.sdp),
         ) {
-            BackButton()
+            BackButton {
+                actions.popActivity()
+            }
             OtpVerificationText()
             OtpDescriptionText()
             OtpTextField(
