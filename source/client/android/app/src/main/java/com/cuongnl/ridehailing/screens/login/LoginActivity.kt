@@ -20,6 +20,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.cuongnl.ridehailing.R
 import com.cuongnl.ridehailing.activitybehavior.ILoginActivityBehavior
 import com.cuongnl.ridehailing.core.BaseActivity
+import com.cuongnl.ridehailing.enums.OtpAuthType
 import com.cuongnl.ridehailing.screens.login.ui.BannerImage
 import com.cuongnl.ridehailing.screens.login.ui.ContinueButton
 import com.cuongnl.ridehailing.screens.login.ui.PhoneCodeBottomSheet
@@ -85,31 +86,29 @@ class LoginScreen : BaseActivity(), ILoginActivityBehavior {
     }
 
     override fun onContinueButtonClicked() {
-        if (canClickContinueButton()) {
+        val phoneNumber = textEnteredViewModel.text.value
+        val countryCode = countryCodeSelectedViewModel.currentCountryCode.value.countryCode
 
-            val phoneNumber = textEnteredViewModel.text.value
-            val countryCode = countryCodeSelectedViewModel.currentCountryCode.value.countryCode
+        authServiceViewModel.checkExistingUser(
+            phoneNumber,
+            onUserExisting = {
 
-            authServiceViewModel.checkExistingUser(
-                phoneNumber,
-                onUserExisting = {
-
-                },
-                onUserNotExisting = {
-                    val intent = Intent(this, OtpVerificationActivity::class.java)
-                    intent.putExtra(Constant.BUNDLE_NUMBER_PHONE, phoneNumber)
-                    intent.putExtra(Constant.BUNDLE_COUNTRY_CODE, countryCode)
-                    startActivity(intent)
-                },
-                onError = {
-                    Toast.makeText(
-                        this,
-                        getString(R.string.cannot_connect_to_server),
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-            )
-        }
+            },
+            onUserNotExisting = {
+                val intent = Intent(this, OtpVerificationActivity::class.java)
+                intent.putExtra(Constant.BUNDLE_OTP_AUTH_TYPE, OtpAuthType.SIGN_UP)
+                intent.putExtra(Constant.BUNDLE_NUMBER_PHONE, phoneNumber)
+                intent.putExtra(Constant.BUNDLE_COUNTRY_CODE, countryCode)
+                startActivity(intent)
+            },
+            onError = {
+                Toast.makeText(
+                    this,
+                    getString(R.string.cannot_connect_to_server),
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        )
     }
 }
 

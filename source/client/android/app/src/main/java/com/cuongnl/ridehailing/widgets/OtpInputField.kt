@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
@@ -33,8 +34,9 @@ import ir.kaaveh.sdpcompose.sdp
 @Composable
 fun OtpTextField(
     modifier: Modifier = Modifier,
-    otpText: String,
+    otpText: String = "",
     otpCount: Int = 6,
+    isTextVisible: Boolean = true,
     onOtpTextChange: (String, Boolean) -> Unit
 ) {
     LaunchedEffect(Unit) {
@@ -66,7 +68,8 @@ fun OtpTextField(
                 repeat(otpCount) { index ->
                     CharView(
                         index = index,
-                        text = textFieldValue.text
+                        text = textFieldValue.text,
+                        isTextVisible = isTextVisible,
                     )
                 }
             }
@@ -77,7 +80,8 @@ fun OtpTextField(
 @Composable
 private fun RowScope.CharView(
     index: Int,
-    text: String
+    text: String,
+    isTextVisible: Boolean
 ) {
     val isFocused = text.length == index
     val char = when {
@@ -99,15 +103,25 @@ private fun RowScope.CharView(
             .clip(RoundedCornerShape(25))
             .background(backgroundColor)
     ) {
-        AppText(
-            modifier = Modifier
-                .align(Alignment.Center),
-            text = char,
-            color = Color.Black,
-            textAlign = TextAlign.Center,
-            fontWeight = FontWeight.SemiBold,
-            fontSize = 24.sp,
-        )
+        if (char.isNotEmpty() && !isTextVisible) {
+            Box(
+                modifier = Modifier
+                    .align(Alignment.Center)
+                    .clip(RoundedCornerShape(100))
+                    .size(8.sdp)
+                    .background(Color.Black)
+            )
+        } else {
+            AppText(
+                modifier = Modifier
+                    .align(Alignment.Center),
+                text = char,
+                color = Color.Black,
+                textAlign = TextAlign.Center,
+                fontWeight = FontWeight.SemiBold,
+                fontSize = 24.sp,
+            )
+        }
     }
 }
 
