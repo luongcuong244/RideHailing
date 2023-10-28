@@ -20,6 +20,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.cuongnl.ridehailing.R
 import com.cuongnl.ridehailing.activitybehavior.ILoginActivityBehavior
 import com.cuongnl.ridehailing.core.BaseActivity
+import com.cuongnl.ridehailing.enums.OtpAuthType
 import com.cuongnl.ridehailing.screens.login.ui.BannerImage
 import com.cuongnl.ridehailing.screens.login.ui.ContinueButton
 import com.cuongnl.ridehailing.screens.login.ui.PhoneCodeBottomSheet
@@ -97,6 +98,7 @@ class LoginScreen : BaseActivity(), ILoginActivityBehavior {
                 },
                 onUserNotExisting = {
                     val intent = Intent(this, OtpVerificationActivity::class.java)
+                    intent.putExtra(Constant.BUNDLE_OTP_AUTH_TYPE, OtpAuthType.SIGN_UP)
                     intent.putExtra(Constant.BUNDLE_NUMBER_PHONE, phoneNumber)
                     intent.putExtra(Constant.BUNDLE_COUNTRY_CODE, countryCode)
                     startActivity(intent)

@@ -1,6 +1,7 @@
 package com.cuongnl.ridehailing.screens.otpverification
 
 import OtpTextField
+import android.os.Build
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.compose.setContent
@@ -17,7 +18,9 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.cuongnl.ridehailing.R
 import com.cuongnl.ridehailing.activitybehavior.IOtpVerificationActivityBehavior
 import com.cuongnl.ridehailing.core.BaseActivity
+import com.cuongnl.ridehailing.enums.OtpAuthType
 import com.cuongnl.ridehailing.extensions.findActivity
+import com.cuongnl.ridehailing.screens.otpverification.ui.BackButton
 import com.cuongnl.ridehailing.screens.otpverification.ui.OtpDescriptionText
 import com.cuongnl.ridehailing.screens.otpverification.ui.OtpTimeout
 import com.cuongnl.ridehailing.screens.otpverification.ui.OtpVerificationText
@@ -36,6 +39,8 @@ class OtpVerificationActivity : BaseActivity(), IOtpVerificationActivityBehavior
 
     private lateinit var otpVerificationViewModel: OtpVerificationViewModel
 
+    private var otpAuthType: OtpAuthType? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -43,6 +48,15 @@ class OtpVerificationActivity : BaseActivity(), IOtpVerificationActivityBehavior
             CompositionLocalProvider(value = LocalActivityBehavior provides this) {
                 Screen()
             }
+        }
+
+        otpAuthType = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            intent.getSerializableExtra(
+                Constant.BUNDLE_OTP_AUTH_TYPE,
+                OtpAuthType::class.java
+            )
+        } else {
+            intent.getSerializableExtra(Constant.BUNDLE_OTP_AUTH_TYPE) as OtpAuthType?
         }
 
         val phoneNumber = intent.getStringExtra(Constant.BUNDLE_NUMBER_PHONE)
@@ -65,7 +79,21 @@ class OtpVerificationActivity : BaseActivity(), IOtpVerificationActivityBehavior
     }
 
     override fun navigateToNextActivity() {
+        if (otpAuthType != null){
+            when(otpAuthType) {
+                OtpAuthType.SIGN_UP -> {
 
+                }
+                OtpAuthType.PASSWORD_CHANGING -> {
+
+                }
+                else -> {
+                    throw Exception("The provided otp auth type is not match with any type")
+                }
+            }
+        } else {
+            throw Exception("Must provide otp auth type")
+        }
     }
 
     override fun onBackPressed() {
@@ -81,8 +109,9 @@ private fun Screen(otpVerificationViewModel: OtpVerificationViewModel = viewMode
     AppTheme {
         Column(
             modifier = Modifier
-                .padding(top = 80.sdp, start = 15.sdp, end = 15.sdp),
+                .padding(top = 30.sdp, start = 15.sdp, end = 15.sdp),
         ) {
+            BackButton()
             OtpVerificationText()
             OtpDescriptionText()
             OtpTextField(
