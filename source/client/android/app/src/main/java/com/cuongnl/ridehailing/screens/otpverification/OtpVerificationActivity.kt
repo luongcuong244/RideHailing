@@ -1,6 +1,7 @@
 package com.cuongnl.ridehailing.screens.otpverification
 
 import OtpTextField
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.widget.Toast
@@ -20,6 +21,7 @@ import com.cuongnl.ridehailing.activitybehavior.IOtpVerificationActivityBehavior
 import com.cuongnl.ridehailing.core.BaseActivity
 import com.cuongnl.ridehailing.enums.OtpAuthType
 import com.cuongnl.ridehailing.extensions.findActivity
+import com.cuongnl.ridehailing.screens.newusercreation.NewUserCreationActivity
 import com.cuongnl.ridehailing.screens.otpverification.ui.OtpDescriptionText
 import com.cuongnl.ridehailing.screens.otpverification.ui.OtpTimeout
 import com.cuongnl.ridehailing.screens.otpverification.ui.OtpVerificationText
@@ -78,15 +80,20 @@ class OtpVerificationActivity : BaseActivity(), IOtpVerificationActivityBehavior
         finish()
     }
 
-    override fun navigateToNextActivity() {
-        if (otpAuthType != null){
-            when(otpAuthType) {
-                OtpAuthType.SIGN_UP -> {
+    override fun navigateToNextActivityAndFinish() {
 
+        var intent: Intent? = null
+
+        if (otpAuthType != null) {
+            when (otpAuthType) {
+                OtpAuthType.SIGN_UP -> {
+                    intent = Intent(this, NewUserCreationActivity::class.java)
                 }
+
                 OtpAuthType.PASSWORD_CHANGING -> {
 
                 }
+
                 else -> {
                     throw Exception("The provided otp auth type is not match with any type")
                 }
@@ -94,6 +101,9 @@ class OtpVerificationActivity : BaseActivity(), IOtpVerificationActivityBehavior
         } else {
             throw Exception("Must provide otp auth type")
         }
+
+        startActivity(intent)
+        finish()
     }
 }
 
@@ -114,7 +124,6 @@ private fun Screen(otpVerificationViewModel: OtpVerificationViewModel = viewMode
             OtpVerificationText()
             OtpDescriptionText()
             OtpTextField(
-                otpText = "",
                 onOtpTextChange = { otp, otpInputFilled ->
                     if (otpInputFilled) {
                         val activity = context.findActivity()

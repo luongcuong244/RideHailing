@@ -26,4 +26,15 @@
     <string name="dismiss_text">Bỏ qua</string>
     <string name="an_error_occurred">An error occurred!</string>
     <string name="otp_expired_and_send_again">Mã OTP đã hết hạn. Hãy thử gửi lại!</string>
+    <string name="account_info_creation_title">Tạo thông tin tài khoản</string>
+    <string name="account_info_creation_description">Hoàn thiện các thông tin cá nhân để tạo tài khoản và trải nghiệm dịch vụ của Cam SM.</string>
+    <string name="user_name_text">Họ và tên</string>
+    <string name="user_name_hint">Nhập họ và tên</string>
+    <string name="user_email_text">Email</string>
+    <string name="user_email_hint">Nhập địa chỉ email</string>
+    <string name="user_email_advice">Dùng email để bảo mật hơn</string>
+    <string name="password_creation_title">Tạo mật khẩu</string>
+    <string name="password_creation_description">Sử dụng mật khẩu để bảo vệ tài khoản và đăng nhập lại nhanh hơn.</string>
+    <string name="password_visibility_text">Hiện mật khẩu</string>
+    <string name="password_invisibility_text">Ẩn mật khẩu</string>
 </resources>

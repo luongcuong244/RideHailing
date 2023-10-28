@@ -87,7 +87,7 @@ class OtpVerificationViewModel : ViewModel() {
                             Toast.LENGTH_LONG
                         ).show()
                     } else {
-                        activity.navigateToNextActivity()
+                        activity.navigateToNextActivityAndFinish()
                     }
                 } else {
                     Toast.makeText(

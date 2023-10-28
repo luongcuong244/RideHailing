@@ -22,6 +22,8 @@ fun TouchableOpacityButton(
     onRelease: (() -> Unit)? = null,
     enable: Boolean = true,
     opacity: Float = 0.7f,
+    dimmedWhenDisable: Boolean = false,
+    opacityWhenDisable: Float = 0.3f,
     content: @Composable BoxScope.() -> Unit
 ) {
     val updatedEnable = remember { mutableStateOf(enable) }
@@ -30,7 +32,8 @@ fun TouchableOpacityButton(
     val alpha by animateFloatAsState(
         targetValue = if (updatedEnable.value)
             if (isPressed.value) opacity else 1.0f
-        else 1f,
+        else
+            if (dimmedWhenDisable) opacityWhenDisable else 1.0f,
         label = ""
     )
 
@@ -39,28 +42,31 @@ fun TouchableOpacityButton(
     }
 
     Box(
-        modifier = modifier
-            .pointerInput(Unit) {
-                detectTapGestures(
-                    onPress = {
-                        if (!updatedEnable.value) {
-                            return@detectTapGestures
-                        }
-                        try {
-                            onPress?.let { it() }
-                            isPressed.value = true
-                            awaitRelease()
-                        } finally {
-                            onClick?.let { it() }
-                            onRelease?.let { it() }
-                            delay(200) // duration of animation
-                            isPressed.value = false
-                        }
-                    },
-                )
-            }
-            .alpha(alpha)
+        modifier = Modifier.alpha(alpha)
     ) {
-        content()
+        Box(
+            modifier = modifier
+                .pointerInput(Unit) {
+                    detectTapGestures(
+                        onPress = {
+                            if (!updatedEnable.value) {
+                                return@detectTapGestures
+                            }
+                            try {
+                                onPress?.let { it() }
+                                isPressed.value = true
+                                awaitRelease()
+                            } finally {
+                                onClick?.let { it() }
+                                onRelease?.let { it() }
+                                delay(200) // duration of animation
+                                isPressed.value = false
+                            }
+                        },
+                    )
+                }
+        ) {
+            content()
+        }
     }
 }
