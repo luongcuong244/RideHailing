@@ -45,4 +45,6 @@
     <string name="wrong_password_text">Mật khẩu không chính xác!</string>
     <string name="confirm_text">Xác nhận</string>
     <string name="forgot_password_dialog_prompt">Đồng ý xác thực số điện thoại để lấy lại mật khẩu của bạn</string>
+    <string name="reset_password_text">Đặt lại mật khẩu</string>
+    <string name="finish_text">Hoàn tất</string>
 </resources>

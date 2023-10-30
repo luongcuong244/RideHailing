@@ -31,8 +31,12 @@ import com.cuongnl.ridehailing.viewmodel.PasswordVerificationViewModel
 import com.cuongnl.ridehailing.widgets.FullScreenLoader
 import ir.kaaveh.sdpcompose.sdp
 import com.cuongnl.ridehailing.R
+import com.cuongnl.ridehailing.callbacks.api.LoginCallback
 import com.cuongnl.ridehailing.enums.OtpAuthType
+import com.cuongnl.ridehailing.models.LoginResponse
 import com.cuongnl.ridehailing.screens.otpverification.OtpVerificationActivity
+import retrofit2.Call
+import retrofit2.Response
 
 val LocalActivityBehavior =
     staticCompositionLocalOf<IPasswordVerificationActivityBehavior> { error("No LocalActivityActionsClass provided") }
@@ -64,16 +68,29 @@ class PasswordVerificationActivity : BaseActivity(), IPasswordVerificationActivi
         val loginRequest = passwordVerificationViewModel.getLoginRequest()
 
         loaderViewModel.setLoading(true)
+
         authServiceViewModel.login(
             loginRequest,
-            onFinish = {
-                loaderViewModel.setLoading(false)
-            },
-            onWrongPassword = {
-                passwordVerificationViewModel.setIsWrongPassword(true)
-            },
-            onSuccess = {
+            object : LoginCallback<LoginResponse> {
+                override fun onFinish() {
+                    loaderViewModel.setLoading(false)
+                }
 
+                override fun onSuccessfulLogin() {
+
+                }
+
+                override fun onWrongPassword() {
+                    passwordVerificationViewModel.setIsWrongPassword(true)
+                }
+
+                override fun onError(call: Call<LoginResponse>, response: Response<LoginResponse>) {
+
+                }
+
+                override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
+
+                }
             }
         )
     }

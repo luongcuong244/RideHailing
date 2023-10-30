@@ -8,6 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.cuongnl.ridehailing.R
+import com.cuongnl.ridehailing.activitybehavior.IChangePasswordActivityBehavior
 import ir.kaaveh.sdpcompose.sdp
 
 @Composable
@@ -20,7 +21,7 @@ fun BackButton(onClick: () -> Unit) {
             painter = painterResource(id = R.drawable.arrow_back),
             contentDescription = null,
             modifier = Modifier
-                .padding(vertical = 25.sdp)
+                .padding(bottom = 25.sdp, top = 50.dp)
                 .size(25.dp),
         )
     }

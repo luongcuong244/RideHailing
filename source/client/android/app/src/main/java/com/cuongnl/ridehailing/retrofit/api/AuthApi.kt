@@ -1,6 +1,8 @@
 package com.cuongnl.ridehailing.retrofit.api
 
-import com.cuongnl.ridehailing.models.AuthResponse
+import com.cuongnl.ridehailing.models.LoginResponse
+import com.cuongnl.ridehailing.models.ChangePasswordRequest
+import com.cuongnl.ridehailing.models.ChangePasswordResponse
 import com.cuongnl.ridehailing.models.LoginRequest
 import com.cuongnl.ridehailing.models.ScalarsBooleanResponse
 import retrofit2.Call
@@ -14,5 +16,8 @@ interface AuthApi {
     fun checkExistingUser(@Path("phoneNumber") phoneNumber: String): Call<ScalarsBooleanResponse>
 
     @POST("login")
-    fun login(@Body request: LoginRequest): Call<AuthResponse>
+    fun login(@Body request: LoginRequest): Call<LoginResponse>
+
+    @POST("change-password")
+    fun changePassword(@Body request: ChangePasswordRequest): Call<ChangePasswordResponse>
 }
