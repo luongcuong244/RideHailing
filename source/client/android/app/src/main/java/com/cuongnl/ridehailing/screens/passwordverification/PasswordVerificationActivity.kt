@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.ViewModelProvider
 import com.cuongnl.ridehailing.activitybehavior.IPasswordVerificationActivityBehavior
 import com.cuongnl.ridehailing.core.BaseActivity
 import com.cuongnl.ridehailing.screens.passwordverification.ui.ChangePhoneNumberButton
@@ -20,6 +21,9 @@ import com.cuongnl.ridehailing.screens.passwordverification.ui.PasswordOtpTextFi
 import com.cuongnl.ridehailing.screens.passwordverification.ui.PasswordPromptText
 import com.cuongnl.ridehailing.screens.passwordverification.ui.WrongPasswordText
 import com.cuongnl.ridehailing.theme.AppTheme
+import com.cuongnl.ridehailing.viewmodel.AuthServiceViewModel
+import com.cuongnl.ridehailing.viewmodel.LoaderViewModel
+import com.cuongnl.ridehailing.viewmodel.PasswordVerificationViewModel
 import com.cuongnl.ridehailing.widgets.FullScreenLoader
 import ir.kaaveh.sdpcompose.sdp
 
@@ -27,8 +31,17 @@ val LocalActivityBehavior =
     staticCompositionLocalOf<IPasswordVerificationActivityBehavior> { error("No LocalActivityActionsClass provided") }
 
 class PasswordVerificationActivity : BaseActivity(), IPasswordVerificationActivityBehavior {
+
+    private lateinit var loaderViewModel: LoaderViewModel
+    private lateinit var authServiceViewModel: AuthServiceViewModel
+    private lateinit var passwordVerificationViewModel: PasswordVerificationViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        loaderViewModel = ViewModelProvider(this)[LoaderViewModel::class.java]
+        authServiceViewModel = ViewModelProvider(this)[AuthServiceViewModel::class.java]
+        passwordVerificationViewModel = ViewModelProvider(this)[PasswordVerificationViewModel::class.java]
 
         setContent {
             CompositionLocalProvider(value = LocalActivityBehavior provides this) {
@@ -39,6 +52,25 @@ class PasswordVerificationActivity : BaseActivity(), IPasswordVerificationActivi
 
     override fun popActivity() {
         finish()
+    }
+
+    override fun login() {
+
+        val loginRequest = passwordVerificationViewModel.getLoginRequest()
+
+        loaderViewModel.setLoading(true)
+        authServiceViewModel.login(
+            loginRequest,
+            onFinish = {
+                loaderViewModel.setLoading(false)
+            },
+            onWrongPassword = {
+                passwordVerificationViewModel.setIsWrongPassword(true)
+            },
+            onSuccess = {
+
+            }
+        )
     }
 }
 

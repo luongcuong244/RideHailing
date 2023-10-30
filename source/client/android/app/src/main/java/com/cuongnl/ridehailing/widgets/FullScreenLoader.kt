@@ -16,12 +16,12 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.colorResource
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.cuongnl.ridehailing.R
-import com.cuongnl.ridehailing.viewmodel.FullScreenLoaderViewModel
+import com.cuongnl.ridehailing.viewmodel.LoaderViewModel
 import ir.kaaveh.sdpcompose.sdp
 
 @Composable
 fun FullScreenLoader(
-    fullScreenLoaderViewModel: FullScreenLoaderViewModel = viewModel(),
+    loaderViewModel: LoaderViewModel = viewModel(),
     content: @Composable BoxScope.() -> Unit
 ) {
     Box(
@@ -30,7 +30,7 @@ fun FullScreenLoader(
     ) {
         content()
 
-        if (fullScreenLoaderViewModel.isLoading.value) {
+        if (loaderViewModel.isLoading.value) {
             Box(
                 modifier = Modifier
                     .fillMaxSize()

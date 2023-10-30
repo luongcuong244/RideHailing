@@ -4,7 +4,7 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 
-class FullScreenLoaderViewModel : ViewModel() {
+class LoaderViewModel : ViewModel() {
     private var _isLoading = mutableStateOf(false)
 
     val isLoading : State<Boolean> = _isLoading

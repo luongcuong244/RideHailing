@@ -1,6 +1,8 @@
 package com.cuongnl.ridehailing.viewmodel
 
 import androidx.lifecycle.ViewModel
+import com.cuongnl.ridehailing.models.AuthResponse
+import com.cuongnl.ridehailing.models.LoginRequest
 import com.cuongnl.ridehailing.models.ScalarsBooleanResponse
 import com.cuongnl.ridehailing.retrofit.repository.AuthRepository
 import retrofit2.Call
@@ -41,6 +43,39 @@ class AuthServiceViewModel : ViewModel() {
 
             override fun onFailure(call: Call<ScalarsBooleanResponse>, t: Throwable) {
                 onError()
+            }
+        })
+    }
+
+    fun login(
+        loginRequest: LoginRequest,
+        onFailure: () -> Unit = {},
+        onSuccess: () -> Unit = {},
+        onFinish: () -> Unit = {},
+        onWrongPassword: () -> Unit = {}
+    ) {
+
+        onSuccess()
+        onFinish()
+        return
+
+        authRepository.login(loginRequest, object : Callback<AuthResponse> {
+            override fun onResponse(
+                call: Call<AuthResponse>,
+                response: Response<AuthResponse>
+            ) {
+                if (response.isSuccessful) {
+                    // store access token and refresh token
+                    onSuccess()
+                } else {
+                    onWrongPassword()
+                }
+                onFinish()
+            }
+
+            override fun onFailure(call: Call<AuthResponse>, t: Throwable) {
+                onFailure()
+                onFinish()
             }
         })
     }

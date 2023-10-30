@@ -5,15 +5,21 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.cuongnl.ridehailing.viewmodel.FullScreenLoaderViewModel
+import com.cuongnl.ridehailing.screens.passwordverification.LocalActivityBehavior
+import com.cuongnl.ridehailing.viewmodel.LoaderViewModel
+import com.cuongnl.ridehailing.viewmodel.PasswordVerificationViewModel
 import ir.kaaveh.sdpcompose.sdp
 
 @Composable
-fun PasswordOtpTextField(fullScreenLoaderViewModel: FullScreenLoaderViewModel = viewModel()) {
+fun PasswordOtpTextField(passwordVerificationViewModel: PasswordVerificationViewModel = viewModel()) {
+
+    val actions = LocalActivityBehavior.current
+
     OtpTextField(
         onOtpTextChange = { otp, otpInputFilled ->
+            passwordVerificationViewModel.setPasswordTextInput(otp)
             if (otpInputFilled) {
-                fullScreenLoaderViewModel.setLoading(true)
+                actions.login()
             }
         },
         isTextVisible = false,
