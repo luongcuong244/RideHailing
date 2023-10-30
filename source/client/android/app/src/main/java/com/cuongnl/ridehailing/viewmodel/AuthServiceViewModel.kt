@@ -20,7 +20,7 @@ class AuthServiceViewModel : ViewModel() {
         onUserNotExisting: () -> Unit = {}
     ) {
 
-        onUserNotExisting()
+        onUserExisting()
         return
 
         authRepository.checkExistingUser(phoneNumber, object : Callback<ScalarsBooleanResponse> {
