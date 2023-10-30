@@ -29,6 +29,7 @@ import com.cuongnl.ridehailing.screens.login.ui.PhoneNumberInvalidText
 import com.cuongnl.ridehailing.screens.login.ui.PolicyText
 import com.cuongnl.ridehailing.screens.login.ui.TitleText
 import com.cuongnl.ridehailing.screens.otpverification.OtpVerificationActivity
+import com.cuongnl.ridehailing.screens.passwordverification.PasswordVerificationActivity
 import com.cuongnl.ridehailing.theme.AppTheme
 import com.cuongnl.ridehailing.utils.Constant
 import com.cuongnl.ridehailing.viewmodel.AuthServiceViewModel
@@ -92,7 +93,10 @@ class LoginScreen : BaseActivity(), ILoginActivityBehavior {
         authServiceViewModel.checkExistingUser(
             phoneNumber,
             onUserExisting = {
-
+                val intent = Intent(this, PasswordVerificationActivity::class.java)
+                intent.putExtra(Constant.BUNDLE_NUMBER_PHONE, phoneNumber)
+                intent.putExtra(Constant.BUNDLE_COUNTRY_CODE, countryCode)
+                startActivity(intent)
             },
             onUserNotExisting = {
                 val intent = Intent(this, OtpVerificationActivity::class.java)
