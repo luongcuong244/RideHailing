@@ -21,6 +21,7 @@ import com.cuongnl.ridehailing.activitybehavior.IOtpVerificationActivityBehavior
 import com.cuongnl.ridehailing.core.BaseActivity
 import com.cuongnl.ridehailing.enums.OtpAuthType
 import com.cuongnl.ridehailing.extensions.findActivity
+import com.cuongnl.ridehailing.screens.changepassword.ChangePasswordActivity
 import com.cuongnl.ridehailing.screens.newusercreation.NewUserCreationActivity
 import com.cuongnl.ridehailing.screens.otpverification.ui.OtpDescriptionText
 import com.cuongnl.ridehailing.screens.otpverification.ui.OtpTimeout
@@ -82,7 +83,10 @@ class OtpVerificationActivity : BaseActivity(), IOtpVerificationActivityBehavior
 
     override fun navigateToNextActivityAndFinish() {
 
-        var intent: Intent? = null
+        val phoneNumber = intent.getStringExtra(Constant.BUNDLE_NUMBER_PHONE)
+        val countryCode = intent.getStringExtra(Constant.BUNDLE_COUNTRY_CODE)
+
+        val intent: Intent?
 
         if (otpAuthType != null) {
             when (otpAuthType) {
@@ -91,7 +95,7 @@ class OtpVerificationActivity : BaseActivity(), IOtpVerificationActivityBehavior
                 }
 
                 OtpAuthType.PASSWORD_CHANGING -> {
-
+                    intent = Intent(this, ChangePasswordActivity::class.java)
                 }
 
                 else -> {
@@ -101,6 +105,9 @@ class OtpVerificationActivity : BaseActivity(), IOtpVerificationActivityBehavior
         } else {
             throw Exception("Must provide otp auth type")
         }
+
+        intent.putExtra(Constant.BUNDLE_NUMBER_PHONE, phoneNumber)
+        intent.putExtra(Constant.BUNDLE_COUNTRY_CODE, countryCode)
 
         startActivity(intent)
         finish()
