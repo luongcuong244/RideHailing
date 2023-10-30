@@ -1,6 +1,6 @@
 package com.cuongnl.ridehailing.screens.otpverification
 
-import OtpTextField
+import OtpInputField
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -130,7 +130,7 @@ private fun Screen(otpVerificationViewModel: OtpVerificationViewModel = viewMode
             }
             OtpVerificationText()
             OtpDescriptionText()
-            OtpTextField(
+            OtpInputField(
                 onOtpTextChange = { otp, otpInputFilled ->
                     if (otpInputFilled) {
                         val activity = context.findActivity()

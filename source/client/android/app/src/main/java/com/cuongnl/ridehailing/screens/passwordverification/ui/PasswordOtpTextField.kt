@@ -1,12 +1,11 @@
 package com.cuongnl.ridehailing.screens.passwordverification.ui
 
-import OtpTextField
+import OtpInputField
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.cuongnl.ridehailing.screens.passwordverification.LocalActivityBehavior
-import com.cuongnl.ridehailing.viewmodel.LoaderViewModel
 import com.cuongnl.ridehailing.viewmodel.PasswordVerificationViewModel
 import ir.kaaveh.sdpcompose.sdp
 
@@ -15,7 +14,7 @@ fun PasswordOtpTextField(passwordVerificationViewModel: PasswordVerificationView
 
     val actions = LocalActivityBehavior.current
 
-    OtpTextField(
+    OtpInputField(
         onOtpTextChange = { otp, otpInputFilled ->
             passwordVerificationViewModel.setPasswordTextInput(otp)
             if (otpInputFilled) {
