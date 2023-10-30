@@ -37,4 +37,9 @@
     <string name="password_creation_description">Sử dụng mật khẩu để bảo vệ tài khoản và đăng nhập lại nhanh hơn.</string>
     <string name="password_visibility_text">Hiện mật khẩu</string>
     <string name="password_invisibility_text">Ẩn mật khẩu</string>
+    <string name="hello_text">Xin chào,</string>
+    <string name="password_prompt_text">Nhập mật khẩu để đăng nhập vào tài khoản với số điện thoại </string>
+    <string name="forgot_password_text">Quên mật khẩu?</string>
+    <string name="change_phone_number_text">Đổi SĐT</string>
+    <string name="wrong_password_text">Mật khẩu không chính xác!</string>
 </resources>
