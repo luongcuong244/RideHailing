@@ -109,13 +109,10 @@ class PasswordVerificationActivity : BaseActivity(), IPasswordVerificationActivi
 
     private fun setupViewModel(){
 
-        val phoneNumber = intent.getStringExtra(Constant.BUNDLE_NUMBER_PHONE)
-        val countryCode = intent.getStringExtra(Constant.BUNDLE_COUNTRY_CODE)
-        val internationalPhoneNumber =
-            FormatterUtils.formatPhoneNumberToInternationalFormation(phoneNumber!!, countryCode!!)
+        val phoneNumber = intent.getStringExtra(Constant.BUNDLE_INTERNATIONAL_PHONE_NUMBER)
 
         passwordVerificationViewModel = ViewModelProvider(this)[PasswordVerificationViewModel::class.java]
-        passwordVerificationViewModel.setInternationalPhoneNumber(internationalPhoneNumber)
+        passwordVerificationViewModel.setInternationalPhoneNumber(phoneNumber!!)
 
         loaderViewModel = ViewModelProvider(this)[LoaderViewModel::class.java]
         authServiceViewModel = ViewModelProvider(this)[AuthServiceViewModel::class.java]
@@ -123,13 +120,11 @@ class PasswordVerificationActivity : BaseActivity(), IPasswordVerificationActivi
 
     private fun navigateToOtpVerificationActivity(){
 
-        val phoneNumber = intent.getStringExtra(Constant.BUNDLE_NUMBER_PHONE)
-        val countryCode = intent.getStringExtra(Constant.BUNDLE_COUNTRY_CODE)
+        val phoneNumber = intent.getStringExtra(Constant.BUNDLE_INTERNATIONAL_PHONE_NUMBER)
 
         val intent = Intent(this, OtpVerificationActivity::class.java)
         intent.putExtra(Constant.BUNDLE_OTP_AUTH_TYPE, OtpAuthType.PASSWORD_CHANGING)
-        intent.putExtra(Constant.BUNDLE_NUMBER_PHONE, phoneNumber)
-        intent.putExtra(Constant.BUNDLE_COUNTRY_CODE, countryCode)
+        intent.putExtra(Constant.BUNDLE_INTERNATIONAL_PHONE_NUMBER, phoneNumber)
         startActivity(intent)
     }
 }

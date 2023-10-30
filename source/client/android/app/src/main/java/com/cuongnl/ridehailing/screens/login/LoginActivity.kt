@@ -34,6 +34,7 @@ import com.cuongnl.ridehailing.screens.otpverification.OtpVerificationActivity
 import com.cuongnl.ridehailing.screens.passwordverification.PasswordVerificationActivity
 import com.cuongnl.ridehailing.theme.AppTheme
 import com.cuongnl.ridehailing.utils.Constant
+import com.cuongnl.ridehailing.utils.FormatterUtils
 import com.cuongnl.ridehailing.viewmodel.AuthServiceViewModel
 import com.cuongnl.ridehailing.viewmodel.CountryCodeSelectedViewModel
 import com.cuongnl.ridehailing.viewmodel.TextEnteredViewModel
@@ -94,20 +95,21 @@ class LoginScreen : BaseActivity(), ILoginActivityBehavior {
         val phoneNumber = textEnteredViewModel.text.value
         val countryCode = countryCodeSelectedViewModel.currentCountryCode.value.countryCode
 
-        authServiceViewModel.checkExistingUser(phoneNumber, object : UserCheckCallback<ScalarsBooleanResponse> {
+        val internationalPhoneNumber =
+            FormatterUtils.formatPhoneNumberToInternationalFormation(phoneNumber, countryCode)
+
+        authServiceViewModel.checkExistingUser(internationalPhoneNumber, object : UserCheckCallback<ScalarsBooleanResponse> {
 
             override fun onUserExisting() {
                 val intent = Intent(this@LoginScreen, PasswordVerificationActivity::class.java)
-                intent.putExtra(Constant.BUNDLE_NUMBER_PHONE, phoneNumber)
-                intent.putExtra(Constant.BUNDLE_COUNTRY_CODE, countryCode)
+                intent.putExtra(Constant.BUNDLE_INTERNATIONAL_PHONE_NUMBER, internationalPhoneNumber)
                 startActivity(intent)
             }
 
             override fun onUserNotExisting() {
                 val intent = Intent(this@LoginScreen, OtpVerificationActivity::class.java)
                 intent.putExtra(Constant.BUNDLE_OTP_AUTH_TYPE, OtpAuthType.SIGN_UP)
-                intent.putExtra(Constant.BUNDLE_NUMBER_PHONE, phoneNumber)
-                intent.putExtra(Constant.BUNDLE_COUNTRY_CODE, countryCode)
+                intent.putExtra(Constant.BUNDLE_INTERNATIONAL_PHONE_NUMBER, internationalPhoneNumber)
                 startActivity(intent)
             }
 

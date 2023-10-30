@@ -62,13 +62,10 @@ class OtpVerificationActivity : BaseActivity(), IOtpVerificationActivityBehavior
             intent.getSerializableExtra(Constant.BUNDLE_OTP_AUTH_TYPE) as OtpAuthType?
         }
 
-        val phoneNumber = intent.getStringExtra(Constant.BUNDLE_NUMBER_PHONE)
-        val countryCode = intent.getStringExtra(Constant.BUNDLE_COUNTRY_CODE)
-        val internationalPhoneNumber =
-            FormatterUtils.formatPhoneNumberToInternationalFormation(phoneNumber!!, countryCode!!)
+        val phoneNumber = intent.getStringExtra(Constant.BUNDLE_INTERNATIONAL_PHONE_NUMBER)
 
         otpVerificationViewModel = ViewModelProvider(this)[OtpVerificationViewModel::class.java]
-        otpVerificationViewModel.setInternationalPhoneNumber(internationalPhoneNumber)
+        otpVerificationViewModel.setInternationalPhoneNumber(phoneNumber!!)
 
         initiateOtp()
     }
@@ -83,8 +80,7 @@ class OtpVerificationActivity : BaseActivity(), IOtpVerificationActivityBehavior
 
     override fun navigateToNextActivityAndFinish() {
 
-        val phoneNumber = intent.getStringExtra(Constant.BUNDLE_NUMBER_PHONE)
-        val countryCode = intent.getStringExtra(Constant.BUNDLE_COUNTRY_CODE)
+        val phoneNumber = intent.getStringExtra(Constant.BUNDLE_INTERNATIONAL_PHONE_NUMBER)
 
         val intent: Intent?
 
@@ -106,8 +102,7 @@ class OtpVerificationActivity : BaseActivity(), IOtpVerificationActivityBehavior
             throw Exception("Must provide otp auth type")
         }
 
-        intent.putExtra(Constant.BUNDLE_NUMBER_PHONE, phoneNumber)
-        intent.putExtra(Constant.BUNDLE_COUNTRY_CODE, countryCode)
+        intent.putExtra(Constant.BUNDLE_INTERNATIONAL_PHONE_NUMBER, phoneNumber)
 
         startActivity(intent)
         finish()
