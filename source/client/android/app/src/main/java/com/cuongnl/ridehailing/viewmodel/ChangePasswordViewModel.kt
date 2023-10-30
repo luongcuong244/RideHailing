@@ -25,4 +25,8 @@ class ChangePasswordViewModel : ViewModel() {
     fun checkUserPasswordNextButtonState() {
         _enableUserPasswordNextButton.value = _passwordInputText.length == 6
     }
+
+    fun getPasswordInputText() : String {
+        return _passwordInputText
+    }
 }
