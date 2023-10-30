@@ -37,7 +37,9 @@ import com.cuongnl.ridehailing.utils.Constant
 import com.cuongnl.ridehailing.utils.FormatterUtils
 import com.cuongnl.ridehailing.viewmodel.AuthServiceViewModel
 import com.cuongnl.ridehailing.viewmodel.CountryCodeSelectedViewModel
+import com.cuongnl.ridehailing.viewmodel.LoaderViewModel
 import com.cuongnl.ridehailing.viewmodel.TextEnteredViewModel
+import com.cuongnl.ridehailing.widgets.FullScreenLoader
 import ir.kaaveh.sdpcompose.sdp
 import retrofit2.Call
 import retrofit2.Response
@@ -51,11 +53,12 @@ class LoginScreen : BaseActivity(), ILoginActivityBehavior {
     private lateinit var authServiceViewModel: AuthServiceViewModel
     private lateinit var textEnteredViewModel: TextEnteredViewModel
     private lateinit var countryCodeSelectedViewModel: CountryCodeSelectedViewModel
+    private lateinit var loaderViewModel: LoaderViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        createViewModels()
+        setupViewModel()
 
         setContent {
             CompositionLocalProvider(LocalActivityBehavior provides this) {
@@ -64,11 +67,12 @@ class LoginScreen : BaseActivity(), ILoginActivityBehavior {
         }
     }
 
-    private fun createViewModels() {
+    private fun setupViewModel() {
         authServiceViewModel = ViewModelProvider(this)[AuthServiceViewModel::class.java]
         textEnteredViewModel = ViewModelProvider(this)[TextEnteredViewModel::class.java]
         countryCodeSelectedViewModel =
             ViewModelProvider(this)[CountryCodeSelectedViewModel::class.java]
+        loaderViewModel = ViewModelProvider(this)[LoaderViewModel::class.java]
     }
 
     override fun isInvalidTextVisible(): Boolean {
@@ -98,6 +102,8 @@ class LoginScreen : BaseActivity(), ILoginActivityBehavior {
         val internationalPhoneNumber =
             FormatterUtils.formatPhoneNumberToInternationalFormation(phoneNumber, countryCode)
 
+        loaderViewModel.setLoading(true)
+
         authServiceViewModel.checkExistingUser(internationalPhoneNumber, object : UserCheckCallback<ScalarsBooleanResponse> {
 
             override fun onUserExisting() {
@@ -122,7 +128,7 @@ class LoginScreen : BaseActivity(), ILoginActivityBehavior {
             }
 
             override fun onFinish() {
-
+                loaderViewModel.setLoading(false)
             }
 
             override fun onError(
@@ -138,31 +144,33 @@ class LoginScreen : BaseActivity(), ILoginActivityBehavior {
 @Composable
 private fun Screen() {
     AppTheme {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(Color.White)
-        ) {
-            BannerImage()
+        FullScreenLoader {
             Column(
                 modifier = Modifier
-                    .padding(horizontal = 15.sdp)
-                    .imePadding()
+                    .fillMaxSize()
+                    .background(Color.White)
             ) {
-                TitleText()
-                PhoneEditText()
-                PhoneNumberInvalidText()
-
+                BannerImage()
                 Column(
                     modifier = Modifier
-                        .fillMaxSize(),
-                    verticalArrangement = Arrangement.Bottom
+                        .padding(horizontal = 15.sdp)
+                        .imePadding()
                 ) {
-                    ContinueButton()
-                    PolicyText()
-                }
+                    TitleText()
+                    PhoneEditText()
+                    PhoneNumberInvalidText()
 
-                PhoneCodeBottomSheet()
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize(),
+                        verticalArrangement = Arrangement.Bottom
+                    ) {
+                        ContinueButton()
+                        PolicyText()
+                    }
+
+                    PhoneCodeBottomSheet()
+                }
             }
         }
     }
