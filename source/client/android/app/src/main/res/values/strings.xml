@@ -48,4 +48,8 @@
     <string name="reset_password_text">Đặt lại mật khẩu</string>
     <string name="finish_text">Hoàn tất</string>
     <string name="change_password_success">Đổi mật khẩu thành công!</string>
+    <string name="booking_text">Gọi xe</string>
+    <string name="activity_text">Hoạt động</string>
+    <string name="notification_text">Thông báo</string>
+    <string name="account_text">Tài khoản</string>
 </resources>
