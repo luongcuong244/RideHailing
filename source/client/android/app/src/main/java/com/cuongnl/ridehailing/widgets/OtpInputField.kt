@@ -32,7 +32,7 @@ import com.cuongnl.ridehailing.widgets.AppText
 import ir.kaaveh.sdpcompose.sdp
 
 @Composable
-fun OtpTextField(
+fun OtpInputField(
     modifier: Modifier = Modifier,
     otpText: String = "",
     otpCount: Int = 6,
@@ -128,5 +128,5 @@ private fun RowScope.CharView(
 @Preview
 @Composable
 fun Preview() {
-    OtpTextField(otpText = "", onOtpTextChange = { _, _ -> })
+    OtpInputField(otpText = "", onOtpTextChange = { _, _ -> })
 }
