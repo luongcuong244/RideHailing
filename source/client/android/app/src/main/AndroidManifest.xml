@@ -18,7 +18,7 @@
         android:theme="@style/Theme.RideHailing"
         tools:targetApi="33">
         <activity
-            android:name=".screens.permission.PermissionActivity"
+            android:name=".screens.home.HomeActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.RideHailing">
@@ -52,6 +52,10 @@
         <activity
             android:name=".screens.changepassword.ChangePasswordActivity"
             android:windowSoftInputMode="adjustResize"
+            android:exported="false"/>
+
+        <activity
+            android:name=".screens.permission.PermissionActivity"
             android:exported="false"/>
 
         <service
