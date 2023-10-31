@@ -18,7 +18,7 @@
         android:theme="@style/Theme.RideHailing"
         tools:targetApi="33">
         <activity
-            android:name=".screens.home.HomeActivity"
+            android:name=".screens.permission.PermissionActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.RideHailing">
@@ -55,7 +55,7 @@
             android:exported="false"/>
 
         <activity
-            android:name=".screens.permission.PermissionActivity"
+            android:name=".screens.home.HomeActivity"
             android:exported="false"/>
 
         <service
