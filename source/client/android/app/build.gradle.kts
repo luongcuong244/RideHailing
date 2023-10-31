@@ -94,4 +94,6 @@ dependencies {
     implementation("com.google.firebase:firebase-auth-ktx")
 
     implementation("com.googlecode.libphonenumber:libphonenumber:8.12.34")
+
+    implementation("androidx.navigation:navigation-compose:2.7.4")
 }

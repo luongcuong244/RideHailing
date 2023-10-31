@@ -1,6 +1,6 @@
 package com.cuongnl.ridehailing.screens.otpverification
 
-import OtpTextField
+import OtpInputField
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -21,6 +21,7 @@ import com.cuongnl.ridehailing.activitybehavior.IOtpVerificationActivityBehavior
 import com.cuongnl.ridehailing.core.BaseActivity
 import com.cuongnl.ridehailing.enums.OtpAuthType
 import com.cuongnl.ridehailing.extensions.findActivity
+import com.cuongnl.ridehailing.screens.changepassword.ChangePasswordActivity
 import com.cuongnl.ridehailing.screens.newusercreation.NewUserCreationActivity
 import com.cuongnl.ridehailing.screens.otpverification.ui.OtpDescriptionText
 import com.cuongnl.ridehailing.screens.otpverification.ui.OtpTimeout
@@ -61,13 +62,10 @@ class OtpVerificationActivity : BaseActivity(), IOtpVerificationActivityBehavior
             intent.getSerializableExtra(Constant.BUNDLE_OTP_AUTH_TYPE) as OtpAuthType?
         }
 
-        val phoneNumber = intent.getStringExtra(Constant.BUNDLE_NUMBER_PHONE)
-        val countryCode = intent.getStringExtra(Constant.BUNDLE_COUNTRY_CODE)
-        val internationalPhoneNumber =
-            FormatterUtils.formatPhoneNumberToInternationalFormation(phoneNumber!!, countryCode!!)
+        val phoneNumber = intent.getStringExtra(Constant.BUNDLE_INTERNATIONAL_PHONE_NUMBER)
 
         otpVerificationViewModel = ViewModelProvider(this)[OtpVerificationViewModel::class.java]
-        otpVerificationViewModel.setInternationalPhoneNumber(internationalPhoneNumber)
+        otpVerificationViewModel.setInternationalPhoneNumber(phoneNumber!!)
 
         initiateOtp()
     }
@@ -82,7 +80,9 @@ class OtpVerificationActivity : BaseActivity(), IOtpVerificationActivityBehavior
 
     override fun navigateToNextActivityAndFinish() {
 
-        var intent: Intent? = null
+        val phoneNumber = intent.getStringExtra(Constant.BUNDLE_INTERNATIONAL_PHONE_NUMBER)
+
+        val intent: Intent?
 
         if (otpAuthType != null) {
             when (otpAuthType) {
@@ -91,7 +91,7 @@ class OtpVerificationActivity : BaseActivity(), IOtpVerificationActivityBehavior
                 }
 
                 OtpAuthType.PASSWORD_CHANGING -> {
-
+                    intent = Intent(this, ChangePasswordActivity::class.java)
                 }
 
                 else -> {
@@ -101,6 +101,8 @@ class OtpVerificationActivity : BaseActivity(), IOtpVerificationActivityBehavior
         } else {
             throw Exception("Must provide otp auth type")
         }
+
+        intent.putExtra(Constant.BUNDLE_INTERNATIONAL_PHONE_NUMBER, phoneNumber)
 
         startActivity(intent)
         finish()
@@ -123,7 +125,7 @@ private fun Screen(otpVerificationViewModel: OtpVerificationViewModel = viewMode
             }
             OtpVerificationText()
             OtpDescriptionText()
-            OtpTextField(
+            OtpInputField(
                 onOtpTextChange = { otp, otpInputFilled ->
                     if (otpInputFilled) {
                         val activity = context.findActivity()

@@ -1,6 +1,6 @@
 package com.cuongnl.ridehailing.screens.newusercreation.ui
 
-import OtpTextField
+import OtpInputField
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -10,7 +10,7 @@ import ir.kaaveh.sdpcompose.sdp
 
 @Composable
 fun PasswordTextField(userInfoCreationViewModel: UserInfoCreationViewModel = viewModel()) {
-    OtpTextField(
+    OtpInputField(
         modifier = Modifier
             .padding(vertical = 30.sdp),
         onOtpTextChange = { otp, _ ->

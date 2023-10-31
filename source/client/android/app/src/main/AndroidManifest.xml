@@ -44,6 +44,20 @@
             android:windowSoftInputMode="adjustResize"
             android:exported="false"/>
 
+        <activity
+            android:name=".screens.passwordverification.PasswordVerificationActivity"
+            android:windowSoftInputMode="adjustResize"
+            android:exported="false"/>
+
+        <activity
+            android:name=".screens.changepassword.ChangePasswordActivity"
+            android:windowSoftInputMode="adjustResize"
+            android:exported="false"/>
+
+        <activity
+            android:name=".screens.home.HomeActivity"
+            android:exported="false"/>
+
         <service
             android:name=".services.LocationService"
             android:foregroundServiceType="location" />
