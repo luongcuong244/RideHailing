@@ -4,9 +4,11 @@ const {
 } = require("../middlewares/jwt");
 const jwt = require("jsonwebtoken");
 
+const userModel = require("../models/userModel");
 const asyncHandler = require("express-async-handler");
 
 const checkExistingUser = asyncHandler(async (req, res) => {
+  console.error(req.body);
   const { phoneNumber } = req.body;
   const check = await userModel.findOne({ phoneNumber });
   return res.status(200).json({
