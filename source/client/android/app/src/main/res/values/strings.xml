@@ -52,4 +52,6 @@
     <string name="activity_text">Hoạt động</string>
     <string name="notification_text">Thông báo</string>
     <string name="account_text">Tài khoản</string>
+    <string name="where_to_text">Bạn muốn tới đâu?</string>
+    <string name="map_text">Bản đồ</string>
 </resources>
