@@ -37,4 +37,10 @@ app.use(function(req, res, next) {
 // error handler
 app.use(errorsMiddleware);
 
+const PORT = process.env.PORT;
+const http = require("http");
+http
+  .createServer(app)
+  .listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
 module.exports = app;
