@@ -10,10 +10,11 @@ import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface AuthApi {
-    @GET("phones/{phoneNumber}")
-    fun checkExistingUser(@Path("phoneNumber") phoneNumber: String): Call<ScalarsBooleanResponse>
+    @GET("auth/check-existing-user")
+    fun checkExistingUser(@Query("phoneNumber") phoneNumber: String): Call<ScalarsBooleanResponse>
 
     @POST("login")
     fun login(@Body request: LoginRequest): Call<LoginResponse>

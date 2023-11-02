@@ -40,12 +40,6 @@ class AuthServiceViewModel : ViewModel() {
                     }
                 }
             }
-
-            // need to remove
-            override fun onFailure(call: Call<ScalarsBooleanResponse>, t: Throwable) {
-                super.onFailure(call, t)
-                userCheckCallback.onUserExisting()
-            }
         })
     }
 
