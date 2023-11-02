@@ -8,8 +8,7 @@ const userModel = require("../models/userModel");
 const asyncHandler = require("express-async-handler");
 
 const checkExistingUser = asyncHandler(async (req, res) => {
-  console.error(req.body);
-  const { phoneNumber } = req.body;
+  const { phoneNumber } = req.query;
   const check = await userModel.findOne({ phoneNumber });
   return res.status(200).json({
     data: check ? true : false,
@@ -17,13 +16,13 @@ const checkExistingUser = asyncHandler(async (req, res) => {
 });
 
 const register = asyncHandler(async (req, res) => {
-  const { email, password, phoneNumber } = req.body;
-  if (!email || !password || !phoneNumber)
+  const { password, phoneNumber, userName } = req.body;
+  if (!userName || !password || !phoneNumber)
     return res.status(400).json({
       sucess: false,
       mes: "Missing input",
     });
-  const user = await userModel.findOne({ email });
+  const user = await userModel.findOne({ phoneNumber });
   if (user) throw new Error("User has existed!");
   else {
     const newUser = await userModel.create(req.body);
