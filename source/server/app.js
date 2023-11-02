@@ -4,9 +4,6 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-
 const { errorsMiddleware } = require('./middlewares/errorsMiddleware');
 const dbConnect = require('./config/database');
 
@@ -26,8 +23,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+const route = require('./routes/index');
+route(app);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -36,5 +33,11 @@ app.use(function(req, res, next) {
 
 // error handler
 app.use(errorsMiddleware);
+
+const PORT = process.env.PORT;
+const http = require("http");
+http
+  .createServer(app)
+  .listen(PORT, () => console.log(`Server running on port ${PORT}`));
 
 module.exports = app;

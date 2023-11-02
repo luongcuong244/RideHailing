@@ -1,5 +1,6 @@
 package com.cuongnl.ridehailing.retrofit
 
+import com.cuongnl.ridehailing.computerlocal.ServerAddress
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -10,7 +11,7 @@ class RetrofitClient {
         fun getClient(): Retrofit {
             if (retrofit == null) {
                 retrofit = Retrofit.Builder()
-                    .baseUrl("https://api.example.com/")
+                    .baseUrl(ServerAddress.SERVER_ADDRESS)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build()
             }
