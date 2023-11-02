@@ -32,7 +32,6 @@ import ir.kaaveh.sdpcompose.sdp
 fun WhereDoYouWantToGo() {
     Row(
         modifier = Modifier
-            .offset(y = (-30).sdp)
             .fillMaxWidth()
             .height(45.sdp)
             .clip(RoundedCornerShape(25))

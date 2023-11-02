@@ -54,4 +54,6 @@
     <string name="account_text">Tài khoản</string>
     <string name="where_to_text">Bạn muốn tới đâu?</string>
     <string name="map_text">Bản đồ</string>
+    <string name="home_text">Nhà riêng</string>
+    <string name="company_text">Công ty</string>
 </resources>
