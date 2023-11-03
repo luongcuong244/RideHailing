@@ -58,4 +58,6 @@
     <string name="company_text">Công ty</string>
     <string name="register_success">Đăng ký thành công!</string>
     <string name="something_went_wrong">Đã xảy ra lỗi!</string>
+    <string name="taxi_text">Taxi</string>
+    <string name="bike_text">Xe máy</string>
 </resources>

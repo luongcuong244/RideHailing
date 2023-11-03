@@ -7,7 +7,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.cuongnl.ridehailing.screens.home.tab.booking.ui.AddressesList
+import com.cuongnl.ridehailing.screens.home.tab.booking.ui.BannerVouchers
 import com.cuongnl.ridehailing.screens.home.tab.booking.ui.DashboardBanner
+import com.cuongnl.ridehailing.screens.home.tab.booking.ui.TransportationMethodsList
 import com.cuongnl.ridehailing.screens.home.tab.booking.ui.WhereDoYouWantToGo
 import ir.kaaveh.sdpcompose.sdp
 
@@ -27,6 +29,8 @@ fun BookingTab() {
         ) {
             WhereDoYouWantToGo()
             AddressesList()
+            TransportationMethodsList()
+            BannerVouchers()
         }
     }
 }

@@ -33,7 +33,7 @@ private fun Screen() {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(Color.LightGray.copy(0.25f))
+                .background(Color.LightGray.copy(0.30f))
         ) {
 
             BottomNavGraph(
