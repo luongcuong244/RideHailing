@@ -30,7 +30,7 @@ import com.cuongnl.ridehailing.screens.login.ui.PhoneEditText
 import com.cuongnl.ridehailing.screens.login.ui.PhoneNumberInvalidText
 import com.cuongnl.ridehailing.screens.login.ui.PolicyText
 import com.cuongnl.ridehailing.screens.login.ui.TitleText
-import com.cuongnl.ridehailing.screens.otpverification.OtpVerificationActivity
+import com.cuongnl.ridehailing.screens.newusercreation.NewUserCreationActivity
 import com.cuongnl.ridehailing.screens.passwordverification.PasswordVerificationActivity
 import com.cuongnl.ridehailing.theme.AppTheme
 import com.cuongnl.ridehailing.utils.Constant
@@ -113,7 +113,8 @@ class LoginScreen : BaseActivity(), ILoginActivityBehavior {
             }
 
             override fun onUserNotExisting() {
-                val intent = Intent(this@LoginScreen, OtpVerificationActivity::class.java)
+                //val intent = Intent(this@LoginScreen, OtpVerificationActivity::class.java)
+                val intent = Intent(this@LoginScreen, NewUserCreationActivity::class.java)
                 intent.putExtra(Constant.BUNDLE_OTP_AUTH_TYPE, OtpAuthType.SIGN_UP)
                 intent.putExtra(Constant.BUNDLE_INTERNATIONAL_PHONE_NUMBER, internationalPhoneNumber)
                 startActivity(intent)

@@ -1,19 +1,18 @@
 package com.cuongnl.ridehailing.viewmodel
 
 import androidx.lifecycle.ViewModel
-import com.cuongnl.ridehailing.callbacks.api.BaseApiCallback
 import com.cuongnl.ridehailing.callbacks.api.LoginCallback
 import com.cuongnl.ridehailing.callbacks.api.RetrofitCallback
 import com.cuongnl.ridehailing.callbacks.api.SimpleApiCallback
 import com.cuongnl.ridehailing.callbacks.api.UserCheckCallback
 import com.cuongnl.ridehailing.models.ChangePasswordRequest
 import com.cuongnl.ridehailing.models.ChangePasswordResponse
-import com.cuongnl.ridehailing.models.LoginResponse
 import com.cuongnl.ridehailing.models.LoginRequest
+import com.cuongnl.ridehailing.models.LoginResponse
+import com.cuongnl.ridehailing.models.RegisterRequest
 import com.cuongnl.ridehailing.models.ScalarsBooleanResponse
 import com.cuongnl.ridehailing.retrofit.repository.AuthRepository
 import retrofit2.Call
-import retrofit2.Callback
 import retrofit2.Response
 
 class AuthServiceViewModel : ViewModel() {
@@ -66,6 +65,14 @@ class AuthServiceViewModel : ViewModel() {
                 super.onFailure(call, t)
                 loginCallback.onWrongPassword()
             }
+        })
+    }
+
+    fun register(
+        registerRequest: RegisterRequest,
+        simpleApiCallback: SimpleApiCallback<ScalarsBooleanResponse>
+    ) {
+        authRepository.register(registerRequest, object : RetrofitCallback<ScalarsBooleanResponse>(simpleApiCallback) {
         })
     }
 

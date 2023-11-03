@@ -56,4 +56,6 @@
     <string name="map_text">Bản đồ</string>
     <string name="home_text">Nhà riêng</string>
     <string name="company_text">Công ty</string>
+    <string name="register_success">Đăng ký thành công!</string>
+    <string name="something_went_wrong">Đã xảy ra lỗi!</string>
 </resources>
