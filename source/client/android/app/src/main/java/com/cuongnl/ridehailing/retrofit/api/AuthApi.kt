@@ -1,7 +1,5 @@
 package com.cuongnl.ridehailing.retrofit.api
 
-import com.cuongnl.ridehailing.models.ChangePasswordRequest
-import com.cuongnl.ridehailing.models.ChangePasswordResponse
 import com.cuongnl.ridehailing.models.LoginRequest
 import com.cuongnl.ridehailing.models.LoginResponse
 import com.cuongnl.ridehailing.models.RegisterRequest
@@ -21,7 +19,4 @@ interface AuthApi {
 
     @POST("auth/register")
     fun register(@Body request: RegisterRequest): Call<ScalarsBooleanResponse>
-
-    @POST("auth/change-password")
-    fun changePassword(@Body request: ChangePasswordRequest): Call<ChangePasswordResponse>
 }

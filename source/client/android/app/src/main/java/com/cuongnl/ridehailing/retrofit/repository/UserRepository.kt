@@ -1,0 +1,22 @@
+package com.cuongnl.ridehailing.retrofit.repository
+
+import android.content.Context
+import com.cuongnl.ridehailing.models.ChangePasswordRequest
+import com.cuongnl.ridehailing.models.ChangePasswordResponse
+import com.cuongnl.ridehailing.models.GetUserResponse
+import com.cuongnl.ridehailing.retrofit.RetrofitClient
+import com.cuongnl.ridehailing.retrofit.api.UserApi
+import retrofit2.Callback
+
+class UserRepository(context: Context) {
+
+    private val userApi: UserApi = RetrofitClient.getClient(context).create(UserApi::class.java)
+
+    fun changePassword(changePasswordRequest: ChangePasswordRequest, callback: Callback<ChangePasswordResponse>) {
+        userApi.changePassword(changePasswordRequest).enqueue(callback)
+    }
+
+    fun getUser(callback: Callback<GetUserResponse>) {
+        userApi.getUser().enqueue(callback)
+    }
+}

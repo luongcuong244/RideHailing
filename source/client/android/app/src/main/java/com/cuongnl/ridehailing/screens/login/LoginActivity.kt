@@ -35,14 +35,13 @@ import com.cuongnl.ridehailing.screens.passwordverification.PasswordVerification
 import com.cuongnl.ridehailing.theme.AppTheme
 import com.cuongnl.ridehailing.utils.Constant
 import com.cuongnl.ridehailing.utils.FormatterUtils
-import com.cuongnl.ridehailing.viewmodel.AuthServiceViewModel
+import com.cuongnl.ridehailing.viewmodel.apiservice.AuthServiceViewModel
 import com.cuongnl.ridehailing.viewmodel.CountryCodeSelectedViewModel
 import com.cuongnl.ridehailing.viewmodel.LoaderViewModel
 import com.cuongnl.ridehailing.viewmodel.TextEnteredViewModel
 import com.cuongnl.ridehailing.widgets.FullScreenLoader
 import ir.kaaveh.sdpcompose.sdp
 import retrofit2.Call
-import retrofit2.Response
 
 
 val LocalActivityBehavior =
@@ -130,13 +129,6 @@ class LoginScreen : BaseActivity(), ILoginActivityBehavior {
 
             override fun onFinish() {
                 loaderViewModel.setLoading(false)
-            }
-
-            override fun onError(
-                call: Call<ScalarsBooleanResponse>,
-                response: Response<ScalarsBooleanResponse>
-            ) {
-
             }
         })
     }

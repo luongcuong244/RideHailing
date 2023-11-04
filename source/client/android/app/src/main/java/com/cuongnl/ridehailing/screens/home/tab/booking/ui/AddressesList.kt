@@ -18,7 +18,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -36,17 +35,27 @@ import ir.kaaveh.sdpcompose.ssp
 @Composable
 fun AddressesList() {
 
-    val data = CurrentUser.getUser().addresses
+    val data = CurrentUser.getUser()?.addresses
+
+    var isLoading = true
+
+    if (data != null) {
+        isLoading = false
+    }
 
     LazyRow(
         modifier = Modifier
             .padding(vertical = 12.sdp),
         content = {
-            items(data.size + 1) { index ->
-                if (index < data.size) {
-                    AddressItem(data[index])
+            items(data?.size!! + 1) { index ->
+                if (isLoading) {
+                    ItemContent(isLoading = false)
                 } else {
-                    AddAddressItem()
+                    if (index < data.size) {
+                        AddressItem(data[index])
+                    } else {
+                        AddAddressItem()
+                    }
                 }
             }
         },
@@ -97,7 +106,8 @@ private fun ItemContent(
     icon: Painter,
     title: String,
     description: String?,
-    onClick: () -> Unit
+    isLoading: Boolean = false,
+    onClick: () -> Unit = {},
 ) {
 
     NoRippleButton(

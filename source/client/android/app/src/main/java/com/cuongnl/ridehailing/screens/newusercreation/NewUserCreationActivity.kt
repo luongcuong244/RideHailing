@@ -24,7 +24,7 @@ import com.cuongnl.ridehailing.screens.newusercreation.ui.UserNameContinueButton
 import com.cuongnl.ridehailing.screens.newusercreation.ui.UserNameTextField
 import com.cuongnl.ridehailing.theme.AppTheme
 import com.cuongnl.ridehailing.utils.Constant
-import com.cuongnl.ridehailing.viewmodel.AuthServiceViewModel
+import com.cuongnl.ridehailing.viewmodel.apiservice.AuthServiceViewModel
 import com.cuongnl.ridehailing.viewmodel.LoaderViewModel
 import com.cuongnl.ridehailing.viewmodel.UserInfoCreationViewModel
 import com.cuongnl.ridehailing.widgets.BackButton

@@ -25,7 +25,7 @@ class User {
         _phoneNumber.value = phoneNumber
     }
 
-    fun setEmail(email: String) {
+    fun setEmail(email: String?) {
         _email.value = email
     }
 
