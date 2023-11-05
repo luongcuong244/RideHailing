@@ -4,6 +4,7 @@ const errorsMiddleware = (err, req, res, next)=>{
         message: err.message,
         data: null
     });
+    console.error("error: " + err);
 }
 module.exports = {
     errorsMiddleware

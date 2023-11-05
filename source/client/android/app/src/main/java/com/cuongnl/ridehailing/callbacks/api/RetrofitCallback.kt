@@ -6,9 +6,6 @@ import retrofit2.Response
 
 abstract class RetrofitCallback<T>(private val apiCallbacks: BaseApiCallback<T>) : Callback<T> {
     override fun onResponse(call: Call<T>, response: Response<T>) {
-        if (!response.isSuccessful) {
-            apiCallbacks.onError(call, response)
-        }
         apiCallbacks.onFinish()
     }
 

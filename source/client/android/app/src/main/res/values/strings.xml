@@ -52,4 +52,12 @@
     <string name="activity_text">Hoạt động</string>
     <string name="notification_text">Thông báo</string>
     <string name="account_text">Tài khoản</string>
+    <string name="where_to_text">Bạn muốn tới đâu?</string>
+    <string name="map_text">Bản đồ</string>
+    <string name="home_text">Nhà riêng</string>
+    <string name="company_text">Công ty</string>
+    <string name="register_success">Đăng ký thành công!</string>
+    <string name="something_went_wrong">Đã xảy ra lỗi!</string>
+    <string name="taxi_text">Taxi</string>
+    <string name="bike_text">Xe máy</string>
 </resources>

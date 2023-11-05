@@ -12,7 +12,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.Constraints
 import androidx.lifecycle.ViewModelProvider
 import com.cuongnl.ridehailing.R
 import com.cuongnl.ridehailing.activitybehavior.IChangePasswordActivityBehavior
@@ -26,9 +25,10 @@ import com.cuongnl.ridehailing.screens.changepassword.ui.PasswordVisibilityButto
 import com.cuongnl.ridehailing.screens.changepassword.ui.ResetPasswordText
 import com.cuongnl.ridehailing.theme.AppTheme
 import com.cuongnl.ridehailing.utils.Constant
-import com.cuongnl.ridehailing.viewmodel.AuthServiceViewModel
+import com.cuongnl.ridehailing.viewmodel.apiservice.AuthServiceViewModel
 import com.cuongnl.ridehailing.viewmodel.ChangePasswordViewModel
 import com.cuongnl.ridehailing.viewmodel.LoaderViewModel
+import com.cuongnl.ridehailing.viewmodel.apiservice.UserServiceViewModel
 import com.cuongnl.ridehailing.widgets.BackButton
 import com.cuongnl.ridehailing.widgets.FullScreenLoader
 import ir.kaaveh.sdpcompose.sdp
@@ -40,7 +40,7 @@ val LocalActivityBehavior =
 
 class ChangePasswordActivity : BaseActivity(), IChangePasswordActivityBehavior {
 
-    private lateinit var authServiceViewModel: AuthServiceViewModel
+    private lateinit var userServiceViewModel: UserServiceViewModel
     private lateinit var loaderViewModel: LoaderViewModel
     private lateinit var changePasswordViewModel: ChangePasswordViewModel
 
@@ -69,7 +69,7 @@ class ChangePasswordActivity : BaseActivity(), IChangePasswordActivityBehavior {
 
         loaderViewModel.setLoading(true)
 
-        authServiceViewModel.changePassword(
+        userServiceViewModel.changePassword(
             changePasswordRequest,
             object : SimpleApiCallback<ChangePasswordResponse> {
                 override fun onSuccess(
@@ -92,18 +92,7 @@ class ChangePasswordActivity : BaseActivity(), IChangePasswordActivityBehavior {
                 }
 
                 override fun onFinish() {
-                    //loaderViewModel.setLoading(false)
-
-                    // need to remove bellow
-                    Handler().postDelayed({
-                        loaderViewModel.setLoading(false)
-                        Toast.makeText(
-                            this@ChangePasswordActivity,
-                            getString(R.string.change_password_success),
-                            Toast.LENGTH_SHORT
-                        ).show()
-                        popActivity()
-                    }, 1000)
+                    loaderViewModel.setLoading(false)
                 }
 
                 override fun onFailure(call: Call<ChangePasswordResponse>, t: Throwable) {
@@ -116,7 +105,7 @@ class ChangePasswordActivity : BaseActivity(), IChangePasswordActivityBehavior {
     }
 
     private fun setupViewModel() {
-        authServiceViewModel = ViewModelProvider(this)[AuthServiceViewModel::class.java]
+        userServiceViewModel = ViewModelProvider(this)[UserServiceViewModel::class.java]
         loaderViewModel = ViewModelProvider(this)[LoaderViewModel::class.java]
         changePasswordViewModel = ViewModelProvider(this)[ChangePasswordViewModel::class.java]
     }

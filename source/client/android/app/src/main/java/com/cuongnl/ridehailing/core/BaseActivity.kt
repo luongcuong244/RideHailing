@@ -16,7 +16,7 @@ abstract class BaseActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        activityLang = LocalStorageUtils.readData(this, Constant.KEY_LANGUAGE) as String?
+        activityLang = LocalStorageUtils.readData(this, LocalStorageUtils.KEY_LANGUAGE) as String?
 
         window.decorView.systemUiVisibility = (
                 View.SYSTEM_UI_FLAG_LAYOUT_STABLE
@@ -25,7 +25,7 @@ abstract class BaseActivity : AppCompatActivity() {
     }
 
     override fun attachBaseContext(newBase: Context) {
-        val languageCode = LocalStorageUtils.readData(newBase, Constant.KEY_LANGUAGE) as String?
+        val languageCode = LocalStorageUtils.readData(newBase, LocalStorageUtils.KEY_LANGUAGE) as String?
         if (languageCode == null) {
             super.attachBaseContext(ContextWrapper(newBase))
         } else {
@@ -36,7 +36,7 @@ abstract class BaseActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
 
-        val storedLang: String? = LocalStorageUtils.readData(this, Constant.KEY_LANGUAGE) as String?
+        val storedLang: String? = LocalStorageUtils.readData(this, LocalStorageUtils.KEY_LANGUAGE) as String?
 
         storedLang?.let {
             if (activityLang != storedLang) {

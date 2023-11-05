@@ -19,6 +19,8 @@ import androidx.compose.ui.text.font.FontWeight
 import com.cuongnl.ridehailing.R
 import com.cuongnl.ridehailing.activitybehavior.IPermissionActivityBehavior
 import com.cuongnl.ridehailing.core.BaseActivity
+import com.cuongnl.ridehailing.globalstate.CurrentUser
+import com.cuongnl.ridehailing.screens.home.HomeActivity
 import com.cuongnl.ridehailing.screens.login.LoginScreen
 import com.cuongnl.ridehailing.screens.permission.ui.BannerImage
 import com.cuongnl.ridehailing.screens.permission.ui.ContinueButton
@@ -83,7 +85,14 @@ class PermissionActivity : BaseActivity(), IPermissionActivityBehavior {
     }
 
     private fun navigateToNextActivity() {
-        val intent = Intent(this, LoginScreen::class.java)
+
+        if (CurrentUser.getUser() == null) {
+            val intent = Intent(this, LoginScreen::class.java)
+            startActivity(intent)
+            return
+        }
+
+        val intent = Intent(this, HomeActivity::class.java)
         startActivity(intent)
     }
 }
