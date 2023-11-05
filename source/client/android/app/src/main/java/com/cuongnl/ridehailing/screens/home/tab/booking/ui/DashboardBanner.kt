@@ -4,7 +4,6 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -15,6 +14,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import com.cuongnl.ridehailing.R
+import com.cuongnl.ridehailing.globalstate.CurrentUser
 import com.cuongnl.ridehailing.widgets.AppText
 import ir.kaaveh.sdpcompose.sdp
 
@@ -33,7 +33,7 @@ fun DashboardBanner() {
             contentScale = ContentScale.FillWidth
         )
         AppText(
-            text = "Chào Lương Cường,",
+            text = "Chào ${CurrentUser.getUser()?.userName?.value},",
             fontSize = 18.sp,
             fontWeight = FontWeight.Medium,
             color = Color.Black,
