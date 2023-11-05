@@ -12,19 +12,24 @@ import retrofit2.converter.gson.GsonConverterFactory
 class RetrofitClient {
 
     companion object {
+
         private var retrofit: Retrofit? = null
-        fun getClient(context: Context): Retrofit {
+
+        fun getClient(): Retrofit {
             if (retrofit == null) {
-
-                val httpClient = setupOkHttpClient(context)
-
-                retrofit = Retrofit.Builder()
-                    .baseUrl(ServerAddress.SERVER_ADDRESS)
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .client(httpClient)
-                    .build()
+                throw Exception("RetrofitClient has not been initialized")
             }
             return retrofit!!
+        }
+
+        fun createClient(context: Context) {
+            val httpClient = setupOkHttpClient(context)
+
+            retrofit = Retrofit.Builder()
+                .baseUrl(ServerAddress.SERVER_ADDRESS)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(httpClient)
+                .build()
         }
 
         private fun setupOkHttpClient(context: Context) : OkHttpClient {
