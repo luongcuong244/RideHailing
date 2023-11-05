@@ -11,6 +11,7 @@ class User {
     private var _phoneNumber : MutableState<String?> = mutableStateOf(null)
     private var _email : MutableState<String?> = mutableStateOf(null)
     private var _addresses = mutableStateListOf<Address>()
+    private var _notifications = mutableStateListOf<Notification>()
 
     val userName : State<String?> = _userName
     val phoneNumber : State<String?> = _phoneNumber
@@ -39,5 +40,17 @@ class User {
 
     fun clearAddresses() {
         _addresses.clear()
+    }
+
+    fun clearNotifications() {
+        _notifications.clear()
+    }
+
+    fun addNotifications(notifications: List<Notification>) {
+        _notifications.addAll(notifications)
+    }
+
+    fun removeNotification(index: Int) {
+        _notifications.removeAt(index)
     }
 }

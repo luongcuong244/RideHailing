@@ -7,6 +7,7 @@ import com.cuongnl.ridehailing.models.AddressResponse
 import com.cuongnl.ridehailing.models.ChangePasswordRequest
 import com.cuongnl.ridehailing.models.ChangePasswordResponse
 import com.cuongnl.ridehailing.models.GetUserResponse
+import com.cuongnl.ridehailing.models.NotificationResponse
 import com.cuongnl.ridehailing.retrofit.repository.UserRepository
 import retrofit2.Call
 import retrofit2.Response
@@ -55,6 +56,21 @@ class UserServiceViewModel : ViewModel() {
                 call: Call<AddressResponse>,
                 response: Response<AddressResponse>
             ) {
+                super.onResponse(call, response)
+                if (response.isSuccessful) {
+                    simpleApiCallback.onSuccess(call, response)
+                }
+            }
+        })
+    }
+
+    fun getNotifications(simpleApiCallback: SimpleApiCallback<NotificationResponse>) {
+        userRepository.getNotifications(object : RetrofitCallback<NotificationResponse>(simpleApiCallback) {
+            override fun onResponse(
+                call: Call<NotificationResponse>,
+                response: Response<NotificationResponse>
+            ) {
+                super.onResponse(call, response)
                 if (response.isSuccessful) {
                     simpleApiCallback.onSuccess(call, response)
                 }
