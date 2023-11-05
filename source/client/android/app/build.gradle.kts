@@ -96,4 +96,6 @@ dependencies {
     implementation("com.googlecode.libphonenumber:libphonenumber:8.12.34")
 
     implementation("androidx.navigation:navigation-compose:2.7.4")
+
+    implementation("androidx.core:core-splashscreen:1.1.0-alpha02")
 }
