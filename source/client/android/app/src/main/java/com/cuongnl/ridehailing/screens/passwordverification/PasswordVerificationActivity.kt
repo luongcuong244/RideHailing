@@ -14,9 +14,18 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.ViewModelProvider
+import com.cuongnl.ridehailing.R
 import com.cuongnl.ridehailing.activitybehavior.IPasswordVerificationActivityBehavior
+import com.cuongnl.ridehailing.callbacks.api.LoginCallback
 import com.cuongnl.ridehailing.core.BaseActivity
+import com.cuongnl.ridehailing.enums.OtpAuthType
 import com.cuongnl.ridehailing.extensions.showDialog
+import com.cuongnl.ridehailing.globalstate.CurrentUser
+import com.cuongnl.ridehailing.models.GetUserResponse
+import com.cuongnl.ridehailing.models.LoginResponse
+import com.cuongnl.ridehailing.models.User
+import com.cuongnl.ridehailing.screens.home.HomeActivity
+import com.cuongnl.ridehailing.screens.otpverification.OtpVerificationActivity
 import com.cuongnl.ridehailing.screens.passwordverification.ui.ChangePhoneNumberButton
 import com.cuongnl.ridehailing.screens.passwordverification.ui.ForgotPasswordButton
 import com.cuongnl.ridehailing.screens.passwordverification.ui.HelloText
@@ -25,21 +34,12 @@ import com.cuongnl.ridehailing.screens.passwordverification.ui.PasswordPromptTex
 import com.cuongnl.ridehailing.screens.passwordverification.ui.WrongPasswordText
 import com.cuongnl.ridehailing.theme.AppTheme
 import com.cuongnl.ridehailing.utils.Constant
-import com.cuongnl.ridehailing.viewmodel.apiservice.AuthServiceViewModel
+import com.cuongnl.ridehailing.utils.LocalStorageUtils
 import com.cuongnl.ridehailing.viewmodel.LoaderViewModel
 import com.cuongnl.ridehailing.viewmodel.PasswordVerificationViewModel
+import com.cuongnl.ridehailing.viewmodel.apiservice.AuthServiceViewModel
 import com.cuongnl.ridehailing.widgets.FullScreenLoader
 import ir.kaaveh.sdpcompose.sdp
-import com.cuongnl.ridehailing.R
-import com.cuongnl.ridehailing.callbacks.api.LoginCallback
-import com.cuongnl.ridehailing.enums.OtpAuthType
-import com.cuongnl.ridehailing.globalstate.CurrentUser
-import com.cuongnl.ridehailing.models.GetUserResponse
-import com.cuongnl.ridehailing.models.LoginResponse
-import com.cuongnl.ridehailing.models.User
-import com.cuongnl.ridehailing.screens.changepassword.ChangePasswordActivity
-import com.cuongnl.ridehailing.screens.home.HomeActivity
-import com.cuongnl.ridehailing.utils.LocalStorageUtils
 import retrofit2.Call
 
 val LocalActivityBehavior =
@@ -143,7 +143,7 @@ class PasswordVerificationActivity : BaseActivity(), IPasswordVerificationActivi
 
         val phoneNumber = intent.getStringExtra(Constant.BUNDLE_INTERNATIONAL_PHONE_NUMBER)
 
-        val intent = Intent(this, ChangePasswordActivity::class.java)
+        val intent = Intent(this, OtpVerificationActivity::class.java)
         intent.putExtra(Constant.BUNDLE_OTP_AUTH_TYPE, OtpAuthType.PASSWORD_CHANGING)
         intent.putExtra(Constant.BUNDLE_INTERNATIONAL_PHONE_NUMBER, phoneNumber)
         startActivity(intent)
