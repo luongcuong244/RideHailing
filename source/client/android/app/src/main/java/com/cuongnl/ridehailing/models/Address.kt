@@ -1,11 +1,12 @@
 package com.cuongnl.ridehailing.models
 
 import com.cuongnl.ridehailing.enums.AddressType
+import com.google.gson.annotations.SerializedName
 
 data class Address(
-    val addressType: AddressType,
-    val shortName: String,
-    val fullName: String,
-    val longitude: Double,
-    val latitude: Double,
+    @SerializedName("addressType") val addressType: AddressType,
+    @SerializedName("shortName") val shortName: String,
+    @SerializedName("fullName") val fullName: String,
+    @SerializedName("longitude") val longitude: Double,
+    @SerializedName("latitude") val latitude: Double,
 )

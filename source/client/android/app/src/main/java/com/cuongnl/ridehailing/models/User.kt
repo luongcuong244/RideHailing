@@ -36,4 +36,8 @@ class User {
     fun addAddresses(addresses: List<Address>) {
         _addresses.addAll(addresses)
     }
+
+    fun clearAddresses() {
+        _addresses.clear()
+    }
 }

@@ -1,5 +1,6 @@
 package com.cuongnl.ridehailing.retrofit.api
 
+import com.cuongnl.ridehailing.models.AddressResponse
 import com.cuongnl.ridehailing.models.ChangePasswordRequest
 import com.cuongnl.ridehailing.models.ChangePasswordResponse
 import com.cuongnl.ridehailing.models.GetUserResponse
@@ -14,4 +15,7 @@ interface UserApi {
 
     @GET("user/current")
     fun getUser(): Call<GetUserResponse>
+
+    @GET("user/get-addresses")
+    fun getUserAddresses(): Call<AddressResponse>
 }

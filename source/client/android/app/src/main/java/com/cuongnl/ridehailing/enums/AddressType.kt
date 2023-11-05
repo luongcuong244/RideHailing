@@ -1,7 +1,9 @@
 package com.cuongnl.ridehailing.enums
 
+import com.google.gson.annotations.SerializedName
+
 enum class AddressType {
-    HOME,
-    WORK,
-    OTHER
+    @SerializedName("home") HOME,
+    @SerializedName("work") WORK,
+    @SerializedName("other") OTHER
 }

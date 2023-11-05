@@ -3,9 +3,11 @@ package com.cuongnl.ridehailing.screens.home.tab.booking.ui
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -23,35 +25,42 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.cuongnl.ridehailing.R
 import com.cuongnl.ridehailing.enums.AddressType
+import com.cuongnl.ridehailing.extensions.shimmerEffect
 import com.cuongnl.ridehailing.globalstate.CurrentUser
 import com.cuongnl.ridehailing.models.Address
-import ir.kaaveh.sdpcompose.sdp
-import com.cuongnl.ridehailing.R
+import com.cuongnl.ridehailing.viewmodel.BookingViewModel
 import com.cuongnl.ridehailing.widgets.AppText
 import com.cuongnl.ridehailing.widgets.NoRippleButton
+import ir.kaaveh.sdpcompose.sdp
 import ir.kaaveh.sdpcompose.ssp
 
 @Composable
-fun AddressesList() {
+fun AddressesList(bookingViewModel: BookingViewModel = viewModel()) {
 
     val data = CurrentUser.getUser()?.addresses
 
-    var isLoading = true
-
-    if (data != null) {
-        isLoading = false
+    val size = if (bookingViewModel.isLoadingAddress.value) {
+        3
+    } else {
+        if (data != null) {
+            data.size + 1
+        } else {
+            1
+        }
     }
 
     LazyRow(
         modifier = Modifier
             .padding(vertical = 12.sdp),
         content = {
-            items(data?.size!! + 1) { index ->
-                if (isLoading) {
-                    ItemContent(isLoading = false)
+            items(size) { index ->
+                if (bookingViewModel.isLoadingAddress.value) {
+                    ItemContent(isLoading = true)
                 } else {
-                    if (index < data.size) {
+                    if (index < data!!.size) {
                         AddressItem(data[index])
                     } else {
                         AddAddressItem()
@@ -103,15 +112,19 @@ private fun AddAddressItem() {
 
 @Composable
 private fun ItemContent(
-    icon: Painter,
-    title: String,
-    description: String?,
+    icon: Painter? = null,
+    title: String? = null,
+    description: String? = null,
     isLoading: Boolean = false,
     onClick: () -> Unit = {},
 ) {
 
     NoRippleButton(
-        onClick = onClick,
+        onClick = {
+            if (!isLoading) {
+                onClick()
+            }
+        },
     ) {
         Row(
             modifier = Modifier
@@ -123,13 +136,23 @@ private fun ItemContent(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(7.sdp)
         ) {
-            Image(
-                painter = icon,
-                contentDescription = null,
-                modifier = Modifier
-                    .padding(start = 5.sdp)
-                    .size(20.sdp)
-            )
+
+            if (isLoading) {
+                Box(
+                    modifier = Modifier
+                        .padding(start = 5.sdp)
+                        .size(20.sdp)
+                        .shimmerEffect()
+                )
+            } else {
+                Image(
+                    painter = icon!!,
+                    contentDescription = null,
+                    modifier = Modifier
+                        .padding(start = 5.sdp)
+                        .size(20.sdp)
+                )
+            }
 
             Column(
                 modifier = Modifier
@@ -137,25 +160,45 @@ private fun ItemContent(
                     .fillMaxHeight(),
                 verticalArrangement = Arrangement.Center,
             ) {
-                AppText(
-                    text = title,
-                    color = Color.Black,
-                    fontSize = 10.ssp,
-                    fontWeight = FontWeight.SemiBold,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis
-                )
 
-                if (description != null) {
-                    AppText(
-                        text = description,
-                        color = Color.Black,
-                        fontSize = 8.ssp,
-                        fontWeight = FontWeight.Light,
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis,
-                        letterSpacing = 0.1.sp
+                if (isLoading) {
+                    Box(
+                        modifier = Modifier
+                            .padding(bottom = 5.sdp)
+                            .fillMaxWidth()
+                            .height(9.sdp)
+                            .shimmerEffect()
                     )
+                } else {
+                    AppText(
+                        text = title!!,
+                        color = Color.Black,
+                        fontSize = 10.ssp,
+                        fontWeight = FontWeight.SemiBold,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                }
+
+                if (isLoading) {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(7.sdp)
+                            .shimmerEffect()
+                    )
+                } else {
+                    if (description != null) {
+                        AppText(
+                            text = description,
+                            color = Color.Black,
+                            fontSize = 8.ssp,
+                            fontWeight = FontWeight.Light,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
+                            letterSpacing = 0.1.sp
+                        )
+                    }
                 }
             }
         }

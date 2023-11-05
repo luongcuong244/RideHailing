@@ -1,6 +1,7 @@
 package com.cuongnl.ridehailing.retrofit.repository
 
 import android.content.Context
+import com.cuongnl.ridehailing.models.AddressResponse
 import com.cuongnl.ridehailing.models.ChangePasswordRequest
 import com.cuongnl.ridehailing.models.ChangePasswordResponse
 import com.cuongnl.ridehailing.models.GetUserResponse
@@ -18,5 +19,9 @@ class UserRepository(context: Context) {
 
     fun getUser(callback: Callback<GetUserResponse>) {
         userApi.getUser().enqueue(callback)
+    }
+
+    fun getUserAddresses(callback: Callback<AddressResponse>) {
+        userApi.getUserAddresses().enqueue(callback)
     }
 }
