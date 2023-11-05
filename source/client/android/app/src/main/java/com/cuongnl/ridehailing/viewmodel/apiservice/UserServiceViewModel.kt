@@ -3,6 +3,7 @@ package com.cuongnl.ridehailing.viewmodel.apiservice
 import androidx.lifecycle.ViewModel
 import com.cuongnl.ridehailing.callbacks.api.RetrofitCallback
 import com.cuongnl.ridehailing.callbacks.api.SimpleApiCallback
+import com.cuongnl.ridehailing.models.AddressResponse
 import com.cuongnl.ridehailing.models.ChangePasswordRequest
 import com.cuongnl.ridehailing.models.ChangePasswordResponse
 import com.cuongnl.ridehailing.models.GetUserResponse
@@ -46,5 +47,18 @@ class UserServiceViewModel : ViewModel() {
                     }
                 }
             })
+    }
+
+    fun getUserAddresses(simpleApiCallback: SimpleApiCallback<AddressResponse>) {
+        userRepository.getUserAddresses(object : RetrofitCallback<AddressResponse>(simpleApiCallback) {
+            override fun onResponse(
+                call: Call<AddressResponse>,
+                response: Response<AddressResponse>
+            ) {
+                if (response.isSuccessful) {
+                    simpleApiCallback.onSuccess(call, response)
+                }
+            }
+        })
     }
 }
