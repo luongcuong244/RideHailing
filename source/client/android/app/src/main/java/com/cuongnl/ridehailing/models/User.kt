@@ -17,6 +17,7 @@ class User {
     val phoneNumber : State<String?> = _phoneNumber
     val email : State<String?> = _email
     val addresses : List<Address> = _addresses
+    val notifications : List<Notification> = _notifications
 
     fun setUserName(userName: String) {
         _userName.value = userName
