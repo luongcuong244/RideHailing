@@ -22,7 +22,7 @@ import com.cuongnl.ridehailing.activitybehavior.ILoginActivityBehavior
 import com.cuongnl.ridehailing.callbacks.api.UserCheckCallback
 import com.cuongnl.ridehailing.core.BaseActivity
 import com.cuongnl.ridehailing.enums.OtpAuthType
-import com.cuongnl.ridehailing.models.ScalarsBooleanResponse
+import com.cuongnl.ridehailing.models.api.ScalarsBooleanResponse
 import com.cuongnl.ridehailing.screens.login.ui.BannerImage
 import com.cuongnl.ridehailing.screens.login.ui.ContinueButton
 import com.cuongnl.ridehailing.screens.login.ui.PhoneCodeBottomSheet

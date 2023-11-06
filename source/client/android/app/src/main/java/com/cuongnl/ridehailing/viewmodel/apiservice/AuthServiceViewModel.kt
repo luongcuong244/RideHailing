@@ -5,10 +5,10 @@ import com.cuongnl.ridehailing.callbacks.api.LoginCallback
 import com.cuongnl.ridehailing.callbacks.api.RetrofitCallback
 import com.cuongnl.ridehailing.callbacks.api.SimpleApiCallback
 import com.cuongnl.ridehailing.callbacks.api.UserCheckCallback
-import com.cuongnl.ridehailing.models.LoginRequest
-import com.cuongnl.ridehailing.models.LoginResponse
-import com.cuongnl.ridehailing.models.RegisterRequest
-import com.cuongnl.ridehailing.models.ScalarsBooleanResponse
+import com.cuongnl.ridehailing.models.api.LoginRequest
+import com.cuongnl.ridehailing.models.api.LoginResponse
+import com.cuongnl.ridehailing.models.api.RegisterRequest
+import com.cuongnl.ridehailing.models.api.ScalarsBooleanResponse
 import com.cuongnl.ridehailing.retrofit.repository.AuthRepository
 import retrofit2.Call
 import retrofit2.Response

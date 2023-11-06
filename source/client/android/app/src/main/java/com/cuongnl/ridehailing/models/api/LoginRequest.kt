@@ -1,4 +1,4 @@
-package com.cuongnl.ridehailing.models
+package com.cuongnl.ridehailing.models.api
 
 import com.google.gson.annotations.SerializedName
 

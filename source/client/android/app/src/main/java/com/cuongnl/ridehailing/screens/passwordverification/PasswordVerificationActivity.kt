@@ -21,8 +21,8 @@ import com.cuongnl.ridehailing.core.BaseActivity
 import com.cuongnl.ridehailing.enums.OtpAuthType
 import com.cuongnl.ridehailing.extensions.showDialog
 import com.cuongnl.ridehailing.globalstate.CurrentUser
-import com.cuongnl.ridehailing.models.GetUserResponse
-import com.cuongnl.ridehailing.models.LoginResponse
+import com.cuongnl.ridehailing.models.api.GetUserResponse
+import com.cuongnl.ridehailing.models.api.LoginResponse
 import com.cuongnl.ridehailing.models.User
 import com.cuongnl.ridehailing.screens.home.HomeActivity
 import com.cuongnl.ridehailing.screens.otpverification.OtpVerificationActivity

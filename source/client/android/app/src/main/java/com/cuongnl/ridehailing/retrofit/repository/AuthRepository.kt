@@ -1,9 +1,9 @@
 package com.cuongnl.ridehailing.retrofit.repository
 
-import com.cuongnl.ridehailing.models.LoginRequest
-import com.cuongnl.ridehailing.models.LoginResponse
-import com.cuongnl.ridehailing.models.RegisterRequest
-import com.cuongnl.ridehailing.models.ScalarsBooleanResponse
+import com.cuongnl.ridehailing.models.api.LoginRequest
+import com.cuongnl.ridehailing.models.api.LoginResponse
+import com.cuongnl.ridehailing.models.api.RegisterRequest
+import com.cuongnl.ridehailing.models.api.ScalarsBooleanResponse
 import com.cuongnl.ridehailing.retrofit.RetrofitClient
 import com.cuongnl.ridehailing.retrofit.api.AuthApi
 import retrofit2.Callback
