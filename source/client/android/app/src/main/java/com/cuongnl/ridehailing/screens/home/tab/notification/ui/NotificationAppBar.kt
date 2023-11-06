@@ -18,6 +18,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.cuongnl.ridehailing.R
+import com.cuongnl.ridehailing.screens.home.tab.notification.LocalBehavior
 import com.cuongnl.ridehailing.viewmodel.NotificationTabUiViewModel
 import com.cuongnl.ridehailing.widgets.AppText
 import com.translator.voicechanger.monster.voicetranslator.ui.common.TouchableOpacityButton
@@ -46,7 +47,7 @@ fun NotificationAppBar(notificationTabUiViewModel: NotificationTabUiViewModel = 
                 .align(Alignment.CenterEnd)
                 .padding(top = 5.sdp)
         ) {
-            if (notificationTabUiViewModel.listNotificationsToDelete.size > 1 && notificationTabUiViewModel.isDeleting.value) {
+            if (notificationTabUiViewModel.isMoreNotificationsSelected() && notificationTabUiViewModel.isDeleting.value) {
                 DeleteTextButton()
             } else {
                 DeleteIcon()
@@ -57,11 +58,20 @@ fun NotificationAppBar(notificationTabUiViewModel: NotificationTabUiViewModel = 
 
 @Composable
 private fun DeleteTextButton() {
-    AppText(
-        text = stringResource(id = R.string.delete_all),
-        fontSize = 14.sp,
-        color = colorResource(id = R.color.app_color),
-    )
+
+    val actions = LocalBehavior.current
+
+    TouchableOpacityButton(
+        onClick = {
+            actions.showDeleteAllNotificationDialog()
+        }
+    ) {
+        AppText(
+            text = stringResource(id = R.string.delete_all),
+            fontSize = 14.sp,
+            color = colorResource(id = R.color.app_color),
+        )
+    }
 }
 
 @Composable

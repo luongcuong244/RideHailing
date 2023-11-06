@@ -19,7 +19,4 @@ interface UserApi {
 
     @GET("user/get-addresses")
     fun getUserAddresses(): Call<AddressResponse>
-
-    @GET("user/get-notifications")
-    fun getNotifications() : Call<NotificationResponse>
 }

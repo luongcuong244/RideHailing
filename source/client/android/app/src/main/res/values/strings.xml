@@ -62,4 +62,9 @@
     <string name="bike_text">Xe máy</string>
     <string name="notification_app_bar_title">Thông báo</string>
     <string name="delete_all">Xóa tất</string>
+    <string name="delete">Xóa</string>
+    <string name="notification">thông báo</string>
+    <string name="dialog_delete_all_notification_title">Xóa tất cả thông báo</string>
+    <string name="dialog_delete_all_notification_content">Sau khi xóa, toàn bộ thông báo hiện tại sẽ không còn được hiển thị. Bạn có chắc chắn muốn xóa tất cả thông báo này?</string>
+    <string name="cancel">Hủy</string>
 </resources>

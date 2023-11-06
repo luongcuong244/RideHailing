@@ -63,18 +63,4 @@ class UserServiceViewModel : ViewModel() {
             }
         })
     }
-
-    fun getNotifications(simpleApiCallback: SimpleApiCallback<NotificationResponse>) {
-        userRepository.getNotifications(object : RetrofitCallback<NotificationResponse>(simpleApiCallback) {
-            override fun onResponse(
-                call: Call<NotificationResponse>,
-                response: Response<NotificationResponse>
-            ) {
-                super.onResponse(call, response)
-                if (response.isSuccessful) {
-                    simpleApiCallback.onSuccess(call, response)
-                }
-            }
-        })
-    }
 }

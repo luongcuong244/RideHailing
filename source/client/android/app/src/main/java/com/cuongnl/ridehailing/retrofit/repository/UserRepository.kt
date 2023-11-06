@@ -24,8 +24,4 @@ class UserRepository {
     fun getUserAddresses(callback: Callback<AddressResponse>) {
         userApi.getUserAddresses().enqueue(callback)
     }
-
-    fun getNotifications(callback: Callback<NotificationResponse>) {
-        userApi.getNotifications().enqueue(callback)
-    }
 }
