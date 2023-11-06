@@ -27,15 +27,15 @@ class NotificationTabUiViewModel : ViewModel() {
         listNotifications.add(notification)
     }
 
-    fun removeNotification(notification: NotificationItem) {
-        listNotifications.remove(notification)
+    fun removeNotificationById(notificationId: Int) {
+        listNotifications.removeIf { it.notification.id == notificationId }
     }
 
     fun isMoreNotificationsSelected() : Boolean {
         return listNotifications.filter { it.isSelected.value }.size > 1
     }
 
-    fun unSelectAllNotifications() {
+    private fun unSelectAllNotifications() {
         listNotifications.forEach { it.isSelected.value = false }
     }
 }

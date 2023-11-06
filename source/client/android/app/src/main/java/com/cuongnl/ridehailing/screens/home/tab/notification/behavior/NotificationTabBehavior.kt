@@ -2,11 +2,16 @@ package com.cuongnl.ridehailing.screens.home.tab.notification.behavior
 
 import android.content.Context
 import com.cuongnl.ridehailing.R
+import com.cuongnl.ridehailing.callbacks.api.SimpleApiCallback
 import com.cuongnl.ridehailing.extensions.showDialog
 import com.cuongnl.ridehailing.models.Notification
+import com.cuongnl.ridehailing.models.api.RemoveNotificationsRequest
+import com.cuongnl.ridehailing.models.api.ScalarsBooleanResponse
 import com.cuongnl.ridehailing.models.item.NotificationItem
 import com.cuongnl.ridehailing.viewmodel.NotificationTabUiViewModel
 import com.cuongnl.ridehailing.viewmodel.apiservice.NotificationServiceViewModel
+import retrofit2.Call
+import retrofit2.Response
 
 class NotificationTabBehavior(val context: Context) {
 
@@ -81,4 +86,73 @@ class NotificationTabBehavior(val context: Context) {
         )
     }
 
+    fun removeAllNotifications(notificationServiceViewModel: NotificationServiceViewModel) {
+        notificationServiceViewModel.removeAllNotifications(
+            object : SimpleApiCallback<ScalarsBooleanResponse> {
+                override fun onSuccess(
+                    call: Call<ScalarsBooleanResponse>,
+                    response: Response<ScalarsBooleanResponse>
+                ) {
+
+                }
+
+                override fun onFinish() {
+
+                }
+
+                override fun onFailure(call: Call<ScalarsBooleanResponse>, t: Throwable) {
+
+                }
+
+                override fun onError(
+                    call: Call<ScalarsBooleanResponse>,
+                    response: Response<ScalarsBooleanResponse>
+                ) {
+
+                }
+            }
+        )
+    }
+
+    fun removeNotifications(
+        notificationTabUiViewModel: NotificationTabUiViewModel,
+        notificationServiceViewModel: NotificationServiceViewModel,
+    ) {
+
+        val notificationIdsToDelete = notificationTabUiViewModel.listNotifications.filter { it.isSelected.value }.map { it.notification.id }
+
+        val request = RemoveNotificationsRequest(notificationIdsToDelete)
+
+        // onSuccess
+        notificationIdsToDelete.forEach {
+            notificationTabUiViewModel.removeNotificationById(it)
+        }
+
+//        notificationServiceViewModel.removeNotifications(
+//            request,
+//            object : SimpleApiCallback<ScalarsBooleanResponse> {
+//                override fun onSuccess(
+//                    call: Call<ScalarsBooleanResponse>,
+//                    response: Response<ScalarsBooleanResponse>
+//                ) {
+//
+//                }
+//
+//                override fun onFinish() {
+//
+//                }
+//
+//                override fun onFailure(call: Call<ScalarsBooleanResponse>, t: Throwable) {
+//
+//                }
+//
+//                override fun onError(
+//                    call: Call<ScalarsBooleanResponse>,
+//                    response: Response<ScalarsBooleanResponse>
+//                ) {
+//
+//                }
+//            }
+//        )
+    }
 }

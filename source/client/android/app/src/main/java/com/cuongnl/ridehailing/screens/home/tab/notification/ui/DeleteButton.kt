@@ -16,13 +16,20 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.cuongnl.ridehailing.R
+import com.cuongnl.ridehailing.screens.home.tab.notification.LocalBehavior
 import com.cuongnl.ridehailing.viewmodel.NotificationTabUiViewModel
+import com.cuongnl.ridehailing.viewmodel.apiservice.NotificationServiceViewModel
 import com.cuongnl.ridehailing.widgets.AppText
 import com.cuongnl.ridehailing.widgets.NoRippleButton
 import ir.kaaveh.sdpcompose.sdp
 
 @Composable
-fun BoxScope.DeleteButton(notificationTabUiViewModel: NotificationTabUiViewModel = viewModel()) {
+fun BoxScope.DeleteButton(
+    notificationTabUiViewModel: NotificationTabUiViewModel = viewModel(),
+    notificationServiceViewModel: NotificationServiceViewModel = viewModel()
+) {
+
+    val actions = LocalBehavior.current
 
     val size = notificationTabUiViewModel.listNotifications.filter { it.isSelected.value }.size
 
@@ -36,7 +43,7 @@ fun BoxScope.DeleteButton(notificationTabUiViewModel: NotificationTabUiViewModel
                 .fillMaxWidth()
                 .background(colorResource(id = R.color.orange_500)),
             onClick = {
-                // delete selected notifications
+                actions.removeNotifications(notificationTabUiViewModel, notificationServiceViewModel)
             }
         ) {
             AppText(
