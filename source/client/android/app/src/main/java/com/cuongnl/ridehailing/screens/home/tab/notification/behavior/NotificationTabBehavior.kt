@@ -1,6 +1,7 @@
 package com.cuongnl.ridehailing.screens.home.tab.notification.behavior
 
 import android.content.Context
+import android.content.Intent
 import com.cuongnl.ridehailing.R
 import com.cuongnl.ridehailing.callbacks.api.SimpleApiCallback
 import com.cuongnl.ridehailing.extensions.showDialog
@@ -8,6 +9,7 @@ import com.cuongnl.ridehailing.models.Notification
 import com.cuongnl.ridehailing.models.api.RemoveNotificationsRequest
 import com.cuongnl.ridehailing.models.api.ScalarsBooleanResponse
 import com.cuongnl.ridehailing.models.item.NotificationItem
+import com.cuongnl.ridehailing.screens.notificationdetails.NotificationDetailActivity
 import com.cuongnl.ridehailing.viewmodel.NotificationTabUiViewModel
 import com.cuongnl.ridehailing.viewmodel.apiservice.NotificationServiceViewModel
 import retrofit2.Call
@@ -154,5 +156,10 @@ class NotificationTabBehavior(val context: Context) {
 //                }
 //            }
 //        )
+    }
+
+    fun navigateToNotificationDetail() {
+        val intent = Intent(context, NotificationDetailActivity::class.java)
+        context.startActivity(intent)
     }
 }

@@ -31,6 +31,7 @@ import com.cuongnl.ridehailing.R
 import com.cuongnl.ridehailing.globalstate.CurrentUser
 import com.cuongnl.ridehailing.models.Notification
 import com.cuongnl.ridehailing.models.item.NotificationItem
+import com.cuongnl.ridehailing.screens.home.tab.notification.LocalBehavior
 import com.cuongnl.ridehailing.viewmodel.NotificationTabUiViewModel
 import com.cuongnl.ridehailing.widgets.AppText
 import com.cuongnl.ridehailing.widgets.NoRippleButton
@@ -60,12 +61,15 @@ private fun NotificationItem(
     item: NotificationItem,
     notificationTabUiViewModel: NotificationTabUiViewModel = viewModel()
 ) {
+
+    val actions = LocalBehavior.current
+
     NoRippleButton(
         onClick = {
             if (notificationTabUiViewModel.isDeleting.value) {
                 item.isSelected.value = !item.isSelected.value
             } else {
-                // navigate to notification detail
+                actions.navigateToNotificationDetail()
             }
         }
     ) {

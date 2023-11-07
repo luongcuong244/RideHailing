@@ -19,6 +19,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.cuongnl.ridehailing.R
 import com.cuongnl.ridehailing.screens.home.tab.notification.LocalBehavior
+import com.cuongnl.ridehailing.utils.Constant
 import com.cuongnl.ridehailing.viewmodel.NotificationTabUiViewModel
 import com.cuongnl.ridehailing.widgets.AppText
 import com.translator.voicechanger.monster.voicetranslator.ui.common.TouchableOpacityButton
@@ -29,7 +30,7 @@ fun NotificationAppBar(notificationTabUiViewModel: NotificationTabUiViewModel = 
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .height(50.sdp)
+            .height(Constant.APP_BAR_HEIGHT.sdp)
             .background(Color.White)
             .padding(horizontal = 10.sdp)
     ) {
