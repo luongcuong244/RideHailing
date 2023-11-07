@@ -1,7 +1,6 @@
 package com.cuongnl.ridehailing.screens.changepassword
 
 import android.os.Bundle
-import android.os.Handler
 import android.widget.Toast
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Arrangement
@@ -17,15 +16,14 @@ import com.cuongnl.ridehailing.R
 import com.cuongnl.ridehailing.activitybehavior.IChangePasswordActivityBehavior
 import com.cuongnl.ridehailing.callbacks.api.SimpleApiCallback
 import com.cuongnl.ridehailing.core.BaseActivity
-import com.cuongnl.ridehailing.models.ChangePasswordRequest
-import com.cuongnl.ridehailing.models.ChangePasswordResponse
+import com.cuongnl.ridehailing.models.api.ChangePasswordRequest
+import com.cuongnl.ridehailing.models.api.ChangePasswordResponse
 import com.cuongnl.ridehailing.screens.changepassword.ui.ContinueButton
 import com.cuongnl.ridehailing.screens.changepassword.ui.PasswordTextField
 import com.cuongnl.ridehailing.screens.changepassword.ui.PasswordVisibilityButton
 import com.cuongnl.ridehailing.screens.changepassword.ui.ResetPasswordText
 import com.cuongnl.ridehailing.theme.AppTheme
 import com.cuongnl.ridehailing.utils.Constant
-import com.cuongnl.ridehailing.viewmodel.apiservice.AuthServiceViewModel
 import com.cuongnl.ridehailing.viewmodel.ChangePasswordViewModel
 import com.cuongnl.ridehailing.viewmodel.LoaderViewModel
 import com.cuongnl.ridehailing.viewmodel.apiservice.UserServiceViewModel

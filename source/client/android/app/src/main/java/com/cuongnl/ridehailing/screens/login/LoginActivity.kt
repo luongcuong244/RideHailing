@@ -22,7 +22,7 @@ import com.cuongnl.ridehailing.activitybehavior.ILoginActivityBehavior
 import com.cuongnl.ridehailing.callbacks.api.UserCheckCallback
 import com.cuongnl.ridehailing.core.BaseActivity
 import com.cuongnl.ridehailing.enums.OtpAuthType
-import com.cuongnl.ridehailing.models.ScalarsBooleanResponse
+import com.cuongnl.ridehailing.models.api.ScalarsBooleanResponse
 import com.cuongnl.ridehailing.screens.login.ui.BannerImage
 import com.cuongnl.ridehailing.screens.login.ui.ContinueButton
 import com.cuongnl.ridehailing.screens.login.ui.PhoneCodeBottomSheet
@@ -30,15 +30,15 @@ import com.cuongnl.ridehailing.screens.login.ui.PhoneEditText
 import com.cuongnl.ridehailing.screens.login.ui.PhoneNumberInvalidText
 import com.cuongnl.ridehailing.screens.login.ui.PolicyText
 import com.cuongnl.ridehailing.screens.login.ui.TitleText
-import com.cuongnl.ridehailing.screens.newusercreation.NewUserCreationActivity
+import com.cuongnl.ridehailing.screens.otpverification.OtpVerificationActivity
 import com.cuongnl.ridehailing.screens.passwordverification.PasswordVerificationActivity
 import com.cuongnl.ridehailing.theme.AppTheme
 import com.cuongnl.ridehailing.utils.Constant
 import com.cuongnl.ridehailing.utils.FormatterUtils
-import com.cuongnl.ridehailing.viewmodel.apiservice.AuthServiceViewModel
 import com.cuongnl.ridehailing.viewmodel.CountryCodeSelectedViewModel
 import com.cuongnl.ridehailing.viewmodel.LoaderViewModel
 import com.cuongnl.ridehailing.viewmodel.TextEnteredViewModel
+import com.cuongnl.ridehailing.viewmodel.apiservice.AuthServiceViewModel
 import com.cuongnl.ridehailing.widgets.FullScreenLoader
 import ir.kaaveh.sdpcompose.sdp
 import retrofit2.Call
@@ -112,8 +112,7 @@ class LoginScreen : BaseActivity(), ILoginActivityBehavior {
             }
 
             override fun onUserNotExisting() {
-                //val intent = Intent(this@LoginScreen, OtpVerificationActivity::class.java)
-                val intent = Intent(this@LoginScreen, NewUserCreationActivity::class.java)
+                val intent = Intent(this@LoginScreen, OtpVerificationActivity::class.java)
                 intent.putExtra(Constant.BUNDLE_OTP_AUTH_TYPE, OtpAuthType.SIGN_UP)
                 intent.putExtra(Constant.BUNDLE_INTERNATIONAL_PHONE_NUMBER, internationalPhoneNumber)
                 startActivity(intent)

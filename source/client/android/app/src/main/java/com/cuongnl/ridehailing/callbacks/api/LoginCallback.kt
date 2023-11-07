@@ -1,6 +1,6 @@
 package com.cuongnl.ridehailing.callbacks.api
 
-import com.cuongnl.ridehailing.models.GetUserResponse
+import com.cuongnl.ridehailing.models.api.GetUserResponse
 
 interface LoginCallback<T> : BaseApiCallback<T> {
     fun onWrongPassword()

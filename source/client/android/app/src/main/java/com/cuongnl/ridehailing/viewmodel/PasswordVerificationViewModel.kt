@@ -3,7 +3,7 @@ package com.cuongnl.ridehailing.viewmodel
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
-import com.cuongnl.ridehailing.models.LoginRequest
+import com.cuongnl.ridehailing.models.api.LoginRequest
 
 class PasswordVerificationViewModel : ViewModel() {
 

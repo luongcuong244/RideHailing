@@ -14,8 +14,8 @@ import com.cuongnl.ridehailing.R
 import com.cuongnl.ridehailing.activitybehavior.INewUserCreationActivityBehavior
 import com.cuongnl.ridehailing.callbacks.api.SimpleApiCallback
 import com.cuongnl.ridehailing.core.BaseActivity
-import com.cuongnl.ridehailing.models.RegisterRequest
-import com.cuongnl.ridehailing.models.ScalarsBooleanResponse
+import com.cuongnl.ridehailing.models.api.RegisterRequest
+import com.cuongnl.ridehailing.models.api.ScalarsBooleanResponse
 import com.cuongnl.ridehailing.screens.newusercreation.ui.PasswordCreationBottomSheet
 import com.cuongnl.ridehailing.screens.newusercreation.ui.UserEmailTextField
 import com.cuongnl.ridehailing.screens.newusercreation.ui.UserInfoCreationDescription

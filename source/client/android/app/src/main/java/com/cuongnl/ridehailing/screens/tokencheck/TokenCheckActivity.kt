@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.cuongnl.ridehailing.callbacks.api.SimpleApiCallback
 import com.cuongnl.ridehailing.core.BaseActivity
 import com.cuongnl.ridehailing.globalstate.CurrentUser
-import com.cuongnl.ridehailing.models.GetUserResponse
+import com.cuongnl.ridehailing.models.api.GetUserResponse
 import com.cuongnl.ridehailing.models.User
 import com.cuongnl.ridehailing.screens.permission.PermissionActivity
 import com.cuongnl.ridehailing.viewmodel.apiservice.UserServiceViewModel

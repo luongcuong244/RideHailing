@@ -1,9 +1,10 @@
 package com.cuongnl.ridehailing.retrofit.repository
 
-import com.cuongnl.ridehailing.models.AddressResponse
-import com.cuongnl.ridehailing.models.ChangePasswordRequest
-import com.cuongnl.ridehailing.models.ChangePasswordResponse
-import com.cuongnl.ridehailing.models.GetUserResponse
+import com.cuongnl.ridehailing.models.api.AddressResponse
+import com.cuongnl.ridehailing.models.api.ChangePasswordRequest
+import com.cuongnl.ridehailing.models.api.ChangePasswordResponse
+import com.cuongnl.ridehailing.models.api.GetUserResponse
+import com.cuongnl.ridehailing.models.api.NotificationResponse
 import com.cuongnl.ridehailing.retrofit.RetrofitClient
 import com.cuongnl.ridehailing.retrofit.api.UserApi
 import retrofit2.Callback
