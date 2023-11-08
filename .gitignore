@@ -59,3 +59,6 @@ yarn-error.log*
 
 # ip network for server creating
 /source/client/android/app/src/main/java/com/cuongnl/ridehailing/computerlocal/ServerAddress.kt
+
+# ignore the file containing Google Map Api KEY
+/source/client/android/secrets.properties

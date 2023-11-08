@@ -2,6 +2,7 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("com.google.gms.google-services")
+    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
 }
 
 android {
@@ -98,4 +99,19 @@ dependencies {
     implementation("androidx.navigation:navigation-compose:2.7.4")
 
     implementation("androidx.core:core-splashscreen:1.1.0-alpha02")
+
+    implementation("com.google.android.gms:play-services-maps:18.2.0")
+
+    implementation("com.google.maps.android:maps-compose:4.1.1")
+}
+
+secrets {
+    // Optionally specify a different file name containing your secrets.
+    // The plugin defaults to "local.properties"
+    propertiesFileName = "secrets.properties"
+
+    // Configure which keys should be ignored by the plugin by providing regular expressions.
+    // "sdk.dir" is ignored by default.
+    ignoreList.add("keyToIgnore") // Ignore the key "keyToIgnore"
+    ignoreList.add("sdk.*")       // Ignore all keys matching the regexp "sdk.*"
 }
