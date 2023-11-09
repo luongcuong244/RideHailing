@@ -101,6 +101,7 @@ dependencies {
     implementation("androidx.core:core-splashscreen:1.1.0-alpha02")
 
     implementation("com.google.android.gms:play-services-maps:18.2.0")
+    implementation("com.google.android.gms:play-services-location:20.0.0")
 
     implementation("com.google.maps.android:maps-compose:4.1.1")
 }

@@ -4,6 +4,13 @@ import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
 import android.content.ContextWrapper
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.util.Size
+import androidx.compose.ui.unit.IntSize
+import androidx.core.content.ContextCompat
+import com.google.android.gms.maps.model.BitmapDescriptor
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import java.util.Locale
 
 fun Context.setAppLocale(language: String): Context {
@@ -55,4 +62,13 @@ fun Context.findActivity(): Activity? {
         context = context.baseContext
     }
     return null
+}
+
+fun Context.bitmapDescriptorFromVector(resId: Int, size: IntSize = IntSize(150, 150)): BitmapDescriptor? {
+    return ContextCompat.getDrawable(this, resId)?.run {
+        setBounds(0, 0, size.width, size.height)
+        val bitmap = Bitmap.createBitmap(size.width, size.height, Bitmap.Config.ARGB_8888)
+        draw(Canvas(bitmap))
+        BitmapDescriptorFactory.fromBitmap(bitmap)
+    }
 }
