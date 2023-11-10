@@ -1,7 +1,6 @@
 package com.cuongnl.ridehailing.viewmodel
 
 import android.content.Context
-import android.location.Location
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -10,19 +9,16 @@ import com.google.android.gms.maps.model.LatLng
 
 class ConfirmDestinationLocationViewModel : ViewModel() {
 
-    private val _selectedLocation = mutableStateOf<Location?>(null)
+    private val _selectedLatLng = mutableStateOf<LatLng?>(null)
     private val _selectedAddress = mutableStateOf("")
     private val _isAddressLoading = mutableStateOf(false)
 
-    val selectedLocation: State<Location?> = _selectedLocation
+    val selectedLatLng: State<LatLng?> = _selectedLatLng
     val selectedAddress: State<String?> = _selectedAddress
     val isAddressLoading: State<Boolean> = _isAddressLoading
 
-    fun setSelectedLocationAndLoadAddress(context: Context, location: Location) {
-        _selectedLocation.value = location
-
-        val latLng = LatLng(location.latitude, location.longitude)
-
+    fun setSelectedLatLngAndLoadAddress(context: Context, latLng: LatLng) {
+        _selectedLatLng.value = latLng
         loadAddress(context, latLng)
     }
 

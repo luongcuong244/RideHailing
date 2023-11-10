@@ -12,8 +12,9 @@ import com.cuongnl.ridehailing.screens.confirmdestinationlocation.ui.MapView
 import com.cuongnl.ridehailing.theme.AppTheme
 import com.cuongnl.ridehailing.utils.MapUtils
 import com.cuongnl.ridehailing.viewmodel.ConfirmDestinationLocationViewModel
+import com.google.android.gms.maps.model.LatLng
 
-class ConfirmDestinationLocation : BaseActivity() {
+class ConfirmDestinationLocationActivity : BaseActivity() {
 
     private lateinit var confirmDestinationLocationViewModel: ConfirmDestinationLocationViewModel
 
@@ -34,7 +35,8 @@ class ConfirmDestinationLocation : BaseActivity() {
         MapUtils.getCurrentLocation(
             this,
             onSuccess = {
-                confirmDestinationLocationViewModel.setSelectedLocationAndLoadAddress(this, it)
+                val latLng = LatLng(it.latitude, it.longitude)
+                confirmDestinationLocationViewModel.setSelectedLatLngAndLoadAddress(this, latLng)
             }
         )
     }

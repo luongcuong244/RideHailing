@@ -16,10 +16,8 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.cuongnl.ridehailing.R
 import com.cuongnl.ridehailing.extensions.bitmapDescriptorFromVector
-import com.cuongnl.ridehailing.screens.confirmdestinationlocation.ConfirmDestinationLocation
 import com.cuongnl.ridehailing.viewmodel.ConfirmDestinationLocationViewModel
 import com.cuongnl.ridehailing.viewmodel.MapViewModel
-import com.google.android.gms.maps.CameraUpdate
 import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.Marker
 import com.google.maps.android.compose.MarkerState
@@ -35,16 +33,10 @@ fun MapView(
 
     val cameraPositionState = rememberCameraPositionState()
 
-    LaunchedEffect(confirmDestinationLocationViewModel.selectedLocation.value) {
-        if (confirmDestinationLocationViewModel.selectedLocation.value != null) {
-
-        }
-    }
-
     LaunchedEffect(cameraPositionState.isMoving) {
         if (!cameraPositionState.isMoving) {
-//            singapore.value = cameraPositionState.position.target
-//            ConfirmDestinationLocation.getPlaceIdByCoordinates(context, singapore.value)
+            val target = cameraPositionState.position.target
+            confirmDestinationLocationViewModel.setSelectedLatLngAndLoadAddress(context, target)
         }
     }
 
@@ -55,23 +47,11 @@ fun MapView(
             uiSettings = mapViewModel.uiSettings.value,
             cameraPositionState = cameraPositionState,
         ) {
-
-            confirmDestinationLocationViewModel.selectedLocation.value?.let {
-
-            }
-            if (confirmDestinationLocationViewModel.selectedLocation.value != null) {
-
-                val latLag = confirmDestinationLocationViewModel.selectedLocation.value?.latitude?.let {
-                    confirmDestinationLocationViewModel.selectedLocation.value?.longitude?.let { it1 ->
-                        com.google.android.gms.maps.model.LatLng(
-                            it,
-                            it1
-                        )
-                    }
-                }
-
+            if (confirmDestinationLocationViewModel.selectedLatLng.value != null) {
                 Marker(
-                    state = MarkerState(position = latLag),
+                    state = MarkerState(
+                        position = confirmDestinationLocationViewModel.selectedLatLng.value!!,
+                    ),
                     icon = context.bitmapDescriptorFromVector(R.drawable.icons_dropoffmarker),
                 )
             }
