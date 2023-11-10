@@ -15,12 +15,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.cuongnl.ridehailing.R
-import com.cuongnl.ridehailing.extensions.bitmapDescriptorFromVector
 import com.cuongnl.ridehailing.viewmodel.ConfirmDestinationLocationViewModel
 import com.cuongnl.ridehailing.viewmodel.MapViewModel
+import com.google.android.gms.maps.model.CameraPosition
 import com.google.maps.android.compose.GoogleMap
-import com.google.maps.android.compose.Marker
-import com.google.maps.android.compose.MarkerState
 import com.google.maps.android.compose.rememberCameraPositionState
 
 @Composable
@@ -31,41 +29,41 @@ fun MapView(
 
     val context = LocalContext.current
 
-    val cameraPositionState = rememberCameraPositionState()
+    if (confirmDestinationLocationViewModel.selectedLatLng.value != null) {
 
-    LaunchedEffect(cameraPositionState.isMoving) {
-        if (!cameraPositionState.isMoving) {
-            val target = cameraPositionState.position.target
-            confirmDestinationLocationViewModel.setSelectedLatLngAndLoadAddress(context, target)
+        val cameraPositionState = rememberCameraPositionState {
+            position = CameraPosition.fromLatLngZoom(
+                confirmDestinationLocationViewModel.selectedLatLng.value!!,
+                17f
+            )
         }
-    }
 
-    Box(Modifier.fillMaxSize()) {
-        GoogleMap(
-            modifier = Modifier.matchParentSize(),
-            properties = mapViewModel.properties.value,
-            uiSettings = mapViewModel.uiSettings.value,
-            cameraPositionState = cameraPositionState,
-        ) {
-            if (confirmDestinationLocationViewModel.selectedLatLng.value != null) {
-                Marker(
-                    state = MarkerState(
-                        position = confirmDestinationLocationViewModel.selectedLatLng.value!!,
-                    ),
-                    icon = context.bitmapDescriptorFromVector(R.drawable.icons_dropoffmarker),
-                )
+        LaunchedEffect(cameraPositionState.isMoving) {
+            if (!cameraPositionState.isMoving) {
+                val target = cameraPositionState.position.target
+                confirmDestinationLocationViewModel.setSelectedLatLngAndLoadAddress(context, target)
             }
         }
 
-        val pxValue = with(LocalDensity.current) { (150 / density).dp }
+        Box(Modifier.fillMaxSize()) {
 
-        Image(
-            painter = painterResource(id = R.drawable.icons_dropoffmarker),
-            contentDescription = null,
-            modifier = Modifier
-                .padding(bottom = pxValue)
-                .align(Alignment.Center)
-                .size(pxValue)
-        )
+            GoogleMap(
+                modifier = Modifier.matchParentSize(),
+                properties = mapViewModel.properties.value,
+                uiSettings = mapViewModel.uiSettings.value,
+                cameraPositionState = cameraPositionState,
+            )
+
+            val pxValue = with(LocalDensity.current) { (150 / density).dp }
+
+            Image(
+                painter = painterResource(id = R.drawable.icons_dropoffmarker),
+                contentDescription = null,
+                modifier = Modifier
+                    .padding(bottom = pxValue)
+                    .align(Alignment.Center)
+                    .size(pxValue)
+            )
+        }
     }
 }

@@ -72,11 +72,11 @@ object MapUtils {
         } else
             fusedLocationClient.lastLocation
 
-        task.addOnSuccessListener {
-            if (it != null) {
-                onSuccess(it)
-            } else {
+        task.addOnCompleteListener {
+            if (!it.isSuccessful || it.result == null) {
                 onFailure()
+            } else {
+                onSuccess(it.result)
             }
         }
     }
