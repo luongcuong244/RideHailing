@@ -67,4 +67,6 @@
     <string name="dialog_delete_all_notification_title">Xóa tất cả thông báo</string>
     <string name="dialog_delete_all_notification_content">Sau khi xóa, toàn bộ thông báo hiện tại sẽ không còn được hiển thị. Bạn có chắc chắn muốn xóa tất cả thông báo này?</string>
     <string name="cancel">Hủy</string>
+    <string name="confirm_destination_location">Xác nhận điểm đến</string>
+    <string name="confirm_pickup_location">Xác nhận điểm đón</string>
 </resources>

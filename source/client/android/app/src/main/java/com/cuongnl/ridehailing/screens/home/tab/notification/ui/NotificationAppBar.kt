@@ -22,7 +22,7 @@ import com.cuongnl.ridehailing.screens.home.tab.notification.LocalBehavior
 import com.cuongnl.ridehailing.utils.Constant
 import com.cuongnl.ridehailing.viewmodel.NotificationTabUiViewModel
 import com.cuongnl.ridehailing.widgets.AppText
-import com.translator.voicechanger.monster.voicetranslator.ui.common.TouchableOpacityButton
+import com.cuongnl.ridehailing.widgets.TouchableOpacityButton
 import ir.kaaveh.sdpcompose.sdp
 
 @Composable

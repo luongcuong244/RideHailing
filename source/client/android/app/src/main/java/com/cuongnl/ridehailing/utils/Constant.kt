@@ -10,4 +10,6 @@ object Constant {
     const val OTP_TIMEOUT_IN_SECOND = 40L
 
     const val APP_BAR_HEIGHT = 45
+
+    const val MARKER_SIZE_IN_PIXEL = 150
 }

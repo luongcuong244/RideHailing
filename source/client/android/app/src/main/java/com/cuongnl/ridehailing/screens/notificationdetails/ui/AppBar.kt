@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.dp
 import com.cuongnl.ridehailing.R
 import com.cuongnl.ridehailing.utils.Constant
 import com.cuongnl.ridehailing.widgets.NoRippleButton
-import com.translator.voicechanger.monster.voicetranslator.ui.common.TouchableOpacityButton
+import com.cuongnl.ridehailing.widgets.TouchableOpacityButton
 import ir.kaaveh.sdpcompose.sdp
 
 @Composable

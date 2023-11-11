@@ -1,4 +1,4 @@
-package com.translator.voicechanger.monster.voicetranslator.ui.common
+package com.cuongnl.ridehailing.widgets
 
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.gestures.detectTapGestures

@@ -13,7 +13,7 @@ import androidx.compose.ui.res.stringResource
 import com.cuongnl.ridehailing.R
 import com.cuongnl.ridehailing.screens.permission.LocalActivityBehavior
 import com.cuongnl.ridehailing.widgets.AppText
-import com.translator.voicechanger.monster.voicetranslator.ui.common.TouchableOpacityButton
+import com.cuongnl.ridehailing.widgets.TouchableOpacityButton
 import ir.kaaveh.sdpcompose.sdp
 import ir.kaaveh.sdpcompose.ssp
 

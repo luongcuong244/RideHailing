@@ -7,13 +7,16 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.cuongnl.ridehailing.enums.AddressType
 import com.cuongnl.ridehailing.globalstate.CurrentUser
 import com.cuongnl.ridehailing.models.Address
+import com.cuongnl.ridehailing.screens.home.tab.booking.behavior.BookingTabBehavior
 import com.cuongnl.ridehailing.screens.home.tab.booking.ui.AddressesList
 import com.cuongnl.ridehailing.screens.home.tab.booking.ui.BannerVouchers
 import com.cuongnl.ridehailing.screens.home.tab.booking.ui.DashboardBanner
@@ -23,6 +26,9 @@ import com.cuongnl.ridehailing.viewmodel.BookingViewModel
 import com.cuongnl.ridehailing.viewmodel.apiservice.UserServiceViewModel
 import ir.kaaveh.sdpcompose.sdp
 
+val LocalBehavior =
+    staticCompositionLocalOf<BookingTabBehavior> { error("No LocalActivityActionsClass provided") }
+
 @Composable
 fun BookingTab(
     userServiceViewModel: UserServiceViewModel = viewModel(),
@@ -31,26 +37,29 @@ fun BookingTab(
 
     val context = LocalContext.current
 
-    LaunchedEffect(null) {
-        getUserAddress(context, userServiceViewModel, bookingViewModel)
-    }
+    CompositionLocalProvider(LocalBehavior provides BookingTabBehavior(context)) {
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-    ) {
-        DashboardBanner()
+        LaunchedEffect(null) {
+            getUserAddress(context, userServiceViewModel, bookingViewModel)
+        }
 
         Column(
             modifier = Modifier
-                .offset(y = (-30).sdp)
-                .weight(1f)
-                .padding(horizontal = 10.sdp)
+                .fillMaxSize()
         ) {
-            WhereDoYouWantToGo()
-            AddressesList()
-            TransportationMethodsList()
-            BannerVouchers()
+            DashboardBanner()
+
+            Column(
+                modifier = Modifier
+                    .offset(y = (-30).sdp)
+                    .weight(1f)
+                    .padding(horizontal = 10.sdp)
+            ) {
+                WhereDoYouWantToGo()
+                AddressesList()
+                TransportationMethodsList()
+                BannerVouchers()
+            }
         }
     }
 }

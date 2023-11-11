@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -23,13 +22,16 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import com.cuongnl.ridehailing.R
-import com.cuongnl.ridehailing.viewmodel.LoaderViewModel
+import com.cuongnl.ridehailing.screens.home.tab.booking.LocalBehavior
 import com.cuongnl.ridehailing.widgets.AppText
 import com.cuongnl.ridehailing.widgets.NoRippleButton
 import ir.kaaveh.sdpcompose.sdp
 
 @Composable
 fun WhereDoYouWantToGo() {
+
+    val actions = LocalBehavior.current
+
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -62,7 +64,7 @@ fun WhereDoYouWantToGo() {
 
         NoRippleButton(
             onClick = {
-
+                actions.navigateToConfirmLocationScreen()
             }
         ) {
             Row(
