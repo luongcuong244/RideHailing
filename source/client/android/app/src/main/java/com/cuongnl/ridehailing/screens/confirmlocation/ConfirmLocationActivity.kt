@@ -26,7 +26,7 @@ val LocalActivityBehavior = androidx.compose.runtime.staticCompositionLocalOf<IC
     error("No ActivityBehavior provided")
 }
 
-class ConfirmDestinationLocationActivity : BaseActivity(), IConfirmDestinationLocationActivityBehavior {
+class ConfirmLocationActivity : BaseActivity(), IConfirmDestinationLocationActivityBehavior {
 
     private lateinit var confirmLocationViewModel: ConfirmLocationViewModel
     private lateinit var loaderViewModel: LoaderViewModel

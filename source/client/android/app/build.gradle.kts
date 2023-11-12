@@ -104,6 +104,8 @@ dependencies {
     implementation("com.google.android.gms:play-services-location:21.0.1")
 
     implementation("com.google.maps.android:maps-compose:4.1.1")
+
+    implementation("androidx.constraintlayout:constraintlayout-compose:1.0.1")
 }
 
 secrets {

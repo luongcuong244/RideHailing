@@ -29,7 +29,7 @@
             android:value="@integer/google_play_services_version" />
 
         <activity
-            android:name=".screens.confirmlocation.ConfirmDestinationLocationActivity"
+            android:name=".screens.selectinglocation.SelectingLocationActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.RideHailing">
@@ -75,6 +75,10 @@
 
         <activity
             android:name=".screens.notificationdetails.NotificationDetailActivity"
+            android:exported="false"/>
+
+        <activity
+            android:name=".screens.confirmlocation.ConfirmLocationActivity"
             android:exported="false"/>
 
         <activity

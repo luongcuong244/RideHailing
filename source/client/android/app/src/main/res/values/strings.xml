@@ -69,4 +69,11 @@
     <string name="cancel">Hủy</string>
     <string name="confirm_destination_location">Xác nhận điểm đến</string>
     <string name="confirm_pickup_location">Xác nhận điểm đón</string>
+    <string name="select_destination">Chọn điểm đến</string>
+    <string name="select_pickup">Chọn điểm đón</string>
+    <string name="show_all">Tất cả</string>
+    <string name="saved">Đã lưu</string>
+    <string name="enter_pickup_placeholder">Nhập điểm đón …</string>
+    <string name="enter_destination_placeholder">Nhập điểm đến …</string>
+    <string name="your_location">Địa chỉ của bạn</string>
 </resources>

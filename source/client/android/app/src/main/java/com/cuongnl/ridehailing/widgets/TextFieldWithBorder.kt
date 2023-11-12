@@ -1,11 +1,13 @@
 package com.cuongnl.ridehailing.widgets
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -27,9 +29,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import com.cuongnl.ridehailing.R
@@ -38,37 +40,56 @@ import ir.kaaveh.sdpcompose.sdp
 import ir.kaaveh.sdpcompose.ssp
 
 @Composable
-fun CustomTextField(
+fun TextFieldWithBorder(
     onValueChange: (TextFieldValue) -> Unit,
     modifier: Modifier = Modifier,
     placeholder: String = "",
+    activeBorderColor: Int = R.color.app_color,
+    inactiveBorderColor: Int = R.color.gray_300,
     textColor: Color = colorResource(id = R.color.black),
     placeholderColor: Color = colorResource(id = R.color.gray_600),
     textSize: TextUnit = 13.ssp,
-    fontWeight: FontWeight = FontWeight.Normal,
     lineHeight: TextUnit = 24.ssp,
     width: Dp = 0.sdp,
-    cursorColor: Color = colorResource(id = R.color.app_color),
-    showClearButton: Boolean = true,
-    clearButtonBackgroundColor: Color = colorResource(id = R.color.gray_400),
-    clearIconColor: Color = colorResource(id = R.color.black),
-    clearIconPadding: PaddingValues = PaddingValues(4.dp),
-    clearButtonSize: Dp = 15.sdp,
+    height: Dp = 40.sdp,
+    contentPadding: PaddingValues = PaddingValues(horizontal = 10.sdp),
+    borderRadius: Dp = 8.sdp,
+    borderWidth: Dp = 1.dp,
+    cursorColor : Color = colorResource(id = R.color.app_color),
+    showClearButton : Boolean = true,
+    clearButtonBackgroundColor : Color = colorResource(id = R.color.gray_400),
+    clearIconColor : Color = colorResource(id = R.color.black),
+    clearIconPadding : PaddingValues = PaddingValues(4.dp),
+    clearButtonSize : Dp = 15.sdp,
 ) {
+
     var textFieldValue by remember {
         mutableStateOf(
             TextFieldValue("")
         )
     }
 
+    val borderColorId = remember {
+        mutableStateOf(inactiveBorderColor)
+    }
+
     Row(
         modifier = if (width == 0.sdp) {
             modifier
+                .clip(RoundedCornerShape(borderRadius))
                 .fillMaxWidth()
         } else {
             modifier
+                .clip(RoundedCornerShape(borderRadius))
                 .width(width)
-        },
+        }
+            .height(height)
+            .border(
+                borderWidth,
+                colorResource(id = borderColorId.value),
+                RoundedCornerShape(borderRadius)
+            )
+            .padding(contentPadding),
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically,
     ) {
@@ -81,14 +102,17 @@ fun CustomTextField(
             modifier = Modifier
                 .weight(1f)
                 .onFocusChanged {
-
+                    borderColorId.value =
+                        if (it.isFocused)
+                            activeBorderColor
+                        else
+                            inactiveBorderColor
                 },
             textStyle = TextStyle(
                 fontSize = textSize,
                 fontFamily = beVietNamFamily,
                 color = textColor,
                 lineHeight = lineHeight,
-                fontWeight = fontWeight,
             ),
             decorationBox = { innerTextField ->
                 if (textFieldValue.text.isEmpty() && placeholder.isNotEmpty()) {
@@ -97,7 +121,6 @@ fun CustomTextField(
                         fontSize = textSize,
                         color = placeholderColor,
                         lineHeight = lineHeight,
-                        fontWeight = fontWeight,
                     )
                 }
                 innerTextField()
@@ -108,7 +131,7 @@ fun CustomTextField(
         if (showClearButton && textFieldValue.text.isNotEmpty()) {
             TouchableOpacityButton(
                 modifier = Modifier
-                    .padding(start = 10.sdp)
+                    .padding(start = contentPadding.calculateRightPadding(LayoutDirection.Ltr))
                     .clip(RoundedCornerShape(clearButtonSize))
                     .size(clearButtonSize)
                     .background(clearButtonBackgroundColor),

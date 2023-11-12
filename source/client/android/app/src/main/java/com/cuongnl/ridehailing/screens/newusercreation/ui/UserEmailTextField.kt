@@ -14,7 +14,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.cuongnl.ridehailing.R
 import com.cuongnl.ridehailing.viewmodel.UserInfoCreationViewModel
 import com.cuongnl.ridehailing.widgets.AppText
-import com.cuongnl.ridehailing.widgets.CustomTextField
+import com.cuongnl.ridehailing.widgets.TextFieldWithBorder
 import ir.kaaveh.sdpcompose.sdp
 
 @Composable
@@ -41,7 +41,7 @@ fun UserEmailTextField(userInfoCreationViewModel: UserInfoCreationViewModel = vi
                 letterSpacing = 0.1.sp,
             )
         }
-        CustomTextField(
+        TextFieldWithBorder(
             onValueChange = {
                 userInfoCreationViewModel.setUserEmail(it.text)
             },

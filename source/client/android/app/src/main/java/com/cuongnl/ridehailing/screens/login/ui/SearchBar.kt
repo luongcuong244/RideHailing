@@ -7,12 +7,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.cuongnl.ridehailing.R
 import com.cuongnl.ridehailing.viewmodel.CountryCodeBottomSheetViewModel
-import com.cuongnl.ridehailing.widgets.CustomTextField
+import com.cuongnl.ridehailing.widgets.TextFieldWithBorder
 import ir.kaaveh.sdpcompose.sdp
 
 @Composable
 fun SearchBar(countryCodeBottomSheetViewModel: CountryCodeBottomSheetViewModel = viewModel()) {
-    CustomTextField(
+    TextFieldWithBorder(
         onValueChange = {
             countryCodeBottomSheetViewModel.filterCountryCodeList(it.text)
         },

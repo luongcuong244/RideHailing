@@ -13,7 +13,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.cuongnl.ridehailing.R
 import com.cuongnl.ridehailing.viewmodel.UserInfoCreationViewModel
 import com.cuongnl.ridehailing.widgets.AppText
-import com.cuongnl.ridehailing.widgets.CustomTextField
+import com.cuongnl.ridehailing.widgets.TextFieldWithBorder
 import ir.kaaveh.sdpcompose.sdp
 
 @Composable
@@ -36,7 +36,7 @@ fun UserNameTextField(userInfoCreationViewModel: UserInfoCreationViewModel = vie
                 fontSize = 13.sp
             )
         }
-        CustomTextField(
+        TextFieldWithBorder(
             onValueChange = {
                 userInfoCreationViewModel.setUserName(it.text)
             },
