@@ -24,17 +24,21 @@ object MapUtils {
 
         try {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1, object : Geocoder.GeocodeListener {
-                    override fun onGeocode(addresses: MutableList<Address>) {
-                        if (addresses.isNotEmpty()) {
-                            onSuccess(addresses[0].getAddressLine(0))
+                geocoder.getFromLocation(
+                    latLng.latitude,
+                    latLng.longitude,
+                    1,
+                    object : Geocoder.GeocodeListener {
+                        override fun onGeocode(addresses: MutableList<Address>) {
+                            if (addresses.isNotEmpty()) {
+                                onSuccess(addresses[0].getAddressLine(0))
+                            }
                         }
-                    }
 
-                    override fun onError(errorMessage: String?) {
-                        onFailure()
-                    }
-                })
+                        override fun onError(errorMessage: String?) {
+                            onFailure()
+                        }
+                    })
             } else {
                 val addresses: MutableList<Address>? =
                     geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1)
