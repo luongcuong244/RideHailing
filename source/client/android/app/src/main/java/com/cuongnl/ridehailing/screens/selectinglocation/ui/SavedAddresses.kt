@@ -19,19 +19,23 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.cuongnl.ridehailing.R
 import com.cuongnl.ridehailing.enums.AddressType
 import com.cuongnl.ridehailing.globalstate.CurrentUser
 import com.cuongnl.ridehailing.models.Address
+import com.cuongnl.ridehailing.viewmodel.SelectingLocationUiViewModel
 import com.cuongnl.ridehailing.widgets.AppText
 import com.cuongnl.ridehailing.widgets.NoRippleButton
 import com.cuongnl.ridehailing.widgets.TouchableOpacityButton
+import com.google.android.gms.maps.model.LatLng
 import ir.kaaveh.sdpcompose.sdp
 import ir.kaaveh.sdpcompose.ssp
 
@@ -92,7 +96,12 @@ fun AddressesList() {
 }
 
 @Composable
-private fun AddressItem(item: Address) {
+private fun AddressItem(
+    item: Address,
+    selectingLocationUiViewModel: SelectingLocationUiViewModel = viewModel()
+) {
+
+    val context = LocalContext.current
 
     val icon = when (item.addressType) {
         AddressType.HOME -> painterResource(id = R.drawable.ic_homeplace)
@@ -113,7 +122,7 @@ private fun AddressItem(item: Address) {
     }
 
     ItemContent(icon, title, description) {
-
+        selectingLocationUiViewModel.onClickSavedAddress(context, item)
     }
 }
 

@@ -19,6 +19,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -80,6 +81,8 @@ private fun AddItem(
     selectingLocationUiViewModel: SelectingLocationUiViewModel = viewModel()
 ) {
 
+    val context = LocalContext.current
+
     val item = if (isLoading) {
         null
     } else {
@@ -88,7 +91,7 @@ private fun AddItem(
 
     NoRippleButton(onClick = {
         if (!isLoading) {
-            selectingLocationUiViewModel.onClickAddressPredictionResponse(item!!)
+            selectingLocationUiViewModel.onClickAddressPredictionResponse(context, item!!)
         }
     }) {
         Column {

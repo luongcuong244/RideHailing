@@ -1,6 +1,7 @@
 package com.cuongnl.ridehailing.viewmodel
 
 import android.app.Application
+import android.content.Context
 import android.util.Log
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
@@ -11,6 +12,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.AndroidViewModel
 import com.cuongnl.ridehailing.enums.SelectingLocationType
 import com.cuongnl.ridehailing.globalstate.CurrentLocation
+import com.cuongnl.ridehailing.models.Address
 import com.cuongnl.ridehailing.utils.MapUtils
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.maps.model.LatLng
@@ -69,15 +71,28 @@ class SelectingLocationUiViewModel(application: Application) : AndroidViewModel(
         }
     }
 
-    fun onClickAddressPredictionResponse(addressPrediction: AutocompletePrediction) {
+    fun onClickAddressPredictionResponse(context: Context, addressPrediction: AutocompletePrediction) {
         val text = addressPrediction.getPrimaryText(null).toString()
 
         when (currentAddressType.value) {
             SelectingLocationType.PICKUP_LOCATION -> {
-                setPickupLocationAndUpdateTextField(addressPrediction.placeId, text)
+                setPickupLocationAndUpdateTextField(context, addressPrediction.placeId, text)
             }
             SelectingLocationType.DESTINATION_LOCATION -> {
-                setDestinationLocationAndUpdateTextField(addressPrediction.placeId, text)
+                setDestinationLocationAndUpdateTextField(context, addressPrediction.placeId, text)
+            }
+        }
+    }
+
+    fun onClickSavedAddress(context: Context, item: Address) {
+        val latLng = LatLng(item.latitude, item.longitude)
+
+        when (currentAddressType.value) {
+            SelectingLocationType.PICKUP_LOCATION -> {
+                setPickupLocationAndPerformNextAction(context, latLng, item.fullName)
+            }
+            SelectingLocationType.DESTINATION_LOCATION -> {
+                setDestinationLocationAndPerformNextAction(context, latLng, item.fullName)
             }
         }
     }
@@ -107,34 +122,50 @@ class SelectingLocationUiViewModel(application: Application) : AndroidViewModel(
             }
     }
 
-    fun setDestinationLocationAndUpdateTextField(placeId: String, text: String) {
+    fun setDestinationLocationAndUpdateTextField(context: Context, placeId: String, text: String) {
         MapUtils.getPlaceById(placesClient = placesClient,
             placeId = placeId,
             placeFields = listOf(Place.Field.LAT_LNG),
             onSuccess = {
-                setDestinationLocationLatLng(it.latLng)
-                setDestinationTextField(text)
-
-                if (pickupLocationLatLng.value == null) {
-                    pickupFocusRequester.requestFocus()
-                }
+                setDestinationLocationAndPerformNextAction(context, it.latLng, text)
             }
         )
     }
 
-    fun setPickupLocationAndUpdateTextField(placeId: String, text: String) {
+    fun setDestinationLocationAndPerformNextAction(context: Context, latLng: LatLng?, addressText: String) {
+        setDestinationLocationLatLng(latLng)
+        setDestinationTextField(addressText)
+
+        if (pickupLocationLatLng.value == null) {
+            pickupFocusRequester.requestFocus()
+        } else {
+            navigateToBookingActivity(context)
+        }
+    }
+
+    fun setPickupLocationAndUpdateTextField(context: Context, placeId: String, text: String) {
         MapUtils.getPlaceById(placesClient = placesClient,
             placeId = placeId,
             placeFields = listOf(Place.Field.LAT_LNG),
             onSuccess = {
-                setPickupLocationLatLng(it.latLng)
-                setPickupTextField(text)
-
-                if (destinationLocationLatLng.value == null) {
-                    destinationFocusRequester.requestFocus()
-                }
+                setPickupLocationAndPerformNextAction(context, it.latLng, text)
             }
         )
+    }
+
+    fun setPickupLocationAndPerformNextAction(context: Context, latLng: LatLng?, addressText: String) {
+        setPickupLocationLatLng(latLng)
+        setPickupTextField(addressText)
+
+        if (destinationLocationLatLng.value == null) {
+            destinationFocusRequester.requestFocus()
+        } else {
+            navigateToBookingActivity(context)
+        }
+    }
+
+    fun navigateToBookingActivity(context: Context) {
+        Log.d(TAG, "navigateToBookingActivity: ")
     }
 
     fun setIsFetchingAddressPredictions(isFetching: Boolean) {
