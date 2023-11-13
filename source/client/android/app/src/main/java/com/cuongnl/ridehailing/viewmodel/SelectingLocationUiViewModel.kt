@@ -10,6 +10,7 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.AndroidViewModel
 import com.cuongnl.ridehailing.enums.SelectingLocationType
+import com.cuongnl.ridehailing.globalstate.CurrentLocation
 import com.cuongnl.ridehailing.utils.MapUtils
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.maps.model.LatLng
@@ -30,16 +31,14 @@ class SelectingLocationUiViewModel(application: Application) : AndroidViewModel(
 
     val addressPredictions = mutableStateListOf<AutocompletePrediction>()
     private val _isFetchingAddressPredictions = mutableStateOf(false)
-    private val _currentLocationLatLng = mutableStateOf(LatLng(0.0, 0.0))
     private val _currentAddressType = mutableStateOf(SelectingLocationType.DESTINATION_LOCATION)
     private val _isAddressResponsesVisible = mutableStateOf(false)
-    private val _destinationLocationLatLng = mutableStateOf<LatLng?>(null)
-    private val _pickupLocationLatLng = mutableStateOf<LatLng?>(null)
-    private val _destinationTextField = mutableStateOf(TextFieldValue(""))
-    private val _pickupTextField = mutableStateOf(TextFieldValue(""))
+    private val _destinationLocationLatLng = mutableStateOf<LatLng?>(CurrentLocation.getLatLng())
+    private val _pickupLocationLatLng = mutableStateOf<LatLng?>(CurrentLocation.getLatLng())
+    private val _destinationTextField = mutableStateOf(TextFieldValue(CurrentLocation.getFullAddress()))
+    private val _pickupTextField = mutableStateOf(TextFieldValue(CurrentLocation.getFullAddress()))
 
     val isFetchingAddressPredictions: State<Boolean> = _isFetchingAddressPredictions
-    val currentLocationLatLng: State<LatLng> = _currentLocationLatLng
     val currentAddressType: State<SelectingLocationType> = _currentAddressType
     val isAddressResponsesVisible: State<Boolean> = _isAddressResponsesVisible
     val destinationLocationLatLng: State<LatLng?> = _destinationLocationLatLng
@@ -91,7 +90,7 @@ class SelectingLocationUiViewModel(application: Application) : AndroidViewModel(
         cancellationTokenSource = CancellationTokenSource()
 
         val request =
-            FindAutocompletePredictionsRequest.builder().setOrigin(_currentLocationLatLng.value)
+            FindAutocompletePredictionsRequest.builder().setOrigin(CurrentLocation.getLatLng())
                 .setCountries("VN").setTypesFilter(listOf(PlaceTypes.ADDRESS))
                 .setCancellationToken(cancellationTokenSource.token).setQuery(query).build()
 
@@ -114,7 +113,7 @@ class SelectingLocationUiViewModel(application: Application) : AndroidViewModel(
             placeFields = listOf(Place.Field.LAT_LNG),
             onSuccess = {
                 setDestinationLocationLatLng(it.latLng)
-                setDestinationTextField(destinationTextField.value.copy(text))
+                setDestinationTextField(text)
 
                 if (pickupLocationLatLng.value == null) {
                     pickupFocusRequester.requestFocus()
@@ -129,7 +128,7 @@ class SelectingLocationUiViewModel(application: Application) : AndroidViewModel(
             placeFields = listOf(Place.Field.LAT_LNG),
             onSuccess = {
                 setPickupLocationLatLng(it.latLng)
-                setPickupTextField(pickupTextField.value.copy(text))
+                setPickupTextField(text)
 
                 if (destinationLocationLatLng.value == null) {
                     destinationFocusRequester.requestFocus()
@@ -140,10 +139,6 @@ class SelectingLocationUiViewModel(application: Application) : AndroidViewModel(
 
     fun setIsFetchingAddressPredictions(isFetching: Boolean) {
         _isFetchingAddressPredictions.value = isFetching
-    }
-
-    fun setCurrentLocationLatLng(latLng: LatLng) {
-        _currentLocationLatLng.value = latLng
     }
 
     fun setCurrentAddressType(addressType: SelectingLocationType) {
@@ -166,12 +161,12 @@ class SelectingLocationUiViewModel(application: Application) : AndroidViewModel(
         _pickupLocationLatLng.value = latLng
     }
 
-    fun setDestinationTextField(text: TextFieldValue) {
-        _destinationTextField.value = text
+    fun setDestinationTextField(newText: String) {
+        _destinationTextField.value = _destinationTextField.value.copy(newText)
     }
 
-    fun setPickupTextField(text: TextFieldValue) {
-        _pickupTextField.value = text
+    fun setPickupTextField(newText: String) {
+        _pickupTextField.value = _pickupTextField.value.copy(newText)
     }
 
     fun getDestinationTextFieldState(): MutableState<TextFieldValue> {

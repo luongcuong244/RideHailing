@@ -32,6 +32,10 @@ fun BoxScope.BackButton() {
         modifier = Modifier
             .padding(top = 50.sdp, start = 20.sdp)
             .align(Alignment.TopStart)
+            .shadow(
+                10.dp,
+                RoundedCornerShape(100)
+            )
             .size(28.sdp)
             .clip(RoundedCornerShape(100))
             .shadow(5.dp)

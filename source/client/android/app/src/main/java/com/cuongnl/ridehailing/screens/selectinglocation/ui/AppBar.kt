@@ -16,6 +16,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.cuongnl.ridehailing.R
 import com.cuongnl.ridehailing.enums.SelectingLocationType
+import com.cuongnl.ridehailing.screens.selectinglocation.LocalActivityBehavior
 import com.cuongnl.ridehailing.viewmodel.SelectingLocationUiViewModel
 import com.cuongnl.ridehailing.widgets.AppText
 import com.cuongnl.ridehailing.widgets.NoRippleButton
@@ -36,7 +37,14 @@ fun AppBar() {
 
 @Composable
 private fun BackButton() {
-    NoRippleButton {
+
+    val actions = LocalActivityBehavior.current
+
+    NoRippleButton(
+        onClick = {
+            actions.onClickBackButton()
+        }
+    ) {
         Image(
             painter = painterResource(id = R.drawable.arrow_back),
             contentDescription = null,

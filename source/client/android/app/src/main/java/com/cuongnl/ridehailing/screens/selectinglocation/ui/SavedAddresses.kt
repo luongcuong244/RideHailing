@@ -3,7 +3,6 @@ package com.cuongnl.ridehailing.screens.selectinglocation.ui
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -26,13 +25,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.cuongnl.ridehailing.R
 import com.cuongnl.ridehailing.enums.AddressType
-import com.cuongnl.ridehailing.extensions.shimmerEffect
 import com.cuongnl.ridehailing.globalstate.CurrentUser
 import com.cuongnl.ridehailing.models.Address
-import com.cuongnl.ridehailing.viewmodel.BookingViewModel
 import com.cuongnl.ridehailing.widgets.AppText
 import com.cuongnl.ridehailing.widgets.NoRippleButton
 import com.cuongnl.ridehailing.widgets.TouchableOpacityButton
@@ -79,26 +75,16 @@ fun SavedAddresses(
 }
 
 @Composable
-fun AddressesList(bookingViewModel: BookingViewModel = viewModel()) {
+fun AddressesList() {
 
-    val data = CurrentUser.getUser()?.addresses
-
-    val size = if (bookingViewModel.isLoadingAddress.value) {
-        3
-    } else {
-        data?.size ?: 0
-    }
+    val data = CurrentUser.getUser()!!.addresses
 
     LazyRow(
         modifier = Modifier
             .padding(top = 9.sdp),
         content = {
-            items(size) { index ->
-                if (bookingViewModel.isLoadingAddress.value) {
-                    ItemContent(isLoading = true)
-                } else {
-                    AddressItem(data!![index])
-                }
+            items(data.size) { index ->
+                AddressItem(data[index])
             }
         },
         horizontalArrangement = Arrangement.spacedBy(8.sdp, Alignment.CenterHorizontally),
@@ -136,15 +122,12 @@ private fun ItemContent(
     icon: Painter? = null,
     title: String? = null,
     description: String? = null,
-    isLoading: Boolean = false,
     onClick: () -> Unit = {},
 ) {
 
     NoRippleButton(
         onClick = {
-            if (!isLoading) {
-                onClick()
-            }
+            onClick()
         },
     ) {
         Row(
@@ -158,22 +141,13 @@ private fun ItemContent(
             horizontalArrangement = Arrangement.spacedBy(7.sdp)
         ) {
 
-            if (isLoading) {
-                Box(
-                    modifier = Modifier
-                        .padding(start = 5.sdp)
-                        .size(20.sdp)
-                        .shimmerEffect()
-                )
-            } else {
-                Image(
-                    painter = icon!!,
-                    contentDescription = null,
-                    modifier = Modifier
-                        .padding(start = 5.sdp)
-                        .size(20.sdp)
-                )
-            }
+            Image(
+                painter = icon!!,
+                contentDescription = null,
+                modifier = Modifier
+                    .padding(start = 5.sdp)
+                    .size(20.sdp)
+            )
 
             Column(
                 modifier = Modifier
@@ -182,44 +156,25 @@ private fun ItemContent(
                 verticalArrangement = Arrangement.Center,
             ) {
 
-                if (isLoading) {
-                    Box(
-                        modifier = Modifier
-                            .padding(bottom = 5.sdp)
-                            .fillMaxWidth()
-                            .height(9.sdp)
-                            .shimmerEffect()
-                    )
-                } else {
-                    AppText(
-                        text = title!!,
-                        color = Color.Black,
-                        fontSize = 10.ssp,
-                        fontWeight = FontWeight.SemiBold,
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
-                    )
-                }
+                AppText(
+                    text = title!!,
+                    color = Color.Black,
+                    fontSize = 10.ssp,
+                    fontWeight = FontWeight.SemiBold,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
 
-                if (isLoading) {
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(7.sdp)
-                            .shimmerEffect()
+                if (description != null) {
+                    AppText(
+                        text = description,
+                        color = Color.Black,
+                        fontSize = 8.ssp,
+                        fontWeight = FontWeight.Light,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                        letterSpacing = 0.1.sp
                     )
-                } else {
-                    if (description != null) {
-                        AppText(
-                            text = description,
-                            color = Color.Black,
-                            fontSize = 8.ssp,
-                            fontWeight = FontWeight.Light,
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis,
-                            letterSpacing = 0.1.sp
-                        )
-                    }
                 }
             }
         }

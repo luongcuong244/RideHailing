@@ -1,5 +1,6 @@
 package com.cuongnl.ridehailing.screens.confirmlocation
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.compose.setContent
@@ -12,10 +13,14 @@ import androidx.lifecycle.ViewModelProvider
 import com.cuongnl.ridehailing.activitybehavior.IConfirmDestinationLocationActivityBehavior
 import com.cuongnl.ridehailing.core.BaseActivity
 import com.cuongnl.ridehailing.enums.ConfirmLocationState
+import com.cuongnl.ridehailing.enums.SelectingLocationType
+import com.cuongnl.ridehailing.globalstate.CurrentLocation
 import com.cuongnl.ridehailing.screens.confirmlocation.ui.BackButton
 import com.cuongnl.ridehailing.screens.confirmlocation.ui.BottomView
 import com.cuongnl.ridehailing.screens.confirmlocation.ui.MapView
+import com.cuongnl.ridehailing.screens.selectinglocation.SelectingLocationActivity
 import com.cuongnl.ridehailing.theme.AppTheme
+import com.cuongnl.ridehailing.utils.Constant
 import com.cuongnl.ridehailing.utils.MapUtils
 import com.cuongnl.ridehailing.viewmodel.ConfirmLocationViewModel
 import com.cuongnl.ridehailing.viewmodel.LoaderViewModel
@@ -48,25 +53,26 @@ class ConfirmLocationActivity : BaseActivity(), IConfirmDestinationLocationActiv
         confirmLocationViewModel = ViewModelProvider(this)[ConfirmLocationViewModel::class.java]
         loaderViewModel = ViewModelProvider(this)[LoaderViewModel::class.java]
 
-        loaderViewModel.setLoading(true)
-
-        MapUtils.getCurrentLocation(
-            this,
-            onSuccess = {
-                val latLng = LatLng(it.latitude, it.longitude)
-                confirmLocationViewModel.setDestinationLocationLatLngAndLoadAddress(this, latLng)
-                confirmLocationViewModel.setCurrentLocationLatLng(latLng)
-                loaderViewModel.setLoading(false)
-            },
-            onFailure = {
-                loaderViewModel.setLoading(false)
-                Toast.makeText(this, "Cannot get current location", Toast.LENGTH_SHORT).show()
-            },
-        )
+        confirmLocationViewModel.setDestinationLocationLatLngAndLoadAddress(this, CurrentLocation.getLatLng())
     }
 
     override fun editLocation() {
+        val intent = Intent(this, SelectingLocationActivity::class.java)
 
+        if (confirmLocationViewModel.destinationLocationLatLng.value != null && confirmLocationViewModel.destinationLocationAddress.value != null) {
+            intent.putExtra(Constant.BUNDLE_DESTINATION_LAT_LNG, confirmLocationViewModel.destinationLocationLatLng.value)
+            intent.putExtra(Constant.BUNDLE_DESTINATION_ADDRESS, confirmLocationViewModel.destinationLocationAddress.value)
+        }
+        if (confirmLocationViewModel.pickupLocationLatLng.value != null && confirmLocationViewModel.pickupLocationAddress.value != null) {
+            intent.putExtra(Constant.BUNDLE_PICKUP_LAT_LNG, confirmLocationViewModel.pickupLocationLatLng.value)
+            intent.putExtra(Constant.BUNDLE_PICKUP_ADDRESS, confirmLocationViewModel.pickupLocationAddress.value)
+        }
+        when (confirmLocationViewModel.confirmLocationState.value) {
+            ConfirmLocationState.CHOOSING_DESTINATION_LOCATION -> intent.putExtra(Constant.BUNDLE_SELECTING_LOCATION_TYPE, SelectingLocationType.DESTINATION_LOCATION)
+            ConfirmLocationState.CHOOSING_PICKUP_LOCATION -> intent.putExtra(Constant.BUNDLE_SELECTING_LOCATION_TYPE, SelectingLocationType.PICKUP_LOCATION)
+        }
+
+        startActivity(intent)
     }
 
     override fun onClickConfirmButton() {
@@ -76,7 +82,7 @@ class ConfirmLocationActivity : BaseActivity(), IConfirmDestinationLocationActiv
                 confirmLocationViewModel.setConfirmLocationState(ConfirmLocationState.CHOOSING_PICKUP_LOCATION)
 
                 if (confirmLocationViewModel.pickupLocationLatLng.value == null) {
-                    confirmLocationViewModel.setPickupLocationLatLngAndLoadAddress(this, confirmLocationViewModel.currentLocationLatLng.value!!)
+                    confirmLocationViewModel.setPickupLocationLatLngAndLoadAddress(this, CurrentLocation.getLatLng())
                 }
             }
             ConfirmLocationState.CHOOSING_PICKUP_LOCATION -> {

@@ -1,6 +1,7 @@
 package com.cuongnl.ridehailing.screens.selectinglocation
 
 import android.os.Bundle
+import android.os.Handler
 import android.widget.Toast
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
@@ -20,11 +21,13 @@ import androidx.lifecycle.ViewModelProvider
 import com.cuongnl.ridehailing.R
 import com.cuongnl.ridehailing.activitybehavior.ISelectingLocationActivityBehavior
 import com.cuongnl.ridehailing.core.BaseActivity
+import com.cuongnl.ridehailing.enums.SelectingLocationType
 import com.cuongnl.ridehailing.screens.selectinglocation.ui.AppBar
 import com.cuongnl.ridehailing.screens.selectinglocation.ui.FetchAddressResponses
 import com.cuongnl.ridehailing.screens.selectinglocation.ui.SavedAddresses
 import com.cuongnl.ridehailing.screens.selectinglocation.ui.SearchingLocation
 import com.cuongnl.ridehailing.theme.AppTheme
+import com.cuongnl.ridehailing.utils.Constant
 import com.cuongnl.ridehailing.utils.MapUtils
 import com.cuongnl.ridehailing.viewmodel.SelectingLocationUiViewModel
 import com.google.android.gms.maps.model.LatLng
@@ -52,18 +55,35 @@ class SelectingLocationActivity : BaseActivity(), ISelectingLocationActivityBeha
     private fun setupViewModel() {
         selectingLocationUiViewModel = ViewModelProvider(this)[SelectingLocationUiViewModel::class.java]
 
-        MapUtils.getCurrentLocation(
-            this,
-            onSuccess = {
-                selectingLocationUiViewModel.setCurrentLocationLatLng(LatLng(it.latitude, it.longitude))
-            },
-            onFailure = {
-                Toast.makeText(this, "Failed to get current location", Toast.LENGTH_SHORT).show()
-            },
-            onPermissionNotGranted = {
-                Toast.makeText(this, "Location permission not granted", Toast.LENGTH_SHORT).show()
-            }
-        )
+        val destinationLocationLatLng = intent.getParcelableExtra<LatLng>(Constant.BUNDLE_DESTINATION_LAT_LNG)
+        val destinationLocationAddress = intent.getStringExtra(Constant.BUNDLE_DESTINATION_ADDRESS)
+        val pickupLocationLatLng = intent.getParcelableExtra<LatLng>(Constant.BUNDLE_PICKUP_LAT_LNG)
+        val pickupLocationAddress = intent.getStringExtra(Constant.BUNDLE_PICKUP_ADDRESS)
+        val selectingLocationType = intent.getSerializableExtra(Constant.BUNDLE_SELECTING_LOCATION_TYPE) as? SelectingLocationType
+
+        if (destinationLocationLatLng != null) {
+            selectingLocationUiViewModel.setDestinationLocationLatLng(destinationLocationLatLng)
+        }
+
+        if (destinationLocationAddress != null) {
+            selectingLocationUiViewModel.setDestinationTextField(destinationLocationAddress)
+        }
+
+        if (pickupLocationLatLng != null) {
+            selectingLocationUiViewModel.setPickupLocationLatLng(pickupLocationLatLng)
+        }
+
+        if (pickupLocationAddress != null) {
+            selectingLocationUiViewModel.setPickupTextField(pickupLocationAddress)
+        }
+
+        if (selectingLocationType != null) {
+            selectingLocationUiViewModel.setCurrentAddressType(selectingLocationType)
+        }
+    }
+
+    override fun onClickBackButton() {
+        finish()
     }
 }
 

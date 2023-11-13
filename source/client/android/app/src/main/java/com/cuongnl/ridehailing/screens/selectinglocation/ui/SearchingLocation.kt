@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -68,7 +69,13 @@ fun SearchingLocation(
 private fun PickupSearchBar(
     selectingLocationUiViewModel: SelectingLocationUiViewModel = viewModel(),
 ) {
-    
+
+    LaunchedEffect(null) {
+        if (selectingLocationUiViewModel.currentAddressType.value == SelectingLocationType.PICKUP_LOCATION) {
+            selectingLocationUiViewModel.pickupFocusRequester.requestFocus()
+        }
+    }
+
     Column(
         verticalArrangement = Arrangement.spacedBy(6.sdp)
     ) {
@@ -128,6 +135,12 @@ private fun PickupSearchBar(
 private fun DestinationSearchBar(
     selectingLocationUiViewModel: SelectingLocationUiViewModel = viewModel(),
 ) {
+
+    LaunchedEffect(null) {
+        if (selectingLocationUiViewModel.currentAddressType.value == SelectingLocationType.DESTINATION_LOCATION) {
+            selectingLocationUiViewModel.destinationFocusRequester.requestFocus()
+        }
+    }
 
     Column {
         Row(

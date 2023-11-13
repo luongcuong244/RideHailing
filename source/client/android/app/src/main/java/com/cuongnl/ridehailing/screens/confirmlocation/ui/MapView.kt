@@ -17,6 +17,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.cuongnl.ridehailing.R
 import com.cuongnl.ridehailing.enums.ConfirmLocationState
 import com.cuongnl.ridehailing.extensions.bitmapDescriptorFromVector
+import com.cuongnl.ridehailing.globalstate.CurrentLocation
 import com.cuongnl.ridehailing.utils.Constant
 import com.cuongnl.ridehailing.viewmodel.ConfirmLocationViewModel
 import com.cuongnl.ridehailing.viewmodel.LoaderViewModel
@@ -38,7 +39,7 @@ fun MapView(
 
     val context = LocalContext.current
 
-    if (confirmLocationViewModel.currentLocationLatLng.value != null && !loaderViewModel.isLoading.value) {
+    if (!loaderViewModel.isLoading.value) {
 
         val cameraPositionState = rememberCameraPositionState {
             position = CameraPosition.fromLatLngZoom(
@@ -76,9 +77,7 @@ fun MapView(
                         )
                     } else {
                         cameraPositionState.move(
-                            CameraUpdateFactory.newLatLng(
-                                confirmLocationViewModel.currentLocationLatLng.value!!
-                            )
+                            CameraUpdateFactory.newLatLng(CurrentLocation.getLatLng())
                         )
                     }
                 }
@@ -92,9 +91,7 @@ fun MapView(
                         )
                     } else {
                         cameraPositionState.move(
-                            CameraUpdateFactory.newLatLng(
-                                confirmLocationViewModel.currentLocationLatLng.value!!
-                            )
+                            CameraUpdateFactory.newLatLng(CurrentLocation.getLatLng())
                         )
                     }
                 }

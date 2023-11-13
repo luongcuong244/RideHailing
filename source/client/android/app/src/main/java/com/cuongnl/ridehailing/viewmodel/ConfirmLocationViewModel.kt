@@ -10,7 +10,6 @@ import com.google.android.gms.maps.model.LatLng
 
 class ConfirmLocationViewModel : ViewModel() {
 
-    private var _currentLocationLatLng = mutableStateOf<LatLng?>(null)
     private val _confirmLocationState =
         mutableStateOf(ConfirmLocationState.CHOOSING_DESTINATION_LOCATION)
     private val _destinationLocationLatLng = mutableStateOf<LatLng?>(null)
@@ -19,7 +18,6 @@ class ConfirmLocationViewModel : ViewModel() {
     private val _pickupLocationAddress = mutableStateOf<String?>(null)
     private val _isAddressLoading = mutableStateOf(false)
 
-    val currentLocationLatLng: State<LatLng?> = _currentLocationLatLng
     val confirmLocationState: State<ConfirmLocationState> = _confirmLocationState
     val destinationLocationLatLng: State<LatLng?> = _destinationLocationLatLng
     val pickupLocationLatLng: State<LatLng?> = _pickupLocationLatLng
@@ -29,10 +27,6 @@ class ConfirmLocationViewModel : ViewModel() {
 
     fun setConfirmLocationState(confirmLocationState: ConfirmLocationState) {
         _confirmLocationState.value = confirmLocationState
-    }
-
-    fun setCurrentLocationLatLng(latLng: LatLng) {
-        _currentLocationLatLng.value = latLng
     }
 
     fun setDestinationLocationLatLngAndLoadAddress(context: Context, latLng: LatLng) {
