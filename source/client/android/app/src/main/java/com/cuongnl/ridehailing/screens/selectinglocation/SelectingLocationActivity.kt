@@ -1,6 +1,7 @@
 package com.cuongnl.ridehailing.screens.selectinglocation
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -15,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.lifecycle.ViewModelProvider
 import com.cuongnl.ridehailing.R
 import com.cuongnl.ridehailing.activitybehavior.ISelectingLocationActivityBehavior
 import com.cuongnl.ridehailing.core.BaseActivity
@@ -23,20 +25,45 @@ import com.cuongnl.ridehailing.screens.selectinglocation.ui.FetchAddressResponse
 import com.cuongnl.ridehailing.screens.selectinglocation.ui.SavedAddresses
 import com.cuongnl.ridehailing.screens.selectinglocation.ui.SearchingLocation
 import com.cuongnl.ridehailing.theme.AppTheme
+import com.cuongnl.ridehailing.utils.MapUtils
+import com.cuongnl.ridehailing.viewmodel.SelectingLocationUiViewModel
+import com.google.android.gms.maps.model.LatLng
 import ir.kaaveh.sdpcompose.sdp
 
 val LocalActivityBehavior =
     staticCompositionLocalOf<ISelectingLocationActivityBehavior> { error("No LocalActivityActionsClass provided") }
 
 class SelectingLocationActivity : BaseActivity(), ISelectingLocationActivityBehavior {
+
+    private lateinit var selectingLocationUiViewModel: SelectingLocationUiViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        setupViewModel()
 
         setContent {
             CompositionLocalProvider(value = LocalActivityBehavior provides this) {
                 Screen()
             }
         }
+    }
+
+    private fun setupViewModel() {
+        selectingLocationUiViewModel = ViewModelProvider(this)[SelectingLocationUiViewModel::class.java]
+
+        MapUtils.getCurrentLocation(
+            this,
+            onSuccess = {
+                selectingLocationUiViewModel.setCurrentLocationLatLng(LatLng(it.latitude, it.longitude))
+            },
+            onFailure = {
+                Toast.makeText(this, "Failed to get current location", Toast.LENGTH_SHORT).show()
+            },
+            onPermissionNotGranted = {
+                Toast.makeText(this, "Location permission not granted", Toast.LENGTH_SHORT).show()
+            }
+        )
     }
 }
 

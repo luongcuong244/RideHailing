@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
@@ -24,72 +25,139 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.cuongnl.ridehailing.R
+import com.cuongnl.ridehailing.enums.SelectingLocationType
+import com.cuongnl.ridehailing.extensions.shimmerEffect
+import com.cuongnl.ridehailing.viewmodel.SelectingLocationUiViewModel
 import com.cuongnl.ridehailing.widgets.AppText
+import com.cuongnl.ridehailing.widgets.NoRippleButton
 import ir.kaaveh.sdpcompose.sdp
 
 @Composable
 fun FetchAddressResponses(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    selectingLocationUiViewModel: SelectingLocationUiViewModel = viewModel(),
 ) {
 
-    LazyColumn(
-        modifier = modifier
-            .fillMaxSize()
-            .clip(RoundedCornerShape(bottomEnd = 10.sdp, bottomStart = 10.sdp))
-            .background(Color.White)
-            .padding(top = 20.sdp)
-            .padding(horizontal = 10.sdp),
-        content = {
-            items(5) {
-                AddItem(it)
-            }
-        },
-    )
+    val shouldVisible =
+        selectingLocationUiViewModel.isAddressResponsesVisible.value && (when (selectingLocationUiViewModel.currentAddressType.value) {
+            SelectingLocationType.PICKUP_LOCATION -> selectingLocationUiViewModel.pickupTextField.value.text.isNotEmpty()
+            SelectingLocationType.DESTINATION_LOCATION -> selectingLocationUiViewModel.destinationTextField.value.text.isNotEmpty()
+        })
+
+    if (shouldVisible) {
+
+        val size = if (selectingLocationUiViewModel.isFetchingAddressPredictions.value) {
+            5
+        } else {
+            selectingLocationUiViewModel.addressPredictions.size
+        }
+
+        LazyColumn(
+            modifier = modifier
+                .fillMaxSize()
+                .clip(RoundedCornerShape(bottomEnd = 10.sdp, bottomStart = 10.sdp))
+                .background(Color.White)
+                .padding(top = 20.sdp)
+                .padding(horizontal = 10.sdp),
+            content = {
+                items(size) {
+
+                    val isLoading = selectingLocationUiViewModel.isFetchingAddressPredictions.value
+
+                    AddItem(it, isLoading)
+                }
+            },
+        )
+    }
 }
 
 @Composable
-private fun AddItem(index: Int) {
+private fun AddItem(
+    index: Int,
+    isLoading: Boolean = false,
+    selectingLocationUiViewModel: SelectingLocationUiViewModel = viewModel()
+) {
 
-    Column {
-        Row(
-            modifier = Modifier
-                .padding(7.sdp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(10.sdp)
-        ) {
-            Image(
-                painter = painterResource(id = R.drawable.ic_placeholder),
-                contentDescription = null,
-                modifier = Modifier
-                    .size(18.sdp)
-            )
+    val item = if (isLoading) {
+        null
+    } else {
+        selectingLocationUiViewModel.addressPredictions[index]
+    }
 
-            Column(
-                verticalArrangement = Arrangement.spacedBy(3.dp)
-            ) {
-                AppText(
-                    text = "199 Phố Liễu Giai",
-                    fontSize = 14.sp,
-                    fontWeight = FontWeight.Medium,
-                )
-
-                AppText(
-                    text = "199 Phố Liễu Giai, Liễu Giai, Ba Đình, Hà Nội, Việt Nam",
-                    fontSize = 12.sp,
-                    fontWeight = FontWeight.Normal,
-                    overflow = TextOverflow.Ellipsis,
-                    maxLines = 1,
-                    color = colorResource(id = R.color.gray_700)
-                )
-            }
+    NoRippleButton(onClick = {
+        if (!isLoading) {
+            selectingLocationUiViewModel.onClickAddressPredictionResponse(item!!)
         }
+    }) {
+        Column {
+            Row(
+                modifier = Modifier.padding(7.sdp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(10.sdp)
+            ) {
 
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(0.5.dp)
-                .background(colorResource(id = R.color.gray_200))
-        )
+                if (isLoading) {
+                    Box(
+                        modifier = Modifier
+                            .size(18.sdp)
+                            .shimmerEffect()
+                    )
+                } else {
+                    Image(
+                        painter = painterResource(id = R.drawable.ic_placeholder),
+                        contentDescription = null,
+                        modifier = Modifier.size(18.sdp)
+                    )
+                }
+
+                Column(
+                    verticalArrangement = Arrangement.spacedBy(3.dp),
+                    modifier = Modifier.height(40.dp)
+                ) {
+
+                    if (isLoading) {
+                        Box(
+                            modifier = Modifier
+                                .width(75.sdp)
+                                .height(18.dp)
+                                .shimmerEffect()
+                        )
+                    } else {
+                        AppText(
+                            text = item!!.getPrimaryText(null).toString(),
+                            fontSize = 14.sp,
+                            fontWeight = FontWeight.Medium,
+                        )
+                    }
+
+                    if (isLoading) {
+                        Box(
+                            modifier = Modifier
+                                .width(150.sdp)
+                                .height(18.dp)
+                                .shimmerEffect()
+                        )
+                    } else {
+                        AppText(
+                            text = item!!.getFullText(null).toString(),
+                            fontSize = 12.sp,
+                            fontWeight = FontWeight.Normal,
+                            overflow = TextOverflow.Ellipsis,
+                            maxLines = 1,
+                            color = colorResource(id = R.color.gray_700)
+                        )
+                    }
+                }
+            }
+
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(0.5.dp)
+                    .background(colorResource(id = R.color.gray_200))
+            )
+        }
     }
 }

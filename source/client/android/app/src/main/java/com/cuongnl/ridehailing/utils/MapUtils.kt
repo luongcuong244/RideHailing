@@ -7,12 +7,21 @@ import android.location.Address
 import android.location.Geocoder
 import android.location.Location
 import android.os.Build
+import android.util.Log
 import androidx.core.app.ActivityCompat
+import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.libraries.places.api.model.Place
+import com.google.android.libraries.places.api.net.FetchPlaceRequest
+import com.google.android.libraries.places.api.net.FetchPlaceResponse
+import com.google.android.libraries.places.api.net.PlacesClient
 import java.io.IOException
 
 object MapUtils {
+
+    const val TAG = "MapUtils"
+
     fun getAddressByCoordinates(
         context: Context,
         latLng: LatLng,
@@ -83,5 +92,26 @@ object MapUtils {
                 onSuccess(it.result)
             }
         }
+    }
+
+    fun getPlaceById(
+        placesClient: PlacesClient,
+        placeId: String,
+        placeFields: List<Place.Field>,
+        onSuccess: (Place) -> Unit = {},
+        onFailure: (Exception) -> Unit = {},
+    ) {
+        val request = FetchPlaceRequest.newInstance(placeId, placeFields)
+
+        placesClient.fetchPlace(request)
+            .addOnSuccessListener { response: FetchPlaceResponse ->
+                onSuccess(response.place)
+            }.addOnFailureListener { exception: Exception ->
+                if (exception is ApiException) {
+                    Log.e(TAG, "Place not found: ${exception.message}")
+                    val statusCode = exception.statusCode
+                }
+                onFailure(exception)
+            }
     }
 }

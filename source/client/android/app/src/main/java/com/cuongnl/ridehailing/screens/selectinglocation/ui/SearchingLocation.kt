@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.cuongnl.ridehailing.R
+import com.cuongnl.ridehailing.enums.SelectingLocationType
 import com.cuongnl.ridehailing.viewmodel.SelectingLocationUiViewModel
 import com.cuongnl.ridehailing.widgets.AppText
 import com.cuongnl.ridehailing.widgets.CustomTextField
@@ -33,8 +34,7 @@ import ir.kaaveh.sdpcompose.sdp
 
 @Composable
 fun SearchingLocation(
-    modifier: Modifier = Modifier,
-    selectingLocationUiViewModel: SelectingLocationUiViewModel = viewModel(),
+    modifier: Modifier = Modifier
 ) {
     
     Column(
@@ -65,7 +65,9 @@ fun SearchingLocation(
 }
 
 @Composable
-private fun PickupSearchBar() {
+private fun PickupSearchBar(
+    selectingLocationUiViewModel: SelectingLocationUiViewModel = viewModel(),
+) {
     
     Column(
         verticalArrangement = Arrangement.spacedBy(6.sdp)
@@ -93,9 +95,18 @@ private fun PickupSearchBar() {
                 )
 
                 CustomTextField(
+                    ref = selectingLocationUiViewModel.getPickupTextFieldState(),
+                    focusRequester = selectingLocationUiViewModel.pickupFocusRequester,
                     onValueChange = {
-
+                        val text = it.text.trim()
+                        selectingLocationUiViewModel.onPickupTextChange(text)
                     },
+                    onFocusChanged = {
+                        if (it.hasFocus) {
+                            selectingLocationUiViewModel.setCurrentAddressType(SelectingLocationType.PICKUP_LOCATION)
+                        }
+                    },
+                    selectAllOnFocus = true,
                     textSize = 14.sp,
                     placeholder = stringResource(id = R.string.enter_pickup_placeholder),
                     fontWeight = FontWeight.Medium,
@@ -114,7 +125,9 @@ private fun PickupSearchBar() {
 }
 
 @Composable
-private fun DestinationSearchBar() {
+private fun DestinationSearchBar(
+    selectingLocationUiViewModel: SelectingLocationUiViewModel = viewModel(),
+) {
 
     Column {
         Row(
@@ -130,9 +143,18 @@ private fun DestinationSearchBar() {
             )
 
             CustomTextField(
+                ref = selectingLocationUiViewModel.getDestinationTextFieldState(),
+                focusRequester = selectingLocationUiViewModel.destinationFocusRequester,
                 onValueChange = {
-
+                    val text = it.text.trim()
+                    selectingLocationUiViewModel.onDestinationTextChange(text)
                 },
+                onFocusChanged = {
+                    if (it.hasFocus) {
+                        selectingLocationUiViewModel.setCurrentAddressType(SelectingLocationType.DESTINATION_LOCATION)
+                    }
+                },
+                selectAllOnFocus = true,
                 textSize = 14.sp,
                 placeholder = stringResource(id = R.string.enter_destination_placeholder),
                 fontWeight = FontWeight.Medium,
@@ -150,7 +172,15 @@ private fun DestinationSearchBar() {
 }
 
 @Composable
-private fun ChoosingButton() {
+private fun ChoosingButton(
+    selectingLocationUiViewModel: SelectingLocationUiViewModel = viewModel(),
+) {
+
+    val text = when (selectingLocationUiViewModel.currentAddressType.value) {
+        SelectingLocationType.DESTINATION_LOCATION -> stringResource(id = R.string.choose_your_destination)
+        SelectingLocationType.PICKUP_LOCATION -> stringResource(id = R.string.choose_your_pickup)
+    }
+
     TouchableOpacityButton(
         modifier = Modifier
             .fillMaxWidth(),
@@ -172,7 +202,7 @@ private fun ChoosingButton() {
                     .size(15.sdp)
             )
             AppText(
-                text = "Choose your destination",
+                text = text,
                 fontSize = 12.sp,
             )
         }

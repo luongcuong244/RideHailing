@@ -76,4 +76,6 @@
     <string name="enter_pickup_placeholder">Nhập điểm đón …</string>
     <string name="enter_destination_placeholder">Nhập điểm đến …</string>
     <string name="your_location">Địa chỉ của bạn</string>
+    <string name="choose_your_pickup">Chọn điểm đón của bạn</string>
+    <string name="choose_your_destination">Chọn điểm đến của bạn</string>
 </resources>

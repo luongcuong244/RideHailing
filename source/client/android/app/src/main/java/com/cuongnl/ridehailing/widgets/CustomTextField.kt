@@ -1,6 +1,8 @@
 package com.cuongnl.ridehailing.widgets
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.collectIsFocusedAsState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -15,6 +17,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Clear
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -22,10 +26,14 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.FocusState
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
@@ -39,7 +47,12 @@ import ir.kaaveh.sdpcompose.ssp
 
 @Composable
 fun CustomTextField(
+    ref: MutableState<TextFieldValue> = mutableStateOf(
+        TextFieldValue("")
+    ),
+    focusRequester: FocusRequester = FocusRequester(),
     onValueChange: (TextFieldValue) -> Unit,
+    onFocusChanged: (FocusState) -> Unit = {},
     modifier: Modifier = Modifier,
     placeholder: String = "",
     textColor: Color = colorResource(id = R.color.black),
@@ -54,10 +67,25 @@ fun CustomTextField(
     clearIconColor: Color = colorResource(id = R.color.black),
     clearIconPadding: PaddingValues = PaddingValues(4.dp),
     clearButtonSize: Dp = 15.sdp,
+    selectAllOnFocus: Boolean = false,
 ) {
     var textFieldValue by remember {
-        mutableStateOf(
-            TextFieldValue("")
+        ref
+    }
+
+    val isFocused = remember {
+        mutableStateOf(false)
+    }
+
+    LaunchedEffect(isFocused.value) {
+
+        val endRange = if (isFocused.value && selectAllOnFocus) textFieldValue.text.length else 0
+
+        textFieldValue = textFieldValue.copy(
+            selection = TextRange(
+                start = 0,
+                end = endRange
+            )
         )
     }
 
@@ -75,14 +103,18 @@ fun CustomTextField(
         BasicTextField(
             value = textFieldValue,
             onValueChange = {
+                if (!it.text.equals(textFieldValue.text, false)) {
+                    onValueChange(it)
+                }
                 textFieldValue = it
-                onValueChange(it)
             },
             modifier = Modifier
                 .weight(1f)
                 .onFocusChanged {
-
-                },
+                    onFocusChanged(it)
+                    isFocused.value = it.hasFocus
+                }
+                .focusRequester(focusRequester),
             textStyle = TextStyle(
                 fontSize = textSize,
                 fontFamily = beVietNamFamily,
@@ -115,6 +147,7 @@ fun CustomTextField(
                 onClick = {
                     textFieldValue = TextFieldValue("")
                     onValueChange(TextFieldValue(""))
+                    focusRequester.requestFocus()
                 }
             ) {
                 Icon(

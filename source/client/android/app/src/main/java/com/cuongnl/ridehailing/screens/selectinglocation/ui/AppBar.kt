@@ -13,7 +13,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.cuongnl.ridehailing.R
+import com.cuongnl.ridehailing.enums.SelectingLocationType
+import com.cuongnl.ridehailing.viewmodel.SelectingLocationUiViewModel
 import com.cuongnl.ridehailing.widgets.AppText
 import com.cuongnl.ridehailing.widgets.NoRippleButton
 import ir.kaaveh.sdpcompose.sdp
@@ -44,9 +47,17 @@ private fun BackButton() {
 }
 
 @Composable
-private fun Title() {
+private fun Title(
+    selectingLocationUiViewModel: SelectingLocationUiViewModel = viewModel()
+) {
+
+    val text = when (selectingLocationUiViewModel.currentAddressType.value) {
+        SelectingLocationType.DESTINATION_LOCATION -> stringResource(id = R.string.select_pickup)
+        SelectingLocationType.PICKUP_LOCATION -> stringResource(id = R.string.select_destination)
+    }
+
     AppText(
-        text = stringResource(id = R.string.select_destination),
+        text = text,
         fontWeight = FontWeight.Medium,
         fontSize = 16.sp,
         color = Color.Black,
