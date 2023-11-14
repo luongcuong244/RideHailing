@@ -51,8 +51,8 @@ fun MapView(
 
         Polyline(
             points = bookingActivityUiViewModel.points,
-            color = colorResource(id = R.color.blue),
-            width = 15f,
+            color = colorResource(id = R.color.map_route_primary_color),
+            width = 12f,
             jointType = JointType.ROUND,
         )
     }

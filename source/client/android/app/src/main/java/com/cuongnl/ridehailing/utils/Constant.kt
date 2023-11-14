@@ -11,6 +11,7 @@ object Constant {
     const val BUNDLE_DESTINATION_ADDRESS = "bundle_destination_address"
     const val BUNDLE_PICKUP_ADDRESS = "bundle_pickup_address"
     const val BUNDLE_SELECTING_LOCATION_TYPE = "bundle_selecting_location_type"
+    const val BUNDLE_TRAVEL_MODE = "bundle_travel_mode"
 
     const val OTP_TIMEOUT_IN_SECOND = 40L
 

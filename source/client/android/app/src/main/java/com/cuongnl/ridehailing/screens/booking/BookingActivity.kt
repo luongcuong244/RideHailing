@@ -1,5 +1,6 @@
 package com.cuongnl.ridehailing.screens.booking
 
+import android.os.Build
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.compose.setContent
@@ -18,8 +19,10 @@ import com.cuongnl.ridehailing.utils.Constant
 import com.cuongnl.ridehailing.utils.MapUtils
 import com.cuongnl.ridehailing.viewmodel.BookingActivityUiViewModel
 import com.google.android.gms.maps.model.LatLng
+import com.google.maps.internal.PolylineEncoding
 import com.google.maps.model.TravelMode
 
+@Suppress("DEPRECATION")
 class BookingActivity : BaseActivity() {
 
     private lateinit var bookingActivityUiViewModel: BookingActivityUiViewModel
@@ -37,39 +40,22 @@ class BookingActivity : BaseActivity() {
     private fun setupViewModel() {
         bookingActivityUiViewModel = ViewModelProvider(this)[BookingActivityUiViewModel::class.java]
 
-        val destinationLocationLatLng = intent.getParcelableExtra<LatLng>(Constant.BUNDLE_DESTINATION_LAT_LNG)
+        val destinationLocationLatLng =
+            intent.getParcelableExtra<LatLng>(Constant.BUNDLE_DESTINATION_LAT_LNG)
         val destinationLocationAddress = intent.getStringExtra(Constant.BUNDLE_DESTINATION_ADDRESS)
         val pickupLocationLatLng = intent.getParcelableExtra<LatLng>(Constant.BUNDLE_PICKUP_LAT_LNG)
         val pickupLocationAddress = intent.getStringExtra(Constant.BUNDLE_PICKUP_ADDRESS)
+        val travelMode = intent.getSerializableExtra(Constant.BUNDLE_TRAVEL_MODE) as TravelMode?
 
         bookingActivityUiViewModel.setDestinationLocationLatLng(destinationLocationLatLng!!)
         bookingActivityUiViewModel.setDestinationLocationAddress(destinationLocationAddress!!)
         bookingActivityUiViewModel.setPickupLocationLatLng(pickupLocationLatLng!!)
         bookingActivityUiViewModel.setPickupLocationAddress(pickupLocationAddress!!)
 
-        val result = MapUtils.getDirectionsBetweenTwoPoints(
-            destinationLocationLatLng,
-            pickupLocationLatLng,
-            TravelMode.DRIVING
-        )
-
-        if (result.routes.isNotEmpty()) {
-            val points = mutableListOf<LatLng>()
-
-            val startLocation = result.routes[0].legs[0].startLocation
-            val newStartLocation = LatLng(startLocation.lat, startLocation.lng)
-
-            points.add(newStartLocation)
-
-            result.routes[0].legs[0].steps.forEach {
-                val endLocation = it.endLocation
-                val newEndLocation = LatLng(endLocation.lat, endLocation.lng)
-                points.add(newEndLocation)
-            }
-
-            bookingActivityUiViewModel.setPoints(points)
+        if (travelMode != null) {
+            bookingActivityUiViewModel.setTravelModeAndUpdateUI(this, travelMode)
         } else {
-            Toast.makeText(this, "Cannot get directions", Toast.LENGTH_SHORT).show()
+            bookingActivityUiViewModel.setTravelModeAndUpdateUI(this, TravelMode.DRIVING)
         }
     }
 }
