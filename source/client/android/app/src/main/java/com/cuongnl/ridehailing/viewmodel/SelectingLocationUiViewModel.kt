@@ -2,6 +2,7 @@ package com.cuongnl.ridehailing.viewmodel
 
 import android.app.Application
 import android.content.Context
+import android.content.Intent
 import android.util.Log
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
@@ -13,6 +14,8 @@ import androidx.lifecycle.AndroidViewModel
 import com.cuongnl.ridehailing.enums.SelectingLocationType
 import com.cuongnl.ridehailing.globalstate.CurrentLocation
 import com.cuongnl.ridehailing.models.Address
+import com.cuongnl.ridehailing.screens.booking.BookingActivity
+import com.cuongnl.ridehailing.utils.Constant
 import com.cuongnl.ridehailing.utils.MapUtils
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.maps.model.LatLng
@@ -165,7 +168,14 @@ class SelectingLocationUiViewModel(application: Application) : AndroidViewModel(
     }
 
     fun navigateToBookingActivity(context: Context) {
-        Log.d(TAG, "navigateToBookingActivity: ")
+
+        val intent = Intent(context, BookingActivity::class.java)
+        intent.putExtra(Constant.BUNDLE_DESTINATION_LAT_LNG, destinationLocationLatLng.value)
+        intent.putExtra(Constant.BUNDLE_PICKUP_LAT_LNG, pickupLocationLatLng.value)
+        intent.putExtra(Constant.BUNDLE_DESTINATION_ADDRESS, destinationTextField.value.text)
+        intent.putExtra(Constant.BUNDLE_PICKUP_ADDRESS, pickupTextField.value.text)
+
+        context.startActivity(intent)
     }
 
     fun setIsFetchingAddressPredictions(isFetching: Boolean) {

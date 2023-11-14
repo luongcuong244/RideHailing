@@ -85,6 +85,10 @@
             android:name=".screens.selectinglocation.SelectingLocationActivity"
             android:exported="false"/>
 
+        <activity
+            android:name=".screens.booking.BookingActivity"
+            android:exported="false"/>
+
         <service
             android:name=".services.LocationService"
             android:foregroundServiceType="location" />

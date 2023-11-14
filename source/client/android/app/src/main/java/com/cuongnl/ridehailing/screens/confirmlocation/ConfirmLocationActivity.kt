@@ -2,7 +2,6 @@ package com.cuongnl.ridehailing.screens.confirmlocation
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -15,17 +14,16 @@ import com.cuongnl.ridehailing.core.BaseActivity
 import com.cuongnl.ridehailing.enums.ConfirmLocationState
 import com.cuongnl.ridehailing.enums.SelectingLocationType
 import com.cuongnl.ridehailing.globalstate.CurrentLocation
+import com.cuongnl.ridehailing.screens.booking.BookingActivity
 import com.cuongnl.ridehailing.screens.confirmlocation.ui.BackButton
 import com.cuongnl.ridehailing.screens.confirmlocation.ui.BottomView
 import com.cuongnl.ridehailing.screens.confirmlocation.ui.MapView
 import com.cuongnl.ridehailing.screens.selectinglocation.SelectingLocationActivity
 import com.cuongnl.ridehailing.theme.AppTheme
 import com.cuongnl.ridehailing.utils.Constant
-import com.cuongnl.ridehailing.utils.MapUtils
 import com.cuongnl.ridehailing.viewmodel.ConfirmLocationViewModel
 import com.cuongnl.ridehailing.viewmodel.LoaderViewModel
 import com.cuongnl.ridehailing.widgets.FullScreenLoader
-import com.google.android.gms.maps.model.LatLng
 
 val LocalActivityBehavior = androidx.compose.runtime.staticCompositionLocalOf<IConfirmDestinationLocationActivityBehavior> {
     error("No ActivityBehavior provided")
@@ -86,7 +84,7 @@ class ConfirmLocationActivity : BaseActivity(), IConfirmDestinationLocationActiv
                 }
             }
             ConfirmLocationState.CHOOSING_PICKUP_LOCATION -> {
-                //navigateToConfirmPickupLocationActivity()
+                navigateToBookingActivity()
             }
         }
     }
@@ -100,6 +98,16 @@ class ConfirmLocationActivity : BaseActivity(), IConfirmDestinationLocationActiv
                 confirmLocationViewModel.setConfirmLocationState(ConfirmLocationState.CHOOSING_DESTINATION_LOCATION)
             }
         }
+    }
+
+    private fun navigateToBookingActivity() {
+        val intent = Intent(this, BookingActivity::class.java)
+        intent.putExtra(Constant.BUNDLE_DESTINATION_LAT_LNG, confirmLocationViewModel.destinationLocationLatLng.value)
+        intent.putExtra(Constant.BUNDLE_PICKUP_LAT_LNG, confirmLocationViewModel.pickupLocationLatLng.value)
+        intent.putExtra(Constant.BUNDLE_DESTINATION_ADDRESS, confirmLocationViewModel.destinationLocationAddress.value)
+        intent.putExtra(Constant.BUNDLE_PICKUP_ADDRESS, confirmLocationViewModel.pickupLocationAddress.value)
+
+        startActivity(intent)
     }
 }
 

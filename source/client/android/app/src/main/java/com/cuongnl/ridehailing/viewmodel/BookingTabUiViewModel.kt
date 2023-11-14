@@ -5,7 +5,7 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.AndroidViewModel
 
-class BookingViewModel(application: Application) : AndroidViewModel(application) {
+class BookingTabUiViewModel(application: Application) : AndroidViewModel(application) {
 
     private var _isLoadingAddress = mutableStateOf(true)
 

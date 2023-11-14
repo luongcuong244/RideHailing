@@ -22,7 +22,7 @@ import com.cuongnl.ridehailing.screens.home.tab.booking.ui.BannerVouchers
 import com.cuongnl.ridehailing.screens.home.tab.booking.ui.DashboardBanner
 import com.cuongnl.ridehailing.screens.home.tab.booking.ui.TransportationMethodsList
 import com.cuongnl.ridehailing.screens.home.tab.booking.ui.WhereDoYouWantToGo
-import com.cuongnl.ridehailing.viewmodel.BookingViewModel
+import com.cuongnl.ridehailing.viewmodel.BookingTabUiViewModel
 import com.cuongnl.ridehailing.viewmodel.apiservice.UserServiceViewModel
 import ir.kaaveh.sdpcompose.sdp
 
@@ -32,7 +32,7 @@ val LocalBehavior =
 @Composable
 fun BookingTab(
     userServiceViewModel: UserServiceViewModel = viewModel(),
-    bookingViewModel: BookingViewModel = viewModel()
+    bookingTabUiViewModel: BookingTabUiViewModel = viewModel()
 ) {
 
     val context = LocalContext.current
@@ -40,7 +40,7 @@ fun BookingTab(
     CompositionLocalProvider(LocalBehavior provides BookingTabBehavior(context)) {
 
         LaunchedEffect(null) {
-            getUserAddress(context, userServiceViewModel, bookingViewModel)
+            getUserAddress(context, userServiceViewModel, bookingTabUiViewModel)
         }
 
         Column(
@@ -67,7 +67,7 @@ fun BookingTab(
 private fun getUserAddress(
     context: Context,
     userServiceViewModel: UserServiceViewModel,
-    bookingViewModel: BookingViewModel
+    bookingTabUiViewModel: BookingTabUiViewModel
 ) {
 
     Handler().postDelayed({
@@ -101,7 +101,7 @@ private fun getUserAddress(
                 )
             )
         }
-        bookingViewModel.setIsLoadingAddress(false)
+        bookingTabUiViewModel.setIsLoadingAddress(false)
     }, 2000)
 
 

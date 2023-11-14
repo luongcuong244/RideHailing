@@ -31,18 +31,18 @@ import com.cuongnl.ridehailing.enums.AddressType
 import com.cuongnl.ridehailing.extensions.shimmerEffect
 import com.cuongnl.ridehailing.globalstate.CurrentUser
 import com.cuongnl.ridehailing.models.Address
-import com.cuongnl.ridehailing.viewmodel.BookingViewModel
+import com.cuongnl.ridehailing.viewmodel.BookingTabUiViewModel
 import com.cuongnl.ridehailing.widgets.AppText
 import com.cuongnl.ridehailing.widgets.NoRippleButton
 import ir.kaaveh.sdpcompose.sdp
 import ir.kaaveh.sdpcompose.ssp
 
 @Composable
-fun AddressesList(bookingViewModel: BookingViewModel = viewModel()) {
+fun AddressesList(bookingTabUiViewModel: BookingTabUiViewModel = viewModel()) {
 
     val data = CurrentUser.getUser()?.addresses
 
-    val size = if (bookingViewModel.isLoadingAddress.value) {
+    val size = if (bookingTabUiViewModel.isLoadingAddress.value) {
         3
     } else {
         if (data != null) {
@@ -57,7 +57,7 @@ fun AddressesList(bookingViewModel: BookingViewModel = viewModel()) {
             .padding(vertical = 12.sdp),
         content = {
             items(size) { index ->
-                if (bookingViewModel.isLoadingAddress.value) {
+                if (bookingTabUiViewModel.isLoadingAddress.value) {
                     ItemContent(isLoading = true)
                 } else {
                     if (index < data!!.size) {

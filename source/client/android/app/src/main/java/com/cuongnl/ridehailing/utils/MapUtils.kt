@@ -9,6 +9,7 @@ import android.location.Location
 import android.os.Build
 import android.util.Log
 import androidx.core.app.ActivityCompat
+import com.cuongnl.ridehailing.BuildConfig
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.model.LatLng
@@ -16,7 +17,12 @@ import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.api.net.FetchPlaceRequest
 import com.google.android.libraries.places.api.net.FetchPlaceResponse
 import com.google.android.libraries.places.api.net.PlacesClient
+import com.google.maps.DirectionsApi
+import com.google.maps.GeoApiContext
+import com.google.maps.model.DirectionsResult
+import com.google.maps.model.TravelMode
 import java.io.IOException
+
 
 object MapUtils {
 
@@ -113,5 +119,28 @@ object MapUtils {
                 }
                 onFailure(exception)
             }
+    }
+
+    fun getDirectionsBetweenTwoPoints(
+        originLatLng: LatLng,
+        destinationLatLng: LatLng,
+        mode: TravelMode,
+    ): DirectionsResult {
+
+        val newOriginLatLng =
+            com.google.maps.model.LatLng(originLatLng.latitude, originLatLng.longitude)
+        val newDestinationLatLng =
+            com.google.maps.model.LatLng(destinationLatLng.latitude, destinationLatLng.longitude)
+
+        val geoApiContext = GeoApiContext.Builder()
+            .apiKey(BuildConfig.MAPS_API_KEY)
+            .build()
+
+        val request = DirectionsApi.newRequest(geoApiContext)
+            .mode(TravelMode.TRANSIT)
+            .origin(newOriginLatLng)
+            .destination(newDestinationLatLng)
+
+        return request.await()
     }
 }
