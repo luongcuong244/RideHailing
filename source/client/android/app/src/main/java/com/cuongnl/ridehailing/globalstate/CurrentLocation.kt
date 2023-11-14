@@ -3,7 +3,6 @@ package com.cuongnl.ridehailing.globalstate
 import android.content.Context
 import android.location.Location
 import android.widget.Toast
-import com.cuongnl.ridehailing.enums.ConfirmLocationState
 import com.cuongnl.ridehailing.utils.MapUtils
 import com.google.android.gms.maps.model.LatLng
 

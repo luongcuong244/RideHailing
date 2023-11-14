@@ -78,4 +78,7 @@
     <string name="your_location">Địa chỉ của bạn</string>
     <string name="choose_your_pickup">Chọn điểm đón của bạn</string>
     <string name="choose_your_destination">Chọn điểm đến của bạn</string>
+    <string name="taxi_characteristic_text">Tối đa 4 hành khách</string>
+    <string name="bike_characteristic_text">Mới ra mắt</string>
+    <string name="minutes_text">phút</string>
 </resources>

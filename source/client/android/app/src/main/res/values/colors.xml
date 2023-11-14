@@ -54,6 +54,5 @@
     <color name="green_900">#1b5e20</color>
 
     <color name="app_background_gray">#4DCCCCCC</color>
-    <color name="map_route_primary_color">#00b0ff</color>
-    <color name="map_route_border_color">#1967d2</color>
+    <color name="map_route_primary_color">#1967d2</color>
 </resources>

@@ -22,6 +22,6 @@ fun BottomView() {
             .background(Color.White)
             .padding(top = 10.sdp)
     ) {
-
+        Vehicles()
     }
 }

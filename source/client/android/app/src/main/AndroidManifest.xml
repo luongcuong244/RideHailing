@@ -32,7 +32,7 @@
             android:name=".screens.tokencheck.TokenCheckActivity"
             android:exported="true"
             android:label="@string/app_name"
-            android:theme="@style/Theme.RideHailing">
+            android:theme="@style/Theme.App.Starting">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

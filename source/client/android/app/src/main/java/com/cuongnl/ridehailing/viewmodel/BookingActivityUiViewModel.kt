@@ -1,31 +1,65 @@
 package com.cuongnl.ridehailing.viewmodel
 
 import android.content.Context
+import android.os.Handler
 import android.widget.Toast
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
+import com.cuongnl.ridehailing.enums.TransportationType
 import com.cuongnl.ridehailing.globalstate.CurrentLocation
+import com.cuongnl.ridehailing.models.api.GetBookingInfoRequest
+import com.cuongnl.ridehailing.models.api.GetBookingInfoResponse
+import com.cuongnl.ridehailing.models.item.RideBookingInfoItem
+import com.cuongnl.ridehailing.retrofit.repository.BookingRepository
 import com.cuongnl.ridehailing.utils.MapUtils
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.model.TravelMode
 
 class BookingActivityUiViewModel : ViewModel() {
 
+    private val bookingRepository = BookingRepository()
+
     val points = mutableStateListOf<LatLng>()
+
+    val bookingsInfo = mutableStateListOf<RideBookingInfoItem>()
 
     private val _destinationLocationLatLng = mutableStateOf<LatLng>(CurrentLocation.getLatLng())
     private val _pickupLocationLatLng = mutableStateOf<LatLng>(CurrentLocation.getLatLng())
     private val _destinationLocationAddress = mutableStateOf("")
     private val _pickupLocationAddress = mutableStateOf("")
-    private val _travelMode = mutableStateOf(TravelMode.DRIVING)
 
     val destinationLocationLatLng: State<LatLng> = _destinationLocationLatLng
     val pickupLocationLatLng: State<LatLng> = _pickupLocationLatLng
     val destinationLocationAddress: State<String> = _destinationLocationAddress
     val pickupLocationAddress: State<String> = _pickupLocationAddress
-    val travelMode: State<TravelMode> = _travelMode
+
+    init {
+        TransportationType.values().forEach {
+            bookingsInfo.add(
+                RideBookingInfoItem(
+                    transportationType = it,
+                )
+            )
+        }
+    }
+
+    fun selectBookingInfoAndUpdateUI(context: Context, transportationType: TransportationType) {
+        bookingsInfo.forEach {
+            it.isSelected.value = it.transportationType == transportationType
+
+            if (it.isSelected.value) {
+                if (it.directionPoints == null) {
+                    val points =
+                        getDirectionsBetweenTwoPoints(context, transportationType.travelMode)
+                    it.directionPoints = points
+
+                }
+                setPoints(it.directionPoints!!)
+            }
+        }
+    }
 
     fun setPoints(points: List<LatLng>) {
         this.points.clear()
@@ -48,18 +82,15 @@ class BookingActivityUiViewModel : ViewModel() {
         _pickupLocationAddress.value = pickupLocationAddress
     }
 
-    fun setTravelModeAndUpdateUI(context: Context, travelMode: TravelMode) {
-        _travelMode.value = travelMode
-
-        getDirectionsBetweenTwoPoints(context)
-    }
-
-    private fun getDirectionsBetweenTwoPoints(context: Context) {
+    private fun getDirectionsBetweenTwoPoints(
+        context: Context,
+        travelMode: TravelMode
+    ): List<LatLng> {
 
         val result = MapUtils.getDirectionsBetweenTwoPoints(
             destinationLocationLatLng.value,
             pickupLocationLatLng.value,
-            travelMode.value
+            travelMode,
         )
 
         if (result.routes.isNotEmpty()) {
@@ -73,9 +104,55 @@ class BookingActivityUiViewModel : ViewModel() {
                 })
             }
 
-            setPoints(points)
+            return points
         } else {
             Toast.makeText(context, "Cannot get directions", Toast.LENGTH_SHORT).show()
+        }
+
+        return listOf()
+    }
+
+    fun getBookingInfoResponses(context: Context) {
+
+        bookingsInfo.forEach {
+
+            val request = GetBookingInfoRequest(
+                travelMode = it.transportationType.name,
+                startLatitude = pickupLocationLatLng.value.latitude,
+                startLongitude = pickupLocationLatLng.value.longitude,
+                endLatitude = destinationLocationLatLng.value.latitude,
+                endLongitude = destinationLocationLatLng.value.longitude,
+            )
+
+            val response = GetBookingInfoResponse(
+                fareAmount = 230,
+                fareCalculationInfo = "230 VND",
+                minutesToDriverArrival = 5,
+                driversNearbyLocation = listOf(),
+            )
+
+            Handler().postDelayed({
+                it.bookingInfoResponse = response
+            }, 2000)
+
+//            bookingRepository.getBookingInfo(request, object : Callback<GetBookingInfoResponse> {
+//                override fun onResponse(
+//                    call: Call<GetBookingInfoResponse>,
+//                    response: Response<GetBookingInfoResponse>
+//                ) {
+//                    if (response.isSuccessful) {
+//                        response.body()?.let { bookingInfoResponse ->
+//                            it.bookingInfoResponse = bookingInfoResponse
+//                        }
+//                    } else {
+//                        Toast.makeText(context, "Cannot get booking info", Toast.LENGTH_SHORT).show()
+//                    }
+//                }
+//
+//                override fun onFailure(call: Call<GetBookingInfoResponse>, t: Throwable) {
+//                    Toast.makeText(context, "Cannot get booking info", Toast.LENGTH_SHORT).show()
+//                }
+//            })
         }
     }
 }
