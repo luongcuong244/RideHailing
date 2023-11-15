@@ -81,4 +81,7 @@
     <string name="taxi_characteristic_text">Tối đa 4 hành khách</string>
     <string name="bike_characteristic_text">Mới ra mắt</string>
     <string name="minutes_text">phút</string>
+    <string name="cash_text">Tiền mặt</string>
+    <string name="note_text">Ghi chú</string>
+    <string name="book_text">Đặt</string>
 </resources>

@@ -17,11 +17,11 @@ fun BottomView() {
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .height(150.sdp)
-            .clip(RoundedCornerShape(topStart = 10.sdp, topEnd = 10.sdp))
             .background(Color.White)
             .padding(top = 10.sdp)
     ) {
         Vehicles()
+        Options()
+        BookingButton()
     }
 }

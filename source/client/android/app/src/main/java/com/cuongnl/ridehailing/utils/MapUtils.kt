@@ -124,8 +124,9 @@ object MapUtils {
     fun getDirectionsBetweenTwoPoints(
         originLatLng: LatLng,
         destinationLatLng: LatLng,
-        mode: TravelMode,
-    ): DirectionsResult {
+        travelMode: TravelMode,
+        callBack: com.google.maps.PendingResult.Callback<DirectionsResult>
+    ) {
 
         val newOriginLatLng =
             com.google.maps.model.LatLng(originLatLng.latitude, originLatLng.longitude)
@@ -137,10 +138,10 @@ object MapUtils {
             .build()
 
         val request = DirectionsApi.newRequest(geoApiContext)
-            .mode(TravelMode.TRANSIT)
+            .mode(travelMode)
             .origin(newOriginLatLng)
             .destination(newDestinationLatLng)
 
-        return request.await()
+        request.setCallback(callBack)
     }
 }
