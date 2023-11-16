@@ -34,6 +34,8 @@ class BookingActivityUiViewModel : ViewModel() {
     private val _pickupLocationAddress = mutableStateOf("")
     private val _paymentMethod = mutableStateOf(PaymentMethod.CASH)
     private val _noteForDriver = mutableStateOf("")
+    private val _isBottomSheetVisible = mutableStateOf(false)
+    private val _fareCalculationInfoSelectedIndex = mutableStateOf(0)
 
     val selectedBookingIndex: Int
         get() = _selectedBookingIndex
@@ -43,6 +45,8 @@ class BookingActivityUiViewModel : ViewModel() {
     val pickupLocationAddress: State<String> = _pickupLocationAddress
     val paymentMethod: State<PaymentMethod> = _paymentMethod
     val noteForDriver: State<String> = _noteForDriver
+    val isBottomSheetVisible: State<Boolean> = _isBottomSheetVisible
+    val fareCalculationInfoSelectedIndex: State<Int> = _fareCalculationInfoSelectedIndex
 
     init {
         TransportationType.values().forEach {
@@ -105,6 +109,14 @@ class BookingActivityUiViewModel : ViewModel() {
         _noteForDriver.value = noteForDriver
     }
 
+    fun setIsBottomSheetVisible(isBottomSheetVisible: Boolean) {
+        _isBottomSheetVisible.value = isBottomSheetVisible
+    }
+
+    fun setFareCalculationInfoSelectedIndex(fareCalculationInfoSelectedIndex: Int) {
+        _fareCalculationInfoSelectedIndex.value = fareCalculationInfoSelectedIndex
+    }
+
     private fun getDirectionsBetweenTwoPoints(
         context: Context,
         travelMode: TravelMode,
@@ -155,7 +167,7 @@ class BookingActivityUiViewModel : ViewModel() {
 
             val response = GetBookingInfoResponse(
                 fareAmount = 230,
-                fareCalculationInfo = "230 VND",
+                fareCalculationInfo = "<b>Hello</b> <i>World</i>",
                 minutesToDriverArrival = 5,
                 driversNearbyLocation = listOf(),
             )

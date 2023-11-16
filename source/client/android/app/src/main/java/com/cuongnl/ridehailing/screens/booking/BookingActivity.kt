@@ -18,6 +18,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.cuongnl.ridehailing.core.BaseActivity
 import com.cuongnl.ridehailing.enums.TransportationType
 import com.cuongnl.ridehailing.screens.booking.ui.BackButton
+import com.cuongnl.ridehailing.screens.booking.ui.FareCalculationInfoBottomSheet
 import com.cuongnl.ridehailing.screens.booking.ui.BottomView
 import com.cuongnl.ridehailing.screens.booking.ui.MapView
 import com.cuongnl.ridehailing.theme.AppTheme
@@ -85,11 +86,13 @@ private fun Screen() {
                         .align(Alignment.BottomCenter)
                         .fillMaxWidth()
                         .height(10.sdp)
-                        .clip(RoundedCornerShape(topStart = 10.sdp, topEnd = 10.sdp))
+                        .clip(RoundedCornerShape(topStart = 20.sdp, topEnd = 20.sdp))
                         .background(Color.White)
                 )
             }
             BottomView()
         }
+
+        FareCalculationInfoBottomSheet()
     }
 }

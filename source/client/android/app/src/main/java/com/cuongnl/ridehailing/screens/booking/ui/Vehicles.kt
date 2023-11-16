@@ -134,7 +134,8 @@ private fun AddItem(
                         top.linkTo(parent.top)
                         end.linkTo(parent.end)
                     }
-                    .padding(top = 2.sdp)
+                    .padding(top = 2.sdp),
+                index = index
             )
 
             FareAmount(
@@ -189,14 +190,19 @@ private fun VehicleName(
 
 @Composable
 private fun DetailIcon(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    bookingActivityUiViewModel: BookingActivityUiViewModel = viewModel(),
+    index: Int
 ) {
     Box(
         modifier = modifier
     ) {
         TouchableOpacityButton(
             onClick = {
-
+                if (bookingActivityUiViewModel.bookingsInfo[index].bookingInfoResponse != null) {
+                    bookingActivityUiViewModel.setFareCalculationInfoSelectedIndex(index)
+                    bookingActivityUiViewModel.setIsBottomSheetVisible(true)
+                }
             }
         ) {
             Image(

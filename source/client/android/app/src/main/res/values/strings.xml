@@ -84,4 +84,5 @@
     <string name="cash_text">Tiền mặt</string>
     <string name="note_text">Ghi chú</string>
     <string name="book_text">Đặt</string>
+    <string name="select_text">Chọn</string>
 </resources>
