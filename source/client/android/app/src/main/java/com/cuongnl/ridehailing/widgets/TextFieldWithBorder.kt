@@ -17,6 +17,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Clear
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -24,6 +25,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
@@ -41,6 +44,10 @@ import ir.kaaveh.sdpcompose.ssp
 
 @Composable
 fun TextFieldWithBorder(
+    ref: MutableState<TextFieldValue> = mutableStateOf(
+        TextFieldValue("")
+    ),
+    focusRequester: FocusRequester = FocusRequester(),
     onValueChange: (TextFieldValue) -> Unit,
     modifier: Modifier = Modifier,
     placeholder: String = "",
@@ -64,9 +71,7 @@ fun TextFieldWithBorder(
 ) {
 
     var textFieldValue by remember {
-        mutableStateOf(
-            TextFieldValue("")
-        )
+        ref
     }
 
     val borderColorId = remember {
@@ -107,7 +112,8 @@ fun TextFieldWithBorder(
                             activeBorderColor
                         else
                             inactiveBorderColor
-                },
+                }
+                .focusRequester(focusRequester),
             textStyle = TextStyle(
                 fontSize = textSize,
                 fontFamily = beVietNamFamily,

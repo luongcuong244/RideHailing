@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.cuongnl.ridehailing.R
+import com.cuongnl.ridehailing.screens.booking.LocalActivityBehavior
 import com.cuongnl.ridehailing.viewmodel.BookingActivityUiViewModel
 import com.cuongnl.ridehailing.widgets.AppText
 import com.cuongnl.ridehailing.widgets.NoRippleButton
@@ -82,12 +83,17 @@ private fun RowScope.NoteForDriver(
     bookingActivityUiViewModel: BookingActivityUiViewModel = viewModel()
 ) {
 
+    val actions = LocalActivityBehavior.current
+
     val text = bookingActivityUiViewModel.noteForDriver.value.ifEmpty {
         stringResource(id = R.string.note_text)
     }
 
     NoRippleButton(
         modifier = Modifier.weight(1f),
+        onClick = {
+            actions.clickNoteForDriver()
+        }
     ) {
         AppText(
             modifier = Modifier.align(Alignment.Center),

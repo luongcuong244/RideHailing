@@ -89,6 +89,10 @@
             android:name=".screens.booking.BookingActivity"
             android:exported="false"/>
 
+        <activity
+            android:name=".screens.notefordriver.NoteForDriverActivity"
+            android:exported="false"/>
+
         <service
             android:name=".services.LocationService"
             android:foregroundServiceType="location" />

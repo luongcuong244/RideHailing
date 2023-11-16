@@ -1,5 +1,6 @@
 package com.cuongnl.ridehailing.screens.booking
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
@@ -10,25 +11,32 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModelProvider
+import com.cuongnl.ridehailing.activitybehavior.IBookingActivityBehavior
 import com.cuongnl.ridehailing.core.BaseActivity
 import com.cuongnl.ridehailing.enums.TransportationType
 import com.cuongnl.ridehailing.screens.booking.ui.BackButton
 import com.cuongnl.ridehailing.screens.booking.ui.FareCalculationInfoBottomSheet
 import com.cuongnl.ridehailing.screens.booking.ui.BottomView
 import com.cuongnl.ridehailing.screens.booking.ui.MapView
+import com.cuongnl.ridehailing.screens.notefordriver.NoteForDriverActivity
 import com.cuongnl.ridehailing.theme.AppTheme
 import com.cuongnl.ridehailing.utils.Constant
 import com.cuongnl.ridehailing.viewmodel.BookingActivityUiViewModel
 import com.google.android.gms.maps.model.LatLng
 import ir.kaaveh.sdpcompose.sdp
 
+val LocalActivityBehavior = androidx.compose.runtime.staticCompositionLocalOf<IBookingActivityBehavior> {
+    error("No ActivityBehavior provided")
+}
+
 @Suppress("DEPRECATION")
-class BookingActivity : BaseActivity() {
+class BookingActivity : BaseActivity(), IBookingActivityBehavior {
 
     private lateinit var bookingActivityUiViewModel: BookingActivityUiViewModel
 
@@ -38,7 +46,9 @@ class BookingActivity : BaseActivity() {
         setupViewModel()
 
         setContent {
-            Screen()
+            CompositionLocalProvider(value = LocalActivityBehavior provides this) {
+                Screen()
+            }
         }
     }
 
@@ -64,6 +74,21 @@ class BookingActivity : BaseActivity() {
         }
 
         bookingActivityUiViewModel.getBookingInfoResponses(this)
+    }
+
+    override fun clickNoteForDriver() {
+        val intent = Intent(this, NoteForDriverActivity::class.java)
+        intent.putExtra(Constant.BUNDLE_NOTE_FOR_DRIVER, bookingActivityUiViewModel.noteForDriver.value)
+        startActivityForResult(intent, Constant.REQUEST_CODE_NOTE_FOR_DRIVER)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == Constant.REQUEST_CODE_NOTE_FOR_DRIVER && resultCode == RESULT_OK && data != null) {
+            val noteForDriver = data.getStringExtra(Constant.BUNDLE_NOTE_FOR_DRIVER)
+            bookingActivityUiViewModel.setNoteForDriver(noteForDriver!!)
+        }
     }
 }
 
