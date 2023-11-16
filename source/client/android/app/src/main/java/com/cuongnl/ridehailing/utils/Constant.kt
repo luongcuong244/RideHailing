@@ -2,6 +2,8 @@ package com.cuongnl.ridehailing.utils
 
 object Constant {
 
+    const val ENABLE_CALL_MAP_API = false
+
     const val POLICY_URL = "https://github.com/luongcuong2002"
 
     const val BUNDLE_INTERNATIONAL_PHONE_NUMBER = "bundle_international_phone_number"

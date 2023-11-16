@@ -7,6 +7,7 @@ import android.location.Address
 import android.location.Geocoder
 import android.location.Location
 import android.os.Build
+import android.os.Handler
 import android.util.Log
 import androidx.core.app.ActivityCompat
 import com.cuongnl.ridehailing.BuildConfig
@@ -34,6 +35,13 @@ object MapUtils {
         onSuccess: (String) -> Unit = {},
         onFailure: () -> Unit = {}
     ) {
+
+        if (!Constant.ENABLE_CALL_MAP_API) {
+            Handler().postDelayed({
+                onSuccess("This is test address")
+            }, 1000)
+            return
+        }
 
         val geocoder = Geocoder(context)
 
@@ -76,6 +84,16 @@ object MapUtils {
         onPermissionNotGranted: () -> Unit = {}
     ) {
 
+        if (!Constant.ENABLE_CALL_MAP_API) {
+            onSuccess(
+                Location("").apply {
+                    latitude = 20.9808164
+                    longitude = 105.7936536
+                }
+            )
+            return
+        }
+
         val fusedLocationClient = LocationServices.getFusedLocationProviderClient(context)
 
         val task = if (ActivityCompat.checkSelfPermission(
@@ -107,6 +125,17 @@ object MapUtils {
         onSuccess: (Place) -> Unit = {},
         onFailure: (Exception) -> Unit = {},
     ) {
+
+        if (!Constant.ENABLE_CALL_MAP_API) {
+            onSuccess(
+                Place.builder()
+                    .setLatLng(LatLng(20.9808164, 105.7936536))
+                    .setName("Test place")
+                    .build()
+            )
+            return
+        }
+
         val request = FetchPlaceRequest.newInstance(placeId, placeFields)
 
         placesClient.fetchPlace(request)
@@ -127,6 +156,11 @@ object MapUtils {
         travelMode: TravelMode,
         callBack: com.google.maps.PendingResult.Callback<DirectionsResult>
     ) {
+
+        if (!Constant.ENABLE_CALL_MAP_API) {
+            callBack.onResult(null)
+            return
+        }
 
         val newOriginLatLng =
             com.google.maps.model.LatLng(originLatLng.latitude, originLatLng.longitude)
