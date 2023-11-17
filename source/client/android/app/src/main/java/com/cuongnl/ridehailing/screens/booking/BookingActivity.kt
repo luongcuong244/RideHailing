@@ -17,13 +17,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModelProvider
+import com.cuongnl.ridehailing.R
 import com.cuongnl.ridehailing.activitybehavior.IBookingActivityBehavior
 import com.cuongnl.ridehailing.core.BaseActivity
 import com.cuongnl.ridehailing.enums.TransportationType
 import com.cuongnl.ridehailing.screens.booking.ui.BackButton
-import com.cuongnl.ridehailing.screens.booking.ui.FareCalculationInfoBottomSheet
 import com.cuongnl.ridehailing.screens.booking.ui.BottomView
+import com.cuongnl.ridehailing.screens.booking.ui.FareCalculationInfoBottomSheet
 import com.cuongnl.ridehailing.screens.booking.ui.MapView
+import com.cuongnl.ridehailing.screens.home.HomeActivity
 import com.cuongnl.ridehailing.screens.notefordriver.NoteForDriverActivity
 import com.cuongnl.ridehailing.theme.AppTheme
 import com.cuongnl.ridehailing.utils.Constant
@@ -82,6 +84,17 @@ class BookingActivity : BaseActivity(), IBookingActivityBehavior {
         startActivityForResult(intent, Constant.REQUEST_CODE_NOTE_FOR_DRIVER)
     }
 
+    override fun clickBackButton() {
+        onBackPressed()
+    }
+
+    override fun onBackPressed() {
+        startActivity(Intent(this, HomeActivity::class.java))
+        finishAffinity()
+
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
@@ -103,7 +116,6 @@ private fun Screen() {
                 modifier = Modifier
                     .weight(1f)
             ) {
-                BackButton()
                 MapView()
 
                 Box(
@@ -114,6 +126,8 @@ private fun Screen() {
                         .clip(RoundedCornerShape(topStart = 20.sdp, topEnd = 20.sdp))
                         .background(Color.White)
                 )
+
+                BackButton()
             }
             BottomView()
         }

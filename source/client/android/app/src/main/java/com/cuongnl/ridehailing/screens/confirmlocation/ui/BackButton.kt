@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -30,7 +31,8 @@ fun BoxScope.BackButton() {
             actions.onClickBackButton()
         },
         modifier = Modifier
-            .padding(top = 50.sdp, start = 20.sdp)
+            .statusBarsPadding()
+            .padding(top = 15.dp, start = 20.sdp)
             .align(Alignment.TopStart)
             .shadow(
                 10.dp,

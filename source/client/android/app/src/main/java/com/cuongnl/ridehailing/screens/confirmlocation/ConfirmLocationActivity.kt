@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.ViewModelProvider
+import com.cuongnl.ridehailing.R
 import com.cuongnl.ridehailing.activitybehavior.IConfirmDestinationLocationActivityBehavior
 import com.cuongnl.ridehailing.core.BaseActivity
 import com.cuongnl.ridehailing.enums.ConfirmLocationState
@@ -71,6 +72,8 @@ class ConfirmLocationActivity : BaseActivity(), IConfirmDestinationLocationActiv
         }
 
         startActivity(intent)
+
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
     }
 
     override fun onClickConfirmButton() {
@@ -90,14 +93,7 @@ class ConfirmLocationActivity : BaseActivity(), IConfirmDestinationLocationActiv
     }
 
     override fun onClickBackButton() {
-        when (confirmLocationViewModel.confirmLocationState.value) {
-            ConfirmLocationState.CHOOSING_DESTINATION_LOCATION -> {
-                finish()
-            }
-            ConfirmLocationState.CHOOSING_PICKUP_LOCATION -> {
-                confirmLocationViewModel.setConfirmLocationState(ConfirmLocationState.CHOOSING_DESTINATION_LOCATION)
-            }
-        }
+        onBackPressed()
     }
 
     private fun navigateToBookingActivity() {
@@ -108,6 +104,21 @@ class ConfirmLocationActivity : BaseActivity(), IConfirmDestinationLocationActiv
         intent.putExtra(Constant.BUNDLE_PICKUP_ADDRESS, confirmLocationViewModel.pickupLocationAddress.value)
 
         startActivity(intent)
+
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+    }
+
+    override fun onBackPressed() {
+
+        when (confirmLocationViewModel.confirmLocationState.value) {
+            ConfirmLocationState.CHOOSING_DESTINATION_LOCATION -> {
+                finish()
+                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
+            }
+            ConfirmLocationState.CHOOSING_PICKUP_LOCATION -> {
+                confirmLocationViewModel.setConfirmLocationState(ConfirmLocationState.CHOOSING_DESTINATION_LOCATION)
+            }
+        }
     }
 }
 

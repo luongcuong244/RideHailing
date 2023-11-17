@@ -84,7 +84,12 @@ class SelectingLocationActivity : BaseActivity(), ISelectingLocationActivityBeha
     }
 
     override fun onClickBackButton() {
+        onBackPressed()
+    }
+
+    override fun onBackPressed() {
         finish()
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
     }
 }
 

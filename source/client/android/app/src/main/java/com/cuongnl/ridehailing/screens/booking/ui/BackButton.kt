@@ -17,19 +17,22 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.cuongnl.ridehailing.R
+import com.cuongnl.ridehailing.screens.booking.LocalActivityBehavior
 import com.cuongnl.ridehailing.widgets.TouchableOpacityButton
 import ir.kaaveh.sdpcompose.sdp
 
 @Composable
 fun BoxScope.BackButton() {
 
+    val actions = LocalActivityBehavior.current
+
     TouchableOpacityButton(
         onClick = {
-
+            actions.clickBackButton()
         },
         modifier = Modifier
-            .padding(top = 20.sdp, start = 20.sdp)
             .statusBarsPadding()
+            .padding(top = 15.dp, start = 20.sdp)
             .align(Alignment.TopStart)
             .shadow(
                 10.dp,
