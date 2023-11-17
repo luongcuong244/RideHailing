@@ -16,39 +16,45 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import com.cuongnl.ridehailing.R
+import com.cuongnl.ridehailing.screens.notefordriver.LocalActivityBehavior
 import com.cuongnl.ridehailing.widgets.AppText
 import com.cuongnl.ridehailing.widgets.TouchableOpacityButton
 import ir.kaaveh.sdpcompose.sdp
 
 @Composable
 fun AppBar() {
-       Row(
-           modifier = Modifier
-               .fillMaxWidth()
-               .background(Color.White)
-               .statusBarsPadding()
-               .padding(horizontal = 15.sdp),
-           verticalAlignment = Alignment.CenterVertically
-       ) {
-           TouchableOpacityButton(
 
-           ) {
-               Image(
-                   painter = painterResource(id = R.drawable.arrow_back),
-                   contentDescription = null,
-                   modifier = Modifier
-                       .padding(vertical = 10.sdp)
-                       .size(20.sdp)
-               )
-           }
+    val actions = LocalActivityBehavior.current
 
-           AppText(
-               text = stringResource(id = R.string.note_for_driver),
-               fontSize = 14.sp,
-               fontWeight = FontWeight.Medium,
-               color = Color.Black,
-               modifier = Modifier
-                   .padding(start = 15.sdp)
-           )
-       }
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(Color.White)
+            .statusBarsPadding()
+            .padding(horizontal = 15.sdp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        TouchableOpacityButton(
+            onClick = {
+                actions.clickBackButton()
+            }
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.arrow_back),
+                contentDescription = null,
+                modifier = Modifier
+                    .padding(vertical = 10.sdp)
+                    .size(20.sdp)
+            )
+        }
+
+        AppText(
+            text = stringResource(id = R.string.note_for_driver),
+            fontSize = 16.sp,
+            fontWeight = FontWeight.Medium,
+            color = Color.Black,
+            modifier = Modifier
+                .padding(start = 10.sdp)
+        )
+    }
 }

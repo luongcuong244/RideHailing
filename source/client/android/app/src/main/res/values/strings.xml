@@ -86,4 +86,6 @@
     <string name="book_text">Đặt</string>
     <string name="select_text">Chọn</string>
     <string name="note_for_driver">Ghi chú cho tài xế</string>
+    <string name="note_for_driver_hint">Nhập ghi chú cho tài xế</string>
+    <string name="done">Hoàn tất</string>
 </resources>

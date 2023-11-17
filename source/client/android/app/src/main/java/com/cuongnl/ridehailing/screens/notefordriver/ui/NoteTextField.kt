@@ -9,7 +9,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.cuongnl.ridehailing.R
 import com.cuongnl.ridehailing.viewmodel.NoteForDriverUiViewModel
 import com.cuongnl.ridehailing.widgets.TextFieldWithBorder
 import ir.kaaveh.sdpcompose.sdp
@@ -32,6 +34,7 @@ fun NoteTextField(
             onValueChange = {
                 noteForDriverUiViewModel.setNoteTextField(it.text)
             },
+            placeholder = stringResource(id = R.string.note_for_driver_hint)
         )
     }
 }
