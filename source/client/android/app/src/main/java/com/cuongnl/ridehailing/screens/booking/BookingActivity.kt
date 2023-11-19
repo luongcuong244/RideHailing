@@ -100,7 +100,9 @@ class BookingActivity : BaseActivity(), IBookingActivityBehavior {
 
         if (requestCode == Constant.REQUEST_CODE_NOTE_FOR_DRIVER && resultCode == RESULT_OK && data != null) {
             val noteForDriver = data.getStringExtra(Constant.BUNDLE_NOTE_FOR_DRIVER)
-            bookingActivityUiViewModel.setNoteForDriver(noteForDriver!!)
+            noteForDriver?.let {
+                bookingActivityUiViewModel.setNoteForDriver(it)
+            }
         }
     }
 }

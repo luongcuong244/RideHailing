@@ -56,7 +56,7 @@ class NoteForDriverActivity : BaseActivity(), INoteForDriverActivityBehavior {
 
     override fun clickDone() {
         val resultIntent = Intent()
-        intent.putExtra(Constant.BUNDLE_NOTE_FOR_DRIVER, noteForDriverUiViewModel.noteTextField.value.text.trim())
+        resultIntent.putExtra(Constant.BUNDLE_NOTE_FOR_DRIVER, noteForDriverUiViewModel.noteTextField.value.text.trim())
         setResult(RESULT_OK, resultIntent)
 
         onBackPressed()

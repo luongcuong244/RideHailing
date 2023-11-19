@@ -9,6 +9,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.cuongnl.ridehailing.enums.PaymentMethod
 import com.cuongnl.ridehailing.enums.TransportationType
+import com.cuongnl.ridehailing.extensions.findActivity
 import com.cuongnl.ridehailing.globalstate.CurrentLocation
 import com.cuongnl.ridehailing.models.api.GetBookingInfoRequest
 import com.cuongnl.ridehailing.models.api.GetBookingInfoResponse
@@ -147,7 +148,9 @@ class BookingActivityUiViewModel : ViewModel() {
                 }
 
                 override fun onFailure(e: Throwable?) {
-                    Toast.makeText(context, "${e?.message}", Toast.LENGTH_SHORT).show()
+                    context.findActivity()?.runOnUiThread {
+                        Toast.makeText(context, "${e?.message}", Toast.LENGTH_SHORT).show()
+                    }
                 }
             }
         )

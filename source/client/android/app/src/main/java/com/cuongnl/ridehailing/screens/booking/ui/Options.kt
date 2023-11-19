@@ -18,6 +18,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -96,10 +97,14 @@ private fun RowScope.NoteForDriver(
         }
     ) {
         AppText(
-            modifier = Modifier.align(Alignment.Center),
+            modifier = Modifier
+                .align(Alignment.Center)
+                .width(70.sdp),
             text = text,
             fontSize = 12.sp,
             color = Color.Black,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis
         )
     }
 }
