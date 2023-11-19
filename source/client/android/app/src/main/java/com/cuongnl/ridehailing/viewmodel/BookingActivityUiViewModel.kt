@@ -27,7 +27,7 @@ class BookingActivityUiViewModel : ViewModel() {
     val points = mutableStateListOf<LatLng>()
 
     val bookingsInfo = mutableStateListOf<RideBookingInfoItem>()
-    private var _selectedBookingIndex = 0
+    private var _selectedBookingIndex = mutableStateOf(0)
 
     private val _destinationLocationLatLng = mutableStateOf<LatLng>(CurrentLocation.getLatLng())
     private val _pickupLocationLatLng = mutableStateOf<LatLng>(CurrentLocation.getLatLng())
@@ -38,8 +38,7 @@ class BookingActivityUiViewModel : ViewModel() {
     private val _isBottomSheetVisible = mutableStateOf(false)
     private val _fareCalculationInfoSelectedIndex = mutableStateOf(0)
 
-    val selectedBookingIndex: Int
-        get() = _selectedBookingIndex
+    val selectedBookingIndex: State<Int> = _selectedBookingIndex
     val destinationLocationLatLng: State<LatLng> = _destinationLocationLatLng
     val pickupLocationLatLng: State<LatLng> = _pickupLocationLatLng
     val destinationLocationAddress: State<String> = _destinationLocationAddress
@@ -66,9 +65,11 @@ class BookingActivityUiViewModel : ViewModel() {
         for (i in 0 until size) {
             bookingsInfo[i].isSelected.value =
                 bookingsInfo[i].transportationType == transportationType
-            _selectedBookingIndex = i
 
             if (bookingsInfo[i].isSelected.value) {
+
+                _selectedBookingIndex.value = i
+
                 if (bookingsInfo[i].directionPoints == null) {
                     getDirectionsBetweenTwoPoints(context, transportationType.travelMode) {
                         bookingsInfo[i].directionPoints = it

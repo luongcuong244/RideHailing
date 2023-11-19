@@ -38,7 +38,7 @@ fun BookingButton(
     ) {
         AppText(
             modifier = Modifier.align(Alignment.Center),
-            text = stringResource(id = R.string.book_text) + " " + bookingActivityUiViewModel.bookingsInfo[bookingActivityUiViewModel.selectedBookingIndex].transportationType.globalName,
+            text = stringResource(id = R.string.book_text) + " " + bookingActivityUiViewModel.bookingsInfo[bookingActivityUiViewModel.selectedBookingIndex.value].transportationType.globalName,
             fontSize = 14.ssp,
             color = colorResource(id = R.color.white),
             fontWeight = FontWeight.Medium
