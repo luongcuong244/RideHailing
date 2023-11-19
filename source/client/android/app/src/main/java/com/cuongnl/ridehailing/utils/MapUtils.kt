@@ -23,6 +23,12 @@ import com.google.maps.GeoApiContext
 import com.google.maps.model.DirectionsResult
 import com.google.maps.model.TravelMode
 import java.io.IOException
+import kotlin.math.atan2
+import kotlin.math.cos
+import kotlin.math.ln
+import kotlin.math.pow
+import kotlin.math.sin
+import kotlin.math.sqrt
 
 
 object MapUtils {
@@ -177,5 +183,29 @@ object MapUtils {
             .destination(newDestinationLatLng)
 
         request.setCallback(callBack)
+    }
+
+    fun getZoomLevelFitMap(point1: LatLng, point2: LatLng): Float {
+        val distance = calculateDistance(point1, point2)
+        val radius = distance / 2
+        val scale = ((radius * 1000) / 500)
+        return ((16 - ln(scale) / ln(2.0)).toFloat())
+    }
+
+    fun calculateDistance(point1: LatLng, point2: LatLng): Double {
+        val earthRadius = 6371 // Radius of the Earth in kilometers
+
+        val lat1 = Math.toRadians(point1.latitude)
+        val lon1 = Math.toRadians(point1.longitude)
+        val lat2 = Math.toRadians(point2.latitude)
+        val lon2 = Math.toRadians(point2.longitude)
+
+        val dlon = lon2 - lon1
+        val dlat = lat2 - lat1
+
+        val a = sin(dlat / 2).pow(2) + cos(lat1) * cos(lat2) * sin(dlon / 2).pow(2)
+        val c = 2 * atan2(sqrt(a), sqrt(1 - a))
+
+        return earthRadius * c
     }
 }

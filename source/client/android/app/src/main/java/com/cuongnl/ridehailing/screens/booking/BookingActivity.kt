@@ -29,8 +29,12 @@ import com.cuongnl.ridehailing.screens.home.HomeActivity
 import com.cuongnl.ridehailing.screens.notefordriver.NoteForDriverActivity
 import com.cuongnl.ridehailing.theme.AppTheme
 import com.cuongnl.ridehailing.utils.Constant
+import com.cuongnl.ridehailing.utils.MapUtils
 import com.cuongnl.ridehailing.viewmodel.BookingActivityUiViewModel
+import com.cuongnl.ridehailing.viewmodel.MapViewModel
+import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
+import com.google.maps.android.compose.CameraPositionState
 import ir.kaaveh.sdpcompose.sdp
 
 val LocalActivityBehavior = androidx.compose.runtime.staticCompositionLocalOf<IBookingActivityBehavior> {
@@ -41,6 +45,7 @@ val LocalActivityBehavior = androidx.compose.runtime.staticCompositionLocalOf<IB
 class BookingActivity : BaseActivity(), IBookingActivityBehavior {
 
     private lateinit var bookingActivityUiViewModel: BookingActivityUiViewModel
+    private lateinit var mapViewModel: MapViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -76,6 +81,20 @@ class BookingActivity : BaseActivity(), IBookingActivityBehavior {
         }
 
         bookingActivityUiViewModel.getBookingInfoResponses(this)
+
+        mapViewModel = ViewModelProvider(this)[MapViewModel::class.java]
+
+        val zoomLevelFitMap = MapUtils.getZoomLevelFitMap(pickupLocationLatLng, destinationLocationLatLng)
+        val destinationZoomLevel = zoomLevelFitMap - 1.2f
+        mapViewModel.setCameraPositionState(CameraPositionState(
+            position = CameraPosition.fromLatLngZoom(
+                LatLng(
+                    (pickupLocationLatLng.latitude + destinationLocationLatLng.latitude) / 2,
+                    (pickupLocationLatLng.longitude + destinationLocationLatLng.longitude) / 2,
+                ),
+                destinationZoomLevel
+            )
+        ))
     }
 
     override fun clickNoteForDriver() {
