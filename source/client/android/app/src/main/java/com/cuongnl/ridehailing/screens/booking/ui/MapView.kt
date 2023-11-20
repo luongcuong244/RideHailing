@@ -14,6 +14,7 @@ import com.cuongnl.ridehailing.viewmodel.MapViewModel
 import com.google.android.gms.maps.model.JointType
 import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.Marker
+import com.google.maps.android.compose.MarkerComposable
 import com.google.maps.android.compose.MarkerState
 import com.google.maps.android.compose.Polyline
 
@@ -46,6 +47,12 @@ fun MapView(
             width = 12f,
             jointType = JointType.ROUND,
         )
+
+        MarkerComposable(
+            state = MarkerState(position = bookingActivityUiViewModel.pickupLocationLatLng.value)
+        ) {
+            PickupLocationMarker()
+        }
     }
 
 }
