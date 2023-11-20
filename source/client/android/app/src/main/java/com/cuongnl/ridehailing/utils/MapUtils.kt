@@ -44,7 +44,7 @@ object MapUtils {
 
         if (!Constant.ENABLE_CALL_MAP_API) {
             Handler().postDelayed({
-                onSuccess("This is test address")
+                onSuccess("This is a test address")
             }, 1000)
             return
         }

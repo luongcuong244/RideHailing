@@ -53,6 +53,12 @@ fun MapView(
         ) {
             PickupLocationMarker()
         }
+
+        MarkerComposable(
+            state = MarkerState(position = bookingActivityUiViewModel.destinationLocationLatLng.value)
+        ) {
+            DestinationLocationMarker()
+        }
     }
 
 }
