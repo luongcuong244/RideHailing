@@ -72,7 +72,18 @@ class BookingActivityUiViewModel : ViewModel() {
 
                 if (bookingsInfo[i].directionPoints == null) {
                     getDirectionsBetweenTwoPoints(context, transportationType.travelMode) {
-                        bookingsInfo[i].directionPoints = it
+
+                        val points = mutableListOf<LatLng>()
+
+                        it.routes[0].legs[0].steps.forEach {
+                            points.addAll(it.polyline.decodePath().map { latLng ->
+                                val newLat = LatLng(latLng.lat, latLng.lng)
+                                newLat
+                            })
+                        }
+
+                        bookingsInfo[i].travelTimeInMinutes = it.routes[0].legs[0].duration.inSeconds / 60
+                        bookingsInfo[i].directionPoints = points
                         setPoints(bookingsInfo[i].directionPoints!!)
                     }
                 } else {
@@ -122,7 +133,7 @@ class BookingActivityUiViewModel : ViewModel() {
     private fun getDirectionsBetweenTwoPoints(
         context: Context,
         travelMode: TravelMode,
-        onSuccess: (List<LatLng>) -> Unit = {},
+        onSuccess: (DirectionsResult) -> Unit = {},
     ) {
 
         MapUtils.getDirectionsBetweenTwoPoints(
@@ -132,17 +143,7 @@ class BookingActivityUiViewModel : ViewModel() {
             object : com.google.maps.PendingResult.Callback<DirectionsResult> {
                 override fun onResult(result: DirectionsResult?) {
                     if (result != null && result.routes.isNotEmpty()) {
-
-                        val points = mutableListOf<LatLng>()
-
-                        result.routes[0].legs[0].steps.forEach {
-                            points.addAll(it.polyline.decodePath().map { latLng ->
-                                val newLat = LatLng(latLng.lat, latLng.lng)
-                                newLat
-                            })
-                        }
-
-                        onSuccess(points)
+                        onSuccess(result)
                     } else {
                         Toast.makeText(context, "Cannot get directions", Toast.LENGTH_SHORT).show()
                     }
