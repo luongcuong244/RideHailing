@@ -1,4 +1,4 @@
-package com.cuongnl.ridehailing.retrofit.api
+package com.cuongnl.ridehailing.network.retrofit.api
 
 import com.cuongnl.ridehailing.models.api.AddressResponse
 import com.cuongnl.ridehailing.models.api.ChangePasswordRequest

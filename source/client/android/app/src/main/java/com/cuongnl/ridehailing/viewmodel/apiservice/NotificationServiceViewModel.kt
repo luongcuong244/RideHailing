@@ -6,7 +6,7 @@ import com.cuongnl.ridehailing.callbacks.api.SimpleApiCallback
 import com.cuongnl.ridehailing.models.api.NotificationResponse
 import com.cuongnl.ridehailing.models.api.RemoveNotificationsRequest
 import com.cuongnl.ridehailing.models.api.ScalarsBooleanResponse
-import com.cuongnl.ridehailing.retrofit.repository.NotificationRepository
+import com.cuongnl.ridehailing.network.retrofit.repository.NotificationRepository
 import retrofit2.Call
 import retrofit2.Response
 

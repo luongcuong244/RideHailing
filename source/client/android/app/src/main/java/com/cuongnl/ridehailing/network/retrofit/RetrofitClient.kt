@@ -1,4 +1,4 @@
-package com.cuongnl.ridehailing.retrofit
+package com.cuongnl.ridehailing.network.retrofit
 
 import android.content.Context
 import com.cuongnl.ridehailing.computerlocal.ServerAddress

@@ -109,6 +109,10 @@ dependencies {
     implementation("com.google.maps.android:maps-compose:4.1.1")
 
     implementation("androidx.constraintlayout:constraintlayout-compose:1.0.1")
+
+    implementation("io.socket:socket.io-client:2.0.0") {
+        exclude(group = "org.json", module = "json")
+    }
 }
 
 secrets {

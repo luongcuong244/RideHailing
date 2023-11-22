@@ -14,7 +14,7 @@ import com.cuongnl.ridehailing.globalstate.CurrentLocation
 import com.cuongnl.ridehailing.models.api.GetBookingInfoRequest
 import com.cuongnl.ridehailing.models.api.GetBookingInfoResponse
 import com.cuongnl.ridehailing.models.item.RideBookingInfoItem
-import com.cuongnl.ridehailing.retrofit.repository.BookingRepository
+import com.cuongnl.ridehailing.network.retrofit.repository.BookingRepository
 import com.cuongnl.ridehailing.utils.MapUtils
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.model.DirectionsResult

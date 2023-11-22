@@ -9,7 +9,7 @@ import com.cuongnl.ridehailing.models.api.LoginRequest
 import com.cuongnl.ridehailing.models.api.LoginResponse
 import com.cuongnl.ridehailing.models.api.RegisterRequest
 import com.cuongnl.ridehailing.models.api.ScalarsBooleanResponse
-import com.cuongnl.ridehailing.retrofit.repository.AuthRepository
+import com.cuongnl.ridehailing.network.retrofit.repository.AuthRepository
 import retrofit2.Call
 import retrofit2.Response
 

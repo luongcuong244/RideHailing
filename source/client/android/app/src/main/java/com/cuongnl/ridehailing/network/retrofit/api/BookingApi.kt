@@ -1,4 +1,4 @@
-package com.cuongnl.ridehailing.retrofit.api
+package com.cuongnl.ridehailing.network.retrofit.api
 
 import com.cuongnl.ridehailing.models.api.GetBookingInfoRequest
 import com.cuongnl.ridehailing.models.api.GetBookingInfoResponse
@@ -11,7 +11,4 @@ import retrofit2.http.POST
 interface BookingApi {
     @POST("booking/get-booking-info")
     fun getBookingInfo(@Body request: GetBookingInfoRequest): Call<GetBookingInfoResponse>
-
-    @POST("booking/request-a-ride")
-    fun requestARide(@Body request: RequestARideRequest): Call<RequestARideResponse>
 }

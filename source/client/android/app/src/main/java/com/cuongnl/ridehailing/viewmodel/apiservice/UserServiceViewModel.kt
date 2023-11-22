@@ -8,7 +8,7 @@ import com.cuongnl.ridehailing.models.api.ChangePasswordRequest
 import com.cuongnl.ridehailing.models.api.ChangePasswordResponse
 import com.cuongnl.ridehailing.models.api.GetUserResponse
 import com.cuongnl.ridehailing.models.api.NotificationResponse
-import com.cuongnl.ridehailing.retrofit.repository.UserRepository
+import com.cuongnl.ridehailing.network.retrofit.repository.UserRepository
 import retrofit2.Call
 import retrofit2.Response
 
