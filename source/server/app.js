@@ -36,8 +36,18 @@ app.use(errorsMiddleware);
 
 const PORT = process.env.PORT;
 const http = require("http");
-http
+
+const httpServer = http
   .createServer(app)
-  .listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
+httpServer.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
+const io = require("socket.io")(httpServer, {
+  pingInterval: 5000,
+  pingTimeout: 5000,
+});
+
+const startSocketIO = require("./socketio/socket.connect");
+startSocketIO(io);
 
 module.exports = app;

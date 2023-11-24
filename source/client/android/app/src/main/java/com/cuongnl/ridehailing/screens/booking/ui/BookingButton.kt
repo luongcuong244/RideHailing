@@ -8,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -24,6 +25,8 @@ fun BookingButton(
     bookingActivityUiViewModel: BookingActivityUiViewModel = viewModel()
 ) {
 
+    val context = LocalContext.current
+
     TouchableOpacityButton(
         modifier = Modifier
             .padding(bottom = 10.sdp)
@@ -33,7 +36,7 @@ fun BookingButton(
             .background(colorResource(id = R.color.app_color))
             .padding(vertical = 10.sdp),
         onClick = {
-
+            bookingActivityUiViewModel.clickBookingButton(context)
         }
     ) {
         AppText(

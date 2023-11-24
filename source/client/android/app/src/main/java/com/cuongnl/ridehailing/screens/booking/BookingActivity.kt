@@ -11,14 +11,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModelProvider
 import com.cuongnl.ridehailing.R
-import com.cuongnl.ridehailing.activitybehavior.IBookingActivityBehavior
 import com.cuongnl.ridehailing.core.BaseActivity
 import com.cuongnl.ridehailing.enums.TransportationType
 import com.cuongnl.ridehailing.screens.booking.ui.BackButton
@@ -26,7 +24,6 @@ import com.cuongnl.ridehailing.screens.booking.ui.BottomView
 import com.cuongnl.ridehailing.screens.booking.ui.FareCalculationInfoBottomSheet
 import com.cuongnl.ridehailing.screens.booking.ui.MapView
 import com.cuongnl.ridehailing.screens.home.HomeActivity
-import com.cuongnl.ridehailing.screens.notefordriver.NoteForDriverActivity
 import com.cuongnl.ridehailing.theme.AppTheme
 import com.cuongnl.ridehailing.utils.Constant
 import com.cuongnl.ridehailing.utils.MapUtils
@@ -37,12 +34,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.compose.CameraPositionState
 import ir.kaaveh.sdpcompose.sdp
 
-val LocalActivityBehavior = androidx.compose.runtime.staticCompositionLocalOf<IBookingActivityBehavior> {
-    error("No ActivityBehavior provided")
-}
-
-@Suppress("DEPRECATION")
-class BookingActivity : BaseActivity(), IBookingActivityBehavior {
+class BookingActivity : BaseActivity() {
 
     private lateinit var bookingActivityUiViewModel: BookingActivityUiViewModel
     private lateinit var mapViewModel: MapViewModel
@@ -53,9 +45,7 @@ class BookingActivity : BaseActivity(), IBookingActivityBehavior {
         setupViewModel()
 
         setContent {
-            CompositionLocalProvider(value = LocalActivityBehavior provides this) {
-                Screen()
-            }
+            Screen()
         }
     }
 
@@ -95,16 +85,6 @@ class BookingActivity : BaseActivity(), IBookingActivityBehavior {
                 destinationZoomLevel
             )
         ))
-    }
-
-    override fun clickNoteForDriver() {
-        val intent = Intent(this, NoteForDriverActivity::class.java)
-        intent.putExtra(Constant.BUNDLE_NOTE_FOR_DRIVER, bookingActivityUiViewModel.noteForDriver.value)
-        startActivityForResult(intent, Constant.REQUEST_CODE_NOTE_FOR_DRIVER)
-    }
-
-    override fun clickBackButton() {
-        onBackPressed()
     }
 
     override fun onBackPressed() {

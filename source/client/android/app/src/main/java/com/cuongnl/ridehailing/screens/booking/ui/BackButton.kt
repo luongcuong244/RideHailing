@@ -14,21 +14,23 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.cuongnl.ridehailing.R
-import com.cuongnl.ridehailing.screens.booking.LocalActivityBehavior
+import com.cuongnl.ridehailing.viewmodel.BookingActivityUiViewModel
 import com.cuongnl.ridehailing.widgets.TouchableOpacityButton
 import ir.kaaveh.sdpcompose.sdp
 
 @Composable
-fun BoxScope.BackButton() {
+fun BoxScope.BackButton(bookingActivityUiViewModel: BookingActivityUiViewModel = viewModel()) {
 
-    val actions = LocalActivityBehavior.current
+    val context = LocalContext.current
 
     TouchableOpacityButton(
         onClick = {
-            actions.clickBackButton()
+            bookingActivityUiViewModel.clickBackButton(context)
         },
         modifier = Modifier
             .statusBarsPadding()

@@ -1,6 +1,7 @@
 package com.cuongnl.ridehailing.viewmodel
 
 import android.content.Context
+import android.content.Intent
 import android.os.Handler
 import android.widget.Toast
 import androidx.compose.runtime.State
@@ -13,8 +14,12 @@ import com.cuongnl.ridehailing.extensions.findActivity
 import com.cuongnl.ridehailing.globalstate.CurrentLocation
 import com.cuongnl.ridehailing.models.api.GetBookingInfoRequest
 import com.cuongnl.ridehailing.models.api.GetBookingInfoResponse
+import com.cuongnl.ridehailing.models.api.RequestARideRequest
 import com.cuongnl.ridehailing.models.item.RideBookingInfoItem
 import com.cuongnl.ridehailing.network.retrofit.repository.BookingRepository
+import com.cuongnl.ridehailing.screens.findingdriver.FindingDriverActivity
+import com.cuongnl.ridehailing.screens.notefordriver.NoteForDriverActivity
+import com.cuongnl.ridehailing.utils.Constant
 import com.cuongnl.ridehailing.utils.MapUtils
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.model.DirectionsResult
@@ -82,7 +87,10 @@ class BookingActivityUiViewModel : ViewModel() {
                             })
                         }
 
-                        bookingsInfo[i].travelTimeInMinutes = it.routes[0].legs[0].duration.inSeconds / 60
+                        bookingsInfo[i].distanceInKilometers =
+                            it.routes[0].legs[0].distance.inMeters / 1000.0
+                        bookingsInfo[i].travelTimeInMinutes =
+                            it.routes[0].legs[0].duration.inSeconds.toInt() / 60
                         bookingsInfo[i].directionPoints = points
                         setPoints(bookingsInfo[i].directionPoints!!)
                     }
@@ -175,6 +183,7 @@ class BookingActivityUiViewModel : ViewModel() {
                 fareCalculationInfo = "<b>Hello</b> <i>World</i>",
                 minutesToDriverArrival = 5,
                 driversNearbyLocation = listOf(),
+                kilometersToDriverArrival = 4.3,
             )
 
             Handler().postDelayed({
@@ -200,5 +209,47 @@ class BookingActivityUiViewModel : ViewModel() {
 //                }
 //            })
         }
+    }
+
+    fun clickNoteForDriver(context: Context) {
+        val intent = Intent(context, NoteForDriverActivity::class.java)
+        intent.putExtra(Constant.BUNDLE_NOTE_FOR_DRIVER, noteForDriver.value)
+        context.findActivity()
+            ?.startActivityForResult(intent, Constant.REQUEST_CODE_NOTE_FOR_DRIVER)
+    }
+
+    fun clickBackButton(context: Context) {
+        context.findActivity()?.onBackPressed()
+    }
+
+    fun clickBookingButton(context: Context) {
+
+        val bookingInfo = bookingsInfo[selectedBookingIndex.value]
+
+        if (bookingInfo.bookingInfoResponse == null) {
+            Toast.makeText(context, "Cannot get booking info", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        val intent = Intent(context, FindingDriverActivity::class.java)
+
+        val requestARideRequest = RequestARideRequest(
+            travelMode = bookingsInfo[selectedBookingIndex.value].transportationType.name,
+            pickupLatitude = pickupLocationLatLng.value.latitude,
+            pickupLongitude = pickupLocationLatLng.value.longitude,
+            destinationLatitude = destinationLocationLatLng.value.latitude,
+            destinationLongitude = destinationLocationLatLng.value.longitude,
+            cost = bookingInfo.bookingInfoResponse!!.fareAmount,
+            paymentMethod = paymentMethod.value.name,
+            noteForDriver = noteForDriver.value,
+            destinationAddress = destinationLocationAddress.value,
+            pickupAddress = pickupLocationAddress.value,
+            distanceInKilometers = bookingInfo.distanceInKilometers ?: 0.0,
+            kilometersToDriverArrival = bookingInfo.bookingInfoResponse!!.kilometersToDriverArrival,
+            durationInMinutes = bookingInfo.travelTimeInMinutes ?: 0,
+            minutesToDriverArrival = bookingInfo.bookingInfoResponse!!.minutesToDriverArrival,
+        )
+        intent.putExtra(Constant.BUNDLE_REQUEST_A_RIDE_REQUEST, requestARideRequest.toJson().toString())
+        context.startActivity(intent)
     }
 }

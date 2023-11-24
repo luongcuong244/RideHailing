@@ -17,6 +17,7 @@ object Constant {
     const val BUNDLE_SELECTING_LOCATION_TYPE = "bundle_selecting_location_type"
     const val BUNDLE_TRAVEL_MODE = "bundle_travel_mode"
     const val BUNDLE_NOTE_FOR_DRIVER = "bundle_note_for_driver"
+    const val BUNDLE_REQUEST_A_RIDE_REQUEST = "bundle_request_a_ride_request"
 
     const val OTP_TIMEOUT_IN_SECOND = 40L
 

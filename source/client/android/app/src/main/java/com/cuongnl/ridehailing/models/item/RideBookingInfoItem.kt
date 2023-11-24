@@ -9,6 +9,7 @@ data class RideBookingInfoItem(
     val transportationType: TransportationType,
     var bookingInfoResponse: GetBookingInfoResponse? = null,
     var directionPoints: List<com.google.android.gms.maps.model.LatLng>? = null,
-    var travelTimeInMinutes: Long? = null,
+    var travelTimeInMinutes: Int? = null,
+    var distanceInKilometers: Double? = null,
     var isSelected: MutableState<Boolean> = mutableStateOf(false)
 )
