@@ -9,5 +9,8 @@
 .cxx
 local.properties
 
+# ip network for server creating
+ServerAddress.kt
+
 # ignore the file containing Google Map Api KEY
 secrets.properties

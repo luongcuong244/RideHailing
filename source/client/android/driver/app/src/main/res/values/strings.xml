@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Cam SM Driver</string>
+
+    <string name="ok_text">OK</string>
+    <string name="cancel_text">HỦY</string>
+    <string name="dismiss_text">Bỏ qua</string>
 </resources>
