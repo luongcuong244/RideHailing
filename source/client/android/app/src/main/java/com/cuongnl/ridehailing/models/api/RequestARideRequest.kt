@@ -1,7 +1,8 @@
 package com.cuongnl.ridehailing.models.api
 
+import com.cuongnl.ridehailing.enums.PaymentMethod
+import com.cuongnl.ridehailing.enums.TransportationType
 import com.google.gson.annotations.SerializedName
-import org.json.JSONArray
 import org.json.JSONObject
 import java.io.Serializable
 
@@ -12,9 +13,9 @@ data class RequestARideRequest(
     @SerializedName("pickupLatitude") val pickupLatitude: Double,
     @SerializedName("pickupLongitude") val pickupLongitude: Double,
     @SerializedName("pickupAddress") val pickupAddress: String,
-    @SerializedName("paymentMethod") val paymentMethod: String,
+    @SerializedName("paymentMethod") val paymentMethod: PaymentMethod,
     @SerializedName("noteForDriver") val noteForDriver: String,
-    @SerializedName("travelMode") val travelMode: String,
+    @SerializedName("travelMode") val transportationType: TransportationType,
     @SerializedName("distanceInKilometers") val distanceInKilometers: Double,
     @SerializedName("durationInMinutes") val durationInMinutes: Int,
     @SerializedName("kilometersToDriverArrival") val kilometersToDriverArrival: Double,
@@ -37,9 +38,9 @@ data class RequestARideRequest(
         data.put("destination", destination.toString())
         data.put("pickup", pickup.toString())
 
-        data.put("paymentMethod", paymentMethod)
+        data.put("paymentMethod", paymentMethod.name)
         data.put("noteForDriver", noteForDriver)
-        data.put("travelMode", travelMode)
+        data.put("travelMode", transportationType.name)
         data.put("distanceInKilometers", distanceInKilometers)
         data.put("durationInMinutes", durationInMinutes)
         data.put("kilometersToDriverArrival", kilometersToDriverArrival)

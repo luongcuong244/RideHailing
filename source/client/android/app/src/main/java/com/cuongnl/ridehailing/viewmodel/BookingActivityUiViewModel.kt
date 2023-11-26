@@ -234,13 +234,13 @@ class BookingActivityUiViewModel : ViewModel() {
         val intent = Intent(context, FindingDriverActivity::class.java)
 
         val requestARideRequest = RequestARideRequest(
-            travelMode = bookingsInfo[selectedBookingIndex.value].transportationType.name,
+            transportationType = bookingsInfo[selectedBookingIndex.value].transportationType,
             pickupLatitude = pickupLocationLatLng.value.latitude,
             pickupLongitude = pickupLocationLatLng.value.longitude,
             destinationLatitude = destinationLocationLatLng.value.latitude,
             destinationLongitude = destinationLocationLatLng.value.longitude,
             cost = bookingInfo.bookingInfoResponse!!.fareAmount,
-            paymentMethod = paymentMethod.value.name,
+            paymentMethod = paymentMethod.value,
             noteForDriver = noteForDriver.value,
             destinationAddress = destinationLocationAddress.value,
             pickupAddress = pickupLocationAddress.value,
@@ -249,7 +249,7 @@ class BookingActivityUiViewModel : ViewModel() {
             durationInMinutes = bookingInfo.travelTimeInMinutes ?: 0,
             minutesToDriverArrival = bookingInfo.bookingInfoResponse!!.minutesToDriverArrival,
         )
-        intent.putExtra(Constant.BUNDLE_REQUEST_A_RIDE_REQUEST, requestARideRequest.toJson().toString())
+        intent.putExtra(Constant.BUNDLE_REQUEST_A_RIDE_REQUEST, requestARideRequest)
         context.startActivity(intent)
     }
 }

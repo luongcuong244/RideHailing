@@ -88,4 +88,5 @@
     <string name="note_for_driver">Ghi chú cho tài xế</string>
     <string name="note_for_driver_hint">Nhập ghi chú cho tài xế</string>
     <string name="done">Hoàn tất</string>
+    <string name="finding_a_car">ĐANG TÌM XE</string>
 </resources>
