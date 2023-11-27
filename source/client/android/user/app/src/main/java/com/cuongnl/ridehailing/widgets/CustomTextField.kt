@@ -1,8 +1,6 @@
 package com.cuongnl.ridehailing.widgets
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.interaction.collectIsFocusedAsState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -50,7 +48,9 @@ fun CustomTextField(
     ref: MutableState<TextFieldValue> = mutableStateOf(
         TextFieldValue("")
     ),
-    focusRequester: FocusRequester = FocusRequester(),
+    focusRequester: FocusRequester = remember {
+        FocusRequester()
+    },
     onValueChange: (TextFieldValue) -> Unit,
     onFocusChanged: (FocusState) -> Unit = {},
     modifier: Modifier = Modifier,

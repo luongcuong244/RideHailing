@@ -8,4 +8,17 @@
     <string name="phone_number_placeholder">Nhập số điện thoại</string>
     <string name="password_placeholder">Nhập mật khẩu</string>
     <string name="login_text">Đăng nhập</string>
+    <string name="info_text">Thông tin</string>
+    <string name="location_text">Vị trí</string>
+    <string name="trip_text">Chuyến đi</string>
+    <string name="save_text">Lưu</string>
+    <string name="edit_text">Sửa</string>
+    <string name="full_name_text">Họ và tên</string>
+    <string name="phone_number_text">Số điện thoại</string>
+    <string name="license_plate_text">Biển số xe</string>
+    <string name="vehicle_brand_text">Hãng xe</string>
+    <string name="vehicle_type_text">Loại xe</string>
+    <string name="address_text">Địa chỉ</string>
+    <string name="coordinate_text">Tọa độ</string>
+    <string name="change_text">Thay đổi</string>
 </resources>

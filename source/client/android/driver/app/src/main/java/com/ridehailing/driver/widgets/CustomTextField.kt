@@ -50,7 +50,9 @@ fun CustomTextField(
     ref: MutableState<TextFieldValue> = mutableStateOf(
         TextFieldValue("")
     ),
-    focusRequester: FocusRequester = FocusRequester(),
+    focusRequester: FocusRequester = remember {
+        FocusRequester()
+    },
     onValueChange: (TextFieldValue) -> Unit,
     onFocusChanged: (FocusState) -> Unit = {},
     modifier: Modifier = Modifier,

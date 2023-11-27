@@ -11,6 +11,7 @@ import com.ridehailing.driver.core.BaseActivity
 import com.ridehailing.driver.screens.login.ui.EmulatorText
 import com.ridehailing.driver.screens.login.ui.LoginButton
 import com.ridehailing.driver.screens.login.ui.Logo
+import com.ridehailing.driver.screens.login.ui.PasswordTextField
 import com.ridehailing.driver.screens.login.ui.PhoneNumberTextField
 import com.ridehailing.driver.theme.AppTheme
 
@@ -37,6 +38,7 @@ private fun Screen() {
         EmulatorText()
         Logo()
         PhoneNumberTextField()
+        PasswordTextField()
         LoginButton()
     }
 }

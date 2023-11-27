@@ -29,6 +29,10 @@
 
         <activity
             android:exported="false"
+            android:name=".screens.home.HomeActivity" />
+
+        <activity
+            android:exported="false"
             android:name=".screens.login.LoginActivity" />
 
         <activity

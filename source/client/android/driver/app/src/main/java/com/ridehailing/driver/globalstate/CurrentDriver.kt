@@ -4,9 +4,9 @@ import com.ridehailing.driver.models.Driver
 
 object CurrentDriver {
 
-    private var driver: Driver? = null
+    private var driver: Driver = Driver()
 
-    fun getDriver(): Driver? {
+    fun getDriver(): Driver {
         return driver
     }
 

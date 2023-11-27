@@ -55,4 +55,7 @@
 
     <color name="app_background_gray">#4DCCCCCC</color>
     <color name="map_route_primary_color">#1967d2</color>
+    <color name="table_header_background">#FFEAC1</color>
+    <color name="divider_color">#D7D7D7</color>
+    <color name="table_content_text_color">#7A7A7A</color>
 </resources>

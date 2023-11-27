@@ -1,6 +1,7 @@
 package com.ridehailing.driver.viewmodel
 
 import android.content.Context
+import android.content.Intent
 import android.widget.Toast
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.text.input.TextFieldValue
@@ -8,13 +9,9 @@ import androidx.lifecycle.ViewModel
 import com.ridehailing.driver.globalstate.CurrentDriver
 import com.ridehailing.driver.models.Driver
 import com.ridehailing.driver.models.api.FetchDriverResponse
-import com.ridehailing.driver.models.api.LoginRequest
-import com.ridehailing.driver.models.api.LoginResponse
 import com.ridehailing.driver.network.retrofit.repository.AuthRepository
+import com.ridehailing.driver.screens.home.HomeActivity
 import com.ridehailing.driver.utils.LocalStorageUtils
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class LoginUiViewModel : ViewModel() {
 
@@ -23,15 +20,27 @@ class LoginUiViewModel : ViewModel() {
     val phoneNumberTextField = mutableStateOf(
         TextFieldValue("")
     )
+    val passwordTextField = mutableStateOf(
+        TextFieldValue("")
+    )
 
     fun setPhoneNumberTextField(textFieldValue: TextFieldValue) {
         phoneNumberTextField.value = textFieldValue
+    }
+
+    fun setPasswordTextField(textFieldValue: TextFieldValue) {
+        passwordTextField.value = textFieldValue
     }
 
     fun clickLoginButton(context: Context) {
 
         if (phoneNumberTextField.value.text.isEmpty()) {
             Toast.makeText(context, "Please enter your phone number", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        if (passwordTextField.value.text.isEmpty()) {
+            Toast.makeText(context, "Please enter your password", Toast.LENGTH_SHORT).show()
             return
         }
 
@@ -45,6 +54,7 @@ class LoginUiViewModel : ViewModel() {
 
 //        val loginRequest = LoginRequest(
 //            phoneNumber = phoneNumberTextField.value.text,
+//            password = passwordTextField.value.text
 //        )
 //
 //        authRepository.login(loginRequest, object : Callback<LoginResponse> {
@@ -83,13 +93,14 @@ class LoginUiViewModel : ViewModel() {
                 setDriverName(fetchDriverResponse.driverName)
                 setDriverAvatar(fetchDriverResponse.driverAvatar)
                 setLicensePlate(fetchDriverResponse.licensePlate)
-                setVehicleName(fetchDriverResponse.vehicleName)
+                setVehicleBrand(fetchDriverResponse.vehicleBrand)
                 setVehicleType(fetchDriverResponse.vehicleType)
             }
         CurrentDriver.setDriver(driver)
     }
 
     private fun navigateToHomeActivity(context: Context) {
-        //val intent = Intent(context, HomeActivity::class.java)
+        val intent = Intent(context, HomeActivity::class.java)
+        context.startActivity(intent)
     }
 }

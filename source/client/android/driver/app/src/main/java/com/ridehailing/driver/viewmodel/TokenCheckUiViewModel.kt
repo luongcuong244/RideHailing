@@ -25,16 +25,18 @@ class TokenCheckUiViewModel : ViewModel() {
                     response: Response<FetchDriverResponse>
                 ) {
                     if (response.isSuccessful) {
-                        val driver = Driver()
-                            .apply {
-                                setPhoneNumber(response.body()?.phoneNumber)
-                                setDriverName(response.body()?.driverName)
-                                setDriverAvatar(response.body()?.driverAvatar)
-                                setLicensePlate(response.body()?.licensePlate)
-                                setVehicleName(response.body()?.vehicleName)
-                                setVehicleType(response.body()?.vehicleType)
-                            }
-                        CurrentDriver.setDriver(driver)
+                        response.body()?.let {
+                            val driver = Driver()
+                                .apply {
+                                    setPhoneNumber(it.phoneNumber)
+                                    setDriverName(it.driverName)
+                                    setDriverAvatar(it.driverAvatar)
+                                    setLicensePlate(it.licensePlate)
+                                    setVehicleBrand(it.vehicleBrand)
+                                    setVehicleType(it.vehicleType)
+                                }
+                            CurrentDriver.setDriver(driver)
+                        }
                         navigateToHomeActivity()
                     } else {
                         navigateToLoginActivity(context)
