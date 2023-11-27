@@ -3,6 +3,8 @@ package com.ridehailing.driver.viewmodel
 import android.content.Context
 import android.content.Intent
 import androidx.lifecycle.ViewModel
+import com.ridehailing.driver.globalstate.CurrentDriver
+import com.ridehailing.driver.models.Driver
 import com.ridehailing.driver.models.api.FetchDriverResponse
 import com.ridehailing.driver.network.retrofit.repository.DriverRepository
 import com.ridehailing.driver.screens.login.LoginActivity
@@ -23,7 +25,16 @@ class TokenCheckUiViewModel : ViewModel() {
                     response: Response<FetchDriverResponse>
                 ) {
                     if (response.isSuccessful) {
-                        //CurrentUser.setUser(response.body()?.user)
+                        val driver = Driver()
+                            .apply {
+                                setPhoneNumber(response.body()?.phoneNumber)
+                                setDriverName(response.body()?.driverName)
+                                setDriverAvatar(response.body()?.driverAvatar)
+                                setLicensePlate(response.body()?.licensePlate)
+                                setVehicleName(response.body()?.vehicleName)
+                                setVehicleType(response.body()?.vehicleType)
+                            }
+                        CurrentDriver.setDriver(driver)
                         navigateToHomeActivity()
                     } else {
                         navigateToLoginActivity(context)

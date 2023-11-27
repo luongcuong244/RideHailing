@@ -4,5 +4,9 @@ import com.google.gson.annotations.SerializedName
 
 data class FetchDriverResponse(
     @SerializedName("phoneNumber") val phoneNumber: String,
-    @SerializedName("name") val name: String,
+    @SerializedName("driverName") val driverName: String?,
+    @SerializedName("driverAvatar") val driverAvatar: String?,
+    @SerializedName("licensePlate") val licensePlate: String?,
+    @SerializedName("vehicleName") val vehicleName: String?,
+    @SerializedName("vehicleType") val vehicleType: String?,
 )

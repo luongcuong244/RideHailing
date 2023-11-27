@@ -23,16 +23,9 @@ class LoginUiViewModel : ViewModel() {
     val phoneNumberTextField = mutableStateOf(
         TextFieldValue("")
     )
-    val passwordTextField = mutableStateOf(
-        TextFieldValue("")
-    )
 
     fun setPhoneNumberTextField(textFieldValue: TextFieldValue) {
         phoneNumberTextField.value = textFieldValue
-    }
-
-    fun setPasswordTextField(textFieldValue: TextFieldValue) {
-        passwordTextField.value = textFieldValue
     }
 
     fun clickLoginButton(context: Context) {
@@ -42,40 +35,41 @@ class LoginUiViewModel : ViewModel() {
             return
         }
 
-        if (passwordTextField.value.text.isEmpty()) {
-            Toast.makeText(context, "Please enter your password", Toast.LENGTH_SHORT).show()
-            return
-        }
-
-        val loginRequest = LoginRequest(
-            phoneNumber = phoneNumberTextField.value.text,
-            password = passwordTextField.value.text
-        )
-
-        authRepository.login(loginRequest, object : Callback<LoginResponse> {
-
-            override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
-                if (response.isSuccessful) {
-                    val accessToken = response.body()?.accessToken
-                    val driverData = response.body()?.driverData
-
-                    if (accessToken != null && driverData != null) {
-                        saveAccessToken(context, accessToken)
-                        setCurrentDriver(driverData)
-                        navigateToHomeActivity(context)
-                    } else if (accessToken == null) {
-                        Toast.makeText(context, "No access token provided!", Toast.LENGTH_SHORT).show()
-                    } else {
-                        Toast.makeText(context, "No user data provided!", Toast.LENGTH_SHORT).show()
-                    }
-                }
+        val driver = Driver()
+            .apply {
+                setPhoneNumber(phoneNumberTextField.value.text)
             }
+        CurrentDriver.setDriver(driver)
+        navigateToHomeActivity(context)
 
-            override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
-                Toast.makeText(context, t.message, Toast.LENGTH_SHORT).show()
-            }
-        })
 
+//        val loginRequest = LoginRequest(
+//            phoneNumber = phoneNumberTextField.value.text,
+//        )
+//
+//        authRepository.login(loginRequest, object : Callback<LoginResponse> {
+//
+//            override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
+//                if (response.isSuccessful) {
+//                    val accessToken = response.body()?.accessToken
+//                    val driverData = response.body()?.driverData
+//
+//                    if (accessToken != null && driverData != null) {
+//                        saveAccessToken(context, accessToken)
+//                        setCurrentDriver(driverData)
+//                        navigateToHomeActivity(context)
+//                    } else if (accessToken == null) {
+//                        Toast.makeText(context, "No access token provided!", Toast.LENGTH_SHORT).show()
+//                    } else {
+//                        Toast.makeText(context, "No user data provided!", Toast.LENGTH_SHORT).show()
+//                    }
+//                }
+//            }
+//
+//            override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
+//                Toast.makeText(context, t.message, Toast.LENGTH_SHORT).show()
+//            }
+//        })
     }
 
     private fun saveAccessToken(context: Context, accessToken: String) {
@@ -83,12 +77,15 @@ class LoginUiViewModel : ViewModel() {
     }
 
     private fun setCurrentDriver(fetchDriverResponse: FetchDriverResponse) {
-        val driver = Driver().apply {
-//            setUserName(userData.userName)
-//            setPhoneNumber(userData.phoneNumber)
-//            setEmail(userData.email)
-        }
-
+        val driver = Driver()
+            .apply {
+                setPhoneNumber(fetchDriverResponse.phoneNumber)
+                setDriverName(fetchDriverResponse.driverName)
+                setDriverAvatar(fetchDriverResponse.driverAvatar)
+                setLicensePlate(fetchDriverResponse.licensePlate)
+                setVehicleName(fetchDriverResponse.vehicleName)
+                setVehicleType(fetchDriverResponse.vehicleType)
+            }
         CurrentDriver.setDriver(driver)
     }
 
