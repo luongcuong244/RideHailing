@@ -1,7 +1,7 @@
 var express = require("express");
 var router = express.Router();
 
-const { test } = require("../controllers/testSocket");
+const { test } = require("../controllers/restful/testSocket");
 
 router.put("/", test);
 

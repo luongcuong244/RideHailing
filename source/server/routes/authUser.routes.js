@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const authUserController = require("../controllers/authUser.js");
+const authUserController = require("../controllers/restful/authUser.js");
 
 router.get("/check-existing-user", authUserController.checkExistingUser);
 router.post("/login", authUserController.login);

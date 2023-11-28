@@ -1,5 +1,5 @@
-const userModel = require("../models/userModel");
-const driverModel = require("../models/driverModel");
+const userModel = require("../../models/userModel");
+const driverModel = require("../../models/driverModel");
 const asyncHandler = require("express-async-handler");
 
 const getBookingInfo = asyncHandler(async (req, res) => {
@@ -81,7 +81,7 @@ const getBookingInfo = asyncHandler(async (req, res) => {
   // tìm 10 tài xế gần nhất trong phạm vi 2km
   const taxiMinutes = 5;
   const bikeMinutes = 7;
-  
+
   let drivers = await driverModel
     .find({ activeStatus: true, travelMode })
     .select("_id currentLatitude currentLongitude ");
@@ -110,7 +110,9 @@ const getBookingInfo = asyncHandler(async (req, res) => {
   //   .select("currentLatitude currentLongitude");
   return res.status(200).json({
     // sucess: driverNear ? true : false,
-    updateUser: drivers ? { drivers, fareAmount, fareCalculationInfo } : "Error.",
+    updateUser: drivers
+      ? { drivers, fareAmount, fareCalculationInfo }
+      : "Error.",
   });
 });
 

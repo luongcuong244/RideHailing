@@ -1,5 +1,5 @@
-const userModel = require("../models/userModel");
-const driverModel = require("../models/driverModel");
+const userModel = require("../../models/userModel");
+const driverModel = require("../../models/driverModel");
 const asyncHandler = require("express-async-handler");
 
 const getCurrent = asyncHandler(async (req, res) => {
@@ -48,7 +48,7 @@ const deleteAddress = asyncHandler(async (req, res) => {
   const response = await userModel.findByIdAndUpdate(
     _id,
     {
-      $pull: { address: {_id: did} },
+      $pull: { address: { _id: did } },
     },
     { new: true }
   );

@@ -7,7 +7,7 @@ const {
   addAddress,
   deleteAddress,
   getAddresses,
-} = require("../controllers/user");
+} = require("../controllers/restful/user");
 const { verifyAccessToken } = require("../middlewares/verifyToken");
 
 router.get("/current", verifyAccessToken, getCurrent);

@@ -1,4 +1,4 @@
-const driverModel = require("../models/driverModel");
+const driverModel = require("../../models/driverModel");
 const asyncHandler = require("express-async-handler");
 
 const updateLocation = asyncHandler(async (req, res) => {
@@ -28,6 +28,5 @@ const getCurrent = asyncHandler(async (req, res) => {
 
 module.exports = {
   updateLocation,
-  getCurrent
+  getCurrent,
 };
-
