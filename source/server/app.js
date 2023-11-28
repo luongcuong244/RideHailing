@@ -39,102 +39,39 @@ const server = http
   .listen(PORT, () => console.log(`Server running on port ${PORT}`));
 
 const socketIO = require("socket.io");
-const driverModel = require("./models/driverModel");
+// const driverModel = require("./models/driverModel");
 const io = socketIO(server, {
-  cors: {   
+  cors: {
     origin: "*",
   },
 });
 
-io.on("connection", (socket) => {
-  console.log("New client connected: " + socket.id);
+const booking = require("./controllers/sockets/booking");
+const connectSocket = require("./controllers/sockets/connectSocket");
 
-  socket.emit("connected", socket.id);
+booking(io);
+connectSocket(io);
 
-  // Xử lý khi tài xế đăng nhập thành công
-  // socket.on("driver-login", async (driverData) => {
-  //   // Lưu socket ID vào schema của tài khoản tài xế
-  //   try {
-  //     const { idDriver, socketId } = driverData;
-  //     await driverModel.findOneAndUpdate(
-  //       { _id: idDriver },
-  //       { socketId: socketId },
-  //       { new: true }
-  //     );
-  //     // console.log(respone);
-  //   } catch (err) {
-  //     console.error("Error saving socket ID:", err);
-  //   }
-  // });
+// io.on("connection", (socket) => {
+//   console.log("New client connected: " + socket.id);
 
-  socket.on("receive-application", async (data) => {
-    try {
-      const { idDriver, currentLatitude, currentLongitude, socketId } = data;
-      await driverModel.findOneAndUpdate(
-        { _id: idDriver },
-        {
-          socketId,
-          currentLatitude,
-          currentLongitude,
-          activeStatus: true,
-        },
-        { new: true }
-      );
-      // console.log(respone);
-    } catch (err) {
-      console.error("Error saving socket ID:", err);
-    }
-  });
+//   socket.emit("connected", socket.id);
 
-
-  socket.on("disconnected", async (data) => {
-    try {
-      const { idDriver } = data;
-      await driverModel.findOneAndUpdate(
-        { _id: idDriver },
-        {
-          socketId: null,
-          currentLatitude: null,
-          currentLongitude: null,
-          activeStatus: false,
-        },
-        { new: true }
-      );
-      // console.log(respone);
-    } catch (err) {
-      console.error("Error saving socket ID:", err);
-    }
-  });
-
-  socket.on("findDriver", async (data) => {
-    try {
-      // console.log(data);
-      const {
-        fareAmount,
-        drivers,
-        startLatitude,
-        startLongitude,
-        endLatitude,
-        endLongitude,
-      } = data;
-      //   console.log(listDriver);
-      const listSocketId = await driverModel
-        .find({ _id: drivers, activeStatus: true })
-        .select("socketId -_id");
-      listSocketId.map((e) => {
-        // console.log(fareAmount, e.socketId);
-        io.to(e.socketId).emit("receive-data", {
-          fareAmount,
-          startLatitude,
-          startLongitude,
-          endLatitude,
-          endLongitude,
-        });
-      });
-    } catch (err) {
-      console.error("Error saving socket ID:", err);
-    }
-  });
-});
+//   // Xử lý khi tài xế đăng nhập thành công
+//   // socket.on("driver-login", async (driverData) => {
+//   //   // Lưu socket ID vào schema của tài khoản tài xế
+//   //   try {
+//   //     const { idDriver, socketId } = driverData;
+//   //     await driverModel.findOneAndUpdate(
+//   //       { _id: idDriver },
+//   //       { socketId: socketId },
+//   //       { new: true }
+//   //     );
+//   //     // console.log(respone);
+//   //   } catch (err) {
+//   //     console.error("Error saving socket ID:", err);
+//   //   }
+//   // });
+// });
 
 module.exports = app;
