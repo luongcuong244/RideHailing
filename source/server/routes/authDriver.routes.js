@@ -3,8 +3,9 @@ const router = express.Router();
 
 const authDriverController = require("../controllers/authDriver.js");
 
-router.get("/check-existing-user", authDriverController.checkExistingDriver);
+router.get("/check-existing-driver", authDriverController.checkExistingDriver);
 router.post("/login", authDriverController.login);
 router.post("/register", authDriverController.register);
+router.post("/refresh-token", authDriverController.refreshAccessToken);
 
 module.exports = router;

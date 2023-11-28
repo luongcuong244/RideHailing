@@ -53,8 +53,6 @@ const getBookingInfo = asyncHandler(async (req, res) => {
   // tính chi phí
   const taxiPrices = 2;
   const bikePrices = 1;
-  const taxiMinutes = 5;
-  const bikeMinutes = 7;
 
   let fareAmount = 0;
   let minutesToDriverArrival = 0;
@@ -81,6 +79,9 @@ const getBookingInfo = asyncHandler(async (req, res) => {
   `;
 
   // tìm 10 tài xế gần nhất trong phạm vi 2km
+  const taxiMinutes = 5;
+  const bikeMinutes = 7;
+  
   let drivers = await driverModel
     .find({ activeStatus: true, travelMode })
     .select("_id currentLatitude currentLongitude ");

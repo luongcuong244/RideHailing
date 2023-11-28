@@ -52,27 +52,28 @@ io.on("connection", (socket) => {
   socket.emit("connected", socket.id);
 
   // Xử lý khi tài xế đăng nhập thành công
-  socket.on("driver-login", async (driverData) => {
-    // Lưu socket ID vào schema của tài khoản tài xế
-    try {
-      const { idDriver, socketId } = driverData;
-      await driverModel.findOneAndUpdate(
-        { _id: idDriver },
-        { socketId: socketId },
-        { new: true }
-      );
-      // console.log(respone);
-    } catch (err) {
-      console.error("Error saving socket ID:", err);
-    }
-  });
+  // socket.on("driver-login", async (driverData) => {
+  //   // Lưu socket ID vào schema của tài khoản tài xế
+  //   try {
+  //     const { idDriver, socketId } = driverData;
+  //     await driverModel.findOneAndUpdate(
+  //       { _id: idDriver },
+  //       { socketId: socketId },
+  //       { new: true }
+  //     );
+  //     // console.log(respone);
+  //   } catch (err) {
+  //     console.error("Error saving socket ID:", err);
+  //   }
+  // });
 
   socket.on("receive-application", async (data) => {
     try {
-      const { idDriver, currentLatitude, currentLongitude } = data;
+      const { idDriver, currentLatitude, currentLongitude, socketId } = data;
       await driverModel.findOneAndUpdate(
         { _id: idDriver },
         {
+          socketId,
           currentLatitude,
           currentLongitude,
           activeStatus: true,

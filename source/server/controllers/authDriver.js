@@ -66,10 +66,29 @@ const driverModel = require("../models/driverModel");
       throw new Error("Invalid credenttials!");
     }
   });
+
+  const refreshAccessToken = asyncHandler(async (req, res) => {
+    const cookie = req.cookies;
+    if (!cookie && !cookie.refreshToken)
+      throw new Error("No refresh token in cookies");
+    const rs = await jwt.verify(cookie.refreshToken, process.env.JWT_SECRET);
+  
+    const response = await driverModel.findOne({
+      _id: rs._id,
+      refreshToken: cookie.refreshToken,
+    });
+    return res.status(200).json({
+      succes: response ? true : false,
+      newAccessToken: response
+        ? generateAccessToken(response._id, response.role)
+        : "Refresh token matched",
+    });
+  });
   
   module.exports = {
     checkExistingDriver,
     register,
     login,
+    refreshAccessToken
   };
   
