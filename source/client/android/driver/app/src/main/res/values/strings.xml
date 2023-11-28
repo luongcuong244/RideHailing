@@ -21,4 +21,7 @@
     <string name="address_text">Địa chỉ</string>
     <string name="coordinate_text">Tọa độ</string>
     <string name="change_text">Thay đổi</string>
+    <string name="pick_up_location_text">Điểm đón</string>
+    <string name="drop_off_location_text">Điểm trả</string>
+    <string name="accept_a_ride">Đồng ý nhận cuốc</string>
 </resources>
