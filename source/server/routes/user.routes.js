@@ -1,10 +1,19 @@
-var express = require('express');
+var express = require("express");
 var router = express.Router();
 
-const { forgotPassword, getCurrent} = require('../controllers/userController');
-const { verifyAccessToken } = require('../middlewares/verifyToken');
+const {
+  forgotPassword,
+  getCurrent,
+  addAddress,
+  deleteAddress,
+  getAddresses,
+} = require("../controllers/user");
+const { verifyAccessToken } = require("../middlewares/verifyToken");
 
-router.get('/current', verifyAccessToken, getCurrent);
-router.post('/change-password', forgotPassword);
+router.get("/current", verifyAccessToken, getCurrent);
+router.get("/get-addresses", verifyAccessToken, getAddresses);
+router.post("/change-password", forgotPassword);
+router.put("/add-address", verifyAccessToken, addAddress);
+router.put("/delete-address/:did", verifyAccessToken, deleteAddress);
 
 module.exports = router;

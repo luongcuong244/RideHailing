@@ -55,11 +55,11 @@ const login = asyncHandler(async (req, res) => {
     // tạo refresh token
     const refreshToken = generateRefreshToken(response._id);
     //Lưu refresh token vào database
-    await userModel.findByIdAndUpdate(
+    const user = await userModel.findByIdAndUpdate(
       response._id,
       { refreshToken },
       { new: true }
-    );
+    ).select("-password -role");
     // Lưu refresh token vào cookie
     res.cookie("refreshToken", refreshToken, {
       httpOnly: true,
@@ -68,7 +68,7 @@ const login = asyncHandler(async (req, res) => {
     return res.status(200).json({
       sucess: true,
       accessToken,
-      userData,
+      user,
     });
   } else {
     throw new Error("Invalid credenttials!");
