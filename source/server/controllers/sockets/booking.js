@@ -1,7 +1,7 @@
 const driverModel = require("../../models/driverModel");
 
 module.exports = function (io) {
-  io.on("connection", (socket) => {
+  io.of("/booking").on("connection", (socket) => {
     console.log("New client connected: " + socket.id);
 
     // tìm tài xế

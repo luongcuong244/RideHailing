@@ -27,23 +27,6 @@ var userSchema = new mongoose.Schema(
     refreshToken: {
       type: String,
     },
-    // travelMode: {
-    //   type: String,
-    //   enum: ["TAXI", "BIKE"],
-    //   default: "BIKE",
-    // },
-    // startLatitude: {
-    //   type: Number,
-    // },
-    // startLongitude: {
-    //   type: Number,
-    // },
-    // endLatitude: {
-    //   type: Number,
-    // },
-    // endLongitude: {
-    //   type: Number,
-    // },
     // notifications: [
     //   {
     //     title: {

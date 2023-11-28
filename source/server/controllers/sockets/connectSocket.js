@@ -1,7 +1,7 @@
 const driverModel = require("../../models/driverModel");
 
 module.exports = function (io) {
-  io.on("connection", (socket) => {
+  io.of("/connect").on("connection", (socket) => {
     console.log("New client connected: " + socket.id);
     // bật chế độ nhận khách
     socket.on("receive-application", async (data) => {
