@@ -28,6 +28,7 @@ var driverSchema = new mongoose.Schema(
     },
     vehicleBrand: {
       type: String,
+      default: "Hyundai",
     },
     role: {
       type: String,
@@ -38,6 +39,7 @@ var driverSchema = new mongoose.Schema(
     },
     licensePlate: {
       type: String,
+      default: "29V5-19850",
     },
     activeStatus: {
       type: Boolean,
