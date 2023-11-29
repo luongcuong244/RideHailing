@@ -99,7 +99,7 @@ fun ConfirmDialog(
                         .padding(top = 5.sdp)
                         .padding(horizontal = 10.sdp)
                         .fillMaxWidth(),
-                    text = currentTrip.pickupAddress,
+                    text = currentTrip.pickupAddress.address,
                     fontWeight = FontWeight.Normal,
                     fontSize = 13.ssp,
                     color = Color.Black,
@@ -130,7 +130,7 @@ fun ConfirmDialog(
                         .padding(top = 5.sdp)
                         .padding(horizontal = 10.sdp)
                         .fillMaxWidth(),
-                    text = currentTrip.destinationAddress,
+                    text = currentTrip.destinationAddress.address,
                     fontWeight = FontWeight.Normal,
                     fontSize = 13.ssp,
                     color = Color.Black,

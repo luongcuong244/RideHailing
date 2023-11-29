@@ -6,6 +6,7 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
+import com.ridehailing.driver.models.Address
 import com.ridehailing.driver.models.TripInfo
 import com.ridehailing.driver.models.UserInfo
 import com.ridehailing.driver.network.socketio.SocketClient
@@ -23,8 +24,16 @@ class TripTabUiViewModel : ViewModel() {
         .apply {
             add(TripInfo(
                 id = "1",
-                pickupAddress = "123 Nguyen Luong Bang",
-                destinationAddress = "456 Nguyen Luong Bang",
+                pickupAddress = Address(
+                    "123 Nguyen Luong Bang",
+                    20.9808114, 
+                    105.7936536
+                ),
+                destinationAddress = Address(
+                    "456 Nguyen Luong Bang",
+                    20.9808114,
+                    105.7936536
+                ),
                 cost = 15,
                 distanceInKilometers = 1.0,
                 durationInMinutes = 10,
@@ -39,8 +48,16 @@ class TripTabUiViewModel : ViewModel() {
             ))
             add(TripInfo(
                 id = "2",
-                pickupAddress = "123 Nguyen Luong Bang",
-                destinationAddress = "456 Nguyen Luong Bang",
+                pickupAddress = Address(
+                    "123 Nguyen Luong Bang",
+                    20.9808114,
+                    105.7936536
+                ),
+                destinationAddress = Address(
+                    "456 Nguyen Luong Bang",
+                    20.9808114,
+                    105.7936536
+                ),
                 cost = 15,
                 distanceInKilometers = 1.0,
                 durationInMinutes = 10,
@@ -55,8 +72,16 @@ class TripTabUiViewModel : ViewModel() {
             ))
             add(TripInfo(
                 id = "3",
-                pickupAddress = "123 Nguyen Luong Bang",
-                destinationAddress = "456 Nguyen Luong Bang",
+                pickupAddress = Address(
+                    "123 Nguyen Luong Bang",
+                    20.9808114,
+                    105.7936536
+                ),
+                destinationAddress = Address(
+                    "456 Nguyen Luong Bang",
+                    20.9808114,
+                    105.7936536
+                ),
                 cost = 15,
                 distanceInKilometers = 1.0,
                 durationInMinutes = 10,
@@ -71,8 +96,16 @@ class TripTabUiViewModel : ViewModel() {
             ))
             add(TripInfo(
                 id = "4",
-                pickupAddress = "123 Nguyen Luong Bang",
-                destinationAddress = "456 Nguyen Luong Bang",
+                pickupAddress = Address(
+                    "123 Nguyen Luong Bang",
+                    20.9808114,
+                    105.7936536
+                ),
+                destinationAddress = Address(
+                    "456 Nguyen Luong Bang",
+                    20.9808114,
+                    105.7936536
+                ),
                 cost = 15,
                 distanceInKilometers = 1.0,
                 durationInMinutes = 10,
@@ -87,8 +120,16 @@ class TripTabUiViewModel : ViewModel() {
             ))
             add(TripInfo(
                 id = "5",
-                pickupAddress = "123 Nguyen Luong Bang",
-                destinationAddress = "456 Nguyen Luong Bang",
+                pickupAddress = Address(
+                    "123 Nguyen Luong Bang",
+                    20.9808114,
+                    105.7936536
+                ),
+                destinationAddress = Address(
+                    "456 Nguyen Luong Bang",
+                    20.9808114,
+                    105.7936536
+                ),
                 cost = 15,
                 distanceInKilometers = 1.0,
                 durationInMinutes = 10,

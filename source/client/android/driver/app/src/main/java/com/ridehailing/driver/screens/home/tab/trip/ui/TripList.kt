@@ -81,7 +81,7 @@ private fun TripItem(
         ) {
             Address(
                 icon = painterResource(id = R.drawable.ic_pickup),
-                address = trip.pickupAddress
+                address = trip.pickupAddress.address
             )
 
             Row(
@@ -113,7 +113,7 @@ private fun TripItem(
 
             Address(
                 icon = painterResource(id = R.drawable.ic_destination),
-                address = trip.destinationAddress
+                address = trip.destinationAddress.address
             )
 
             Row(

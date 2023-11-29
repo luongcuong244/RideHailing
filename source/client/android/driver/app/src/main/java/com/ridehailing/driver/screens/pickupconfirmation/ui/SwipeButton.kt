@@ -15,17 +15,25 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.ridehailing.driver.R
+import com.ridehailing.driver.viewmodel.PickupConfirmationUiViewModel
 import com.ridehailing.driver.widgets.AppText
 import com.ridehailing.driver.widgets.SwipeableView
 import ir.kaaveh.sdpcompose.sdp
 import ir.kaaveh.sdpcompose.ssp
 
 @Composable
-fun BoxScope.SwipeButton() {
+fun BoxScope.SwipeButton(
+    pickupConfirmationUiViewModel: PickupConfirmationUiViewModel = viewModel()
+) {
+
+    val context = LocalContext.current
+
     SwipeableView(
         modifier = Modifier
             .align(Alignment.BottomCenter)
@@ -75,7 +83,7 @@ fun BoxScope.SwipeButton() {
         },
         progressTint = colorResource(id = R.color.blue_400).copy(0.5f),
         onSwiped = {
-
+            pickupConfirmationUiViewModel.onSwipeToConfirm(context)
         }
     )
 }

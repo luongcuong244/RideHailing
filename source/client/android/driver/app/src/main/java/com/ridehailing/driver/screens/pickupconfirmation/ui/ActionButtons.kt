@@ -12,6 +12,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
@@ -27,6 +28,9 @@ import ir.kaaveh.sdpcompose.ssp
 fun ActionButtons(
     pickupConfirmationUiViewModel: PickupConfirmationUiViewModel = viewModel()
 ) {
+
+    val context = LocalContext.current
+
     Row(
         modifier = Modifier
             .padding(top = 30.sdp)
@@ -41,19 +45,19 @@ fun ActionButtons(
             icon = painterResource(id = R.drawable.confirm_pickup_ic_message),
             text = stringResource(id = R.string.texting),
         ) {
-
+            pickupConfirmationUiViewModel.onClickTextingButton(context)
         }
         Button(
             icon = painterResource(id = R.drawable.confirm_pickup_ic_call),
             text = stringResource(id = R.string.call),
         ) {
-
+            pickupConfirmationUiViewModel.onClickCallButton(context)
         }
         Button(
             icon = painterResource(id = R.drawable.confirm_pickup_ic_close),
             text = stringResource(id = R.string.cancel_trip),
         ) {
-
+            pickupConfirmationUiViewModel.onClickCancelTripButton(context)
         }
     }
 }

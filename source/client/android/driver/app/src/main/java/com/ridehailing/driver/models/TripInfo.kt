@@ -5,8 +5,8 @@ import java.io.Serializable
 
 data class TripInfo (
     @SerializedName("id") val id: String,
-    @SerializedName("pickupAddress") val pickupAddress: String,
-    @SerializedName("destinationAddress") val destinationAddress: String,
+    @SerializedName("pickupAddress") val pickupAddress: Address,
+    @SerializedName("destinationAddress") val destinationAddress: Address,
     @SerializedName("distanceInKilometers") val distanceInKilometers: Double,
     @SerializedName("durationInMinutes") val durationInMinutes: Int,
     @SerializedName("minutesToDriverArrival") val minutesToDriverArrival: Int,
