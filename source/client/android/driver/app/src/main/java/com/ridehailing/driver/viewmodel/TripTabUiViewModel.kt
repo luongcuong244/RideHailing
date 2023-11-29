@@ -1,12 +1,16 @@
 package com.ridehailing.driver.viewmodel
 
 import android.content.Context
+import android.content.Intent
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.ridehailing.driver.models.TripInfo
+import com.ridehailing.driver.models.UserInfo
 import com.ridehailing.driver.network.socketio.SocketClient
+import com.ridehailing.driver.screens.pickupconfirmation.PickupConfirmationActivity
+import com.ridehailing.driver.utils.Constant
 
 class TripTabUiViewModel : ViewModel() {
 
@@ -27,7 +31,11 @@ class TripTabUiViewModel : ViewModel() {
                 minutesToDriverArrival = 5,
                 kilometersToDriverArrival = 0.5,
                 paymentMethod = "Cash",
-                noteForDriver = "Please bring me a coffee"
+                noteForDriver = "Please bring me a coffee",
+                userInfo = UserInfo(
+                    userName = "Cuong Nguyen",
+                    phoneNumber = "123456789"
+                )
             ))
             add(TripInfo(
                 id = "2",
@@ -39,7 +47,11 @@ class TripTabUiViewModel : ViewModel() {
                 minutesToDriverArrival = 5,
                 kilometersToDriverArrival = 0.5,
                 paymentMethod = "Cash",
-                noteForDriver = "Please bring me a coffee"
+                noteForDriver = "Please bring me a coffee",
+                userInfo = UserInfo(
+                    userName = "Cuong Nguyen",
+                    phoneNumber = "123456789"
+                )
             ))
             add(TripInfo(
                 id = "3",
@@ -51,7 +63,11 @@ class TripTabUiViewModel : ViewModel() {
                 minutesToDriverArrival = 5,
                 kilometersToDriverArrival = 0.5,
                 paymentMethod = "Cash",
-                noteForDriver = "Please bring me a coffee"
+                noteForDriver = "Please bring me a coffee",
+                userInfo = UserInfo(
+                    userName = "Cuong Nguyen",
+                    phoneNumber = "123456789"
+                )
             ))
             add(TripInfo(
                 id = "4",
@@ -63,7 +79,11 @@ class TripTabUiViewModel : ViewModel() {
                 minutesToDriverArrival = 5,
                 kilometersToDriverArrival = 0.5,
                 paymentMethod = "Cash",
-                noteForDriver = "Please bring me a coffee"
+                noteForDriver = "Please bring me a coffee",
+                userInfo = UserInfo(
+                    userName = "Cuong Nguyen",
+                    phoneNumber = "123456789"
+                )
             ))
             add(TripInfo(
                 id = "5",
@@ -75,7 +95,11 @@ class TripTabUiViewModel : ViewModel() {
                 minutesToDriverArrival = 5,
                 kilometersToDriverArrival = 0.5,
                 paymentMethod = "Cash",
-                noteForDriver = "Please bring me a coffee"
+                noteForDriver = "Please bring me a coffee",
+                userInfo = UserInfo(
+                    userName = "Cuong Nguyen",
+                    phoneNumber = "123456789"
+                )
             ))
         }
 
@@ -110,6 +134,8 @@ class TripTabUiViewModel : ViewModel() {
     }
 
     fun clickToAcceptARide(context: Context) {
-
+        val intent = Intent(context, PickupConfirmationActivity::class.java)
+        intent.putExtra(Constant.BUNDLE_TRIP_INFO, _selectedTrip.value)
+        context.startActivity(intent)
     }
 }

@@ -15,7 +15,10 @@ import androidx.compose.ui.res.painterResource
 import com.ridehailing.driver.R
 
 @Composable
-fun AppTheme(content: @Composable BoxScope.() -> Unit) {
+fun AppTheme(
+    withImageBackground: Boolean = true,
+    content: @Composable BoxScope.() -> Unit
+) {
     MaterialTheme {
         Surface(
             modifier = Modifier
@@ -26,13 +29,15 @@ fun AppTheme(content: @Composable BoxScope.() -> Unit) {
                     .fillMaxSize()
                     .background(Color.White)
             ) {
-                Image(
-                    painter = painterResource(id = R.drawable.background),
-                    contentDescription = null,
-                    modifier = Modifier
-                        .fillMaxSize(),
-                    contentScale = ContentScale.Crop
-                )
+                if (withImageBackground) {
+                    Image(
+                        painter = painterResource(id = R.drawable.background),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .fillMaxSize(),
+                        contentScale = ContentScale.Crop
+                    )
+                }
                 content()
             }
         }

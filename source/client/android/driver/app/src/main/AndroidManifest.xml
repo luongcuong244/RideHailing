@@ -29,6 +29,10 @@
 
         <activity
             android:exported="false"
+            android:name=".screens.pickupconfirmation.PickupConfirmationActivity" />
+
+        <activity
+            android:exported="false"
             android:name=".screens.home.HomeActivity" />
 
         <activity

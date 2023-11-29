@@ -24,4 +24,12 @@
     <string name="pick_up_location_text">Điểm đón</string>
     <string name="drop_off_location_text">Điểm trả</string>
     <string name="accept_a_ride">Đồng ý nhận cuốc</string>
+    <string name="pickup_customer_location">Địa điểm đón khách</string>
+    <string name="directions">Chỉ đường</string>
+    <string name="texting">Nhắn tin</string>
+    <string name="call">Gọi điện</string>
+    <string name="cancel_trip">Hủy chuyến</string>
+    <string name="expected_fare">Giá cước dự kiến</string>
+    <string name="customer_info">Thông tin khách hàng</string>
+    <string name="swipe_to_confirm_pickup">Vuốt xác nhận đón khách</string>
 </resources>

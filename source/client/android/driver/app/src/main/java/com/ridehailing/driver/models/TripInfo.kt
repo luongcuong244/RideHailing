@@ -1,14 +1,18 @@
 package com.ridehailing.driver.models
 
-data class TripInfo(
-    val id: String,
-    val pickupAddress: String,
-    val destinationAddress: String,
-    val distanceInKilometers: Double,
-    val durationInMinutes: Int,
-    val minutesToDriverArrival: Int,
-    val kilometersToDriverArrival: Double,
-    val paymentMethod: String,
-    val noteForDriver: String,
-    val cost: Int,
-)
+import com.google.gson.annotations.SerializedName
+import java.io.Serializable
+
+data class TripInfo (
+    @SerializedName("id") val id: String,
+    @SerializedName("pickupAddress") val pickupAddress: String,
+    @SerializedName("destinationAddress") val destinationAddress: String,
+    @SerializedName("distanceInKilometers") val distanceInKilometers: Double,
+    @SerializedName("durationInMinutes") val durationInMinutes: Int,
+    @SerializedName("minutesToDriverArrival") val minutesToDriverArrival: Int,
+    @SerializedName("kilometersToDriverArrival") val kilometersToDriverArrival: Double,
+    @SerializedName("paymentMethod") val paymentMethod: String,
+    @SerializedName("noteForDriver") val noteForDriver: String,
+    @SerializedName("cost") val cost: Int,
+    @SerializedName("userInfo") val userInfo: UserInfo
+) : Serializable
