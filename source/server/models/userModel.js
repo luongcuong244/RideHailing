@@ -26,7 +26,53 @@ var userSchema = new mongoose.Schema(
     },
     refreshToken: {
       type: String,
-    }
+    },
+    // notifications: [
+    //   {
+    //     title: {
+    //       type: String,
+    //       required: true,
+    //     },
+    //     shortContent: {
+    //       type: String,
+    //       required: true,
+    //     },
+    //     content: {
+    //       type: String,
+    //       required: true,
+    //     },
+    //     image: {
+    //       type: String,
+    //       default:
+    //         "https://insieutoc.vn/wp-content/uploads/2021/03/cac-mau-logo-dep-nhat.jpg",
+    //     },
+    //     isRead: {
+    //       type: Boolean,
+    //       default: false,
+    //     },
+    //   },
+    // ],
+    address: [
+      {
+        addressType: {
+          type: String,
+          enum: ["Home", "Work", "Other"],
+          default: "Home",
+        },
+        shortName: {
+          type: String, 
+        },
+        fullName: {
+          type: String,      
+        },
+        longitude: {
+          type: Number,       
+        },
+        latitude: {
+          type: Number,
+        }
+      },
+    ],
   },
   {
     timestamps: true,
@@ -37,7 +83,7 @@ userSchema.pre("save", async function (next) {
   if (!this.isModified("password")) {
     next();
   }
-  const salt =await bcrypt.genSaltSync(10);
+  const salt = await bcrypt.genSaltSync(10);
   this.password = await bcrypt.hash(this.password, salt);
   next();
 });
