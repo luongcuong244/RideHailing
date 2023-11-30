@@ -17,6 +17,7 @@ import com.ridehailing.driver.models.TripInfo
 import com.ridehailing.driver.screens.pickupconfirmation.ui.ActionButtons
 import com.ridehailing.driver.screens.pickupconfirmation.ui.CustomerInfo
 import com.ridehailing.driver.screens.pickupconfirmation.ui.FareAmount
+import com.ridehailing.driver.screens.pickupconfirmation.ui.NoteForDriver
 import com.ridehailing.driver.screens.pickupconfirmation.ui.PickupAddressTextAndDirectionButton
 import com.ridehailing.driver.screens.pickupconfirmation.ui.PickupLocationText
 import com.ridehailing.driver.screens.pickupconfirmation.ui.SwipeButton
@@ -67,6 +68,7 @@ private fun Screen() {
                 ActionButtons()
                 FareAmount()
                 CustomerInfo()
+                NoteForDriver()
             }
             SwipeButton()
         }

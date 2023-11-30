@@ -29,14 +29,14 @@ class PickupConfirmationUiViewModel : ViewModel() {
     }
 
     fun onClickTextingButton(context: Context) {
-        val intent = Intent(Intent.ACTION_PROCESS_TEXT)
-        intent.data = Uri.parse("tel:${currentTripInfo.userInfo.phoneNumber}}")
+        val intent = Intent(Intent.ACTION_VIEW)
+        intent.data = Uri.parse("smsto:${currentTripInfo.userInfo.phoneNumber}")
         context.startActivity(intent)
     }
 
     fun onClickCallButton(context: Context) {
         val intent = Intent(Intent.ACTION_DIAL)
-        intent.data = Uri.parse("tel:${currentTripInfo.userInfo.phoneNumber}}")
+        intent.data = Uri.parse("tel:${currentTripInfo.userInfo.phoneNumber}")
         context.startActivity(intent)
     }
 

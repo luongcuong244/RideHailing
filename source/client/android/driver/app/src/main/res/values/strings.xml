@@ -32,4 +32,5 @@
     <string name="expected_fare">Giá cước dự kiến</string>
     <string name="customer_info">Thông tin khách hàng</string>
     <string name="swipe_to_confirm_pickup">Vuốt xác nhận đón khách</string>
+    <string name="note_text">Ghi chú</string>
 </resources>

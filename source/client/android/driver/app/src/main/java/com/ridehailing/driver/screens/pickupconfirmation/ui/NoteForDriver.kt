@@ -24,7 +24,7 @@ import ir.kaaveh.sdpcompose.sdp
 import ir.kaaveh.sdpcompose.ssp
 
 @Composable
-fun CustomerInfo(
+fun NoteForDriver(
     pickupConfirmationUiViewModel: PickupConfirmationUiViewModel = viewModel()
 ) {
     Column(
@@ -33,7 +33,7 @@ fun CustomerInfo(
             .fillMaxWidth()
     ) {
         AppText(
-            text = stringResource(id = R.string.customer_info),
+            text = stringResource(id = R.string.note_text),
             fontSize = 12.ssp,
             color = Color.White,
         )
@@ -44,8 +44,7 @@ fun CustomerInfo(
                 .fillMaxWidth(),
             verticalArrangement = Arrangement.spacedBy(5.sdp)
         ) {
-            TextItem(value = pickupConfirmationUiViewModel.currentTripInfo.userInfo.userName)
-            TextItem(value = pickupConfirmationUiViewModel.currentTripInfo.userInfo.phoneNumber)
+            TextItem(value = pickupConfirmationUiViewModel.currentTripInfo.noteForDriver)
         }
     }
 }

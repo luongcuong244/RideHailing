@@ -2,7 +2,16 @@ package com.ridehailing.driver.utils
 
 object FormatterUtils {
     fun formatCurrency(amount: Int): String {
-        val formatter = java.text.DecimalFormat("#.###", java.text.DecimalFormatSymbols.getInstance(java.util.Locale.US))
-        return formatter.format(amount)
+        val amountStr = amount.toString().reversed()
+
+        val formattedStr = StringBuilder()
+        for (i in amountStr.indices) {
+            formattedStr.append(amountStr[i])
+            if ((i + 1) % 3 == 0 && i != amountStr.lastIndex) {
+                formattedStr.append(".")
+            }
+        }
+
+        return formattedStr.reverse().toString()
     }
 }
