@@ -34,6 +34,10 @@
 
         <activity
             android:exported="false"
+            android:name=".screens.paymentconfirmation.PaymentConfirmationActivity" />
+
+        <activity
+            android:exported="false"
             android:name=".screens.dropoffconfirmation.DropoffConfirmationActivity" />
 
         <activity

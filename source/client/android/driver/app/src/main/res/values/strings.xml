@@ -35,4 +35,9 @@
     <string name="swipe_to_confirm_pickup">Vuốt xác nhận đón khách</string>
     <string name="swipe_to_confirm_dropoff">Vuốt xác nhận trả khách</string>
     <string name="note_text">Ghi chú</string>
+    <string name="money_customer_paid">"Số tiền khách phải trả"</string>
+    <string name="payment_method">Phương thức thanh toán</string>
+    <string name="trip_cost">Phí chuyến đi</string>
+    <string name="total_distance">Tổng quãng đường</string>
+    <string name="confirm_paid">Xác nhận đã thanh toán</string>
 </resources>
