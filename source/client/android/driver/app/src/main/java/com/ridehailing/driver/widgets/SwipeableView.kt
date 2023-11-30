@@ -35,6 +35,11 @@ fun SwipeableView(
     onSwiped: () -> Unit = {},
     progressTint: Color = Color.Transparent,
 ) {
+
+    var isSwiped = remember {
+        false
+    }
+
     val density = LocalDensity.current
     val animationSpec = tween<Float>(
         durationMillis = 300
@@ -68,8 +73,11 @@ fun SwipeableView(
                 DragValue.End at backgroundWidth.value
             },
             confirmValueChange = {
-                if (it == DragValue.End) {
+                if (it == DragValue.End && !isSwiped) {
+                    isSwiped = true
                     onSwiped()
+                } else {
+                    isSwiped = false
                 }
                 true
             }

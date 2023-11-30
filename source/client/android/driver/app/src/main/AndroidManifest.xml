@@ -34,6 +34,10 @@
 
         <activity
             android:exported="false"
+            android:name=".screens.dropoffconfirmation.DropoffConfirmationActivity" />
+
+        <activity
+            android:exported="false"
             android:name=".screens.pickupconfirmation.PickupConfirmationActivity" />
 
         <activity

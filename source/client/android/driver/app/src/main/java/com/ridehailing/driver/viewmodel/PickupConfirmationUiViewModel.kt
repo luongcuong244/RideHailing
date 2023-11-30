@@ -4,7 +4,11 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import androidx.lifecycle.ViewModel
+import com.ridehailing.driver.R
+import com.ridehailing.driver.extensions.findActivity
 import com.ridehailing.driver.models.TripInfo
+import com.ridehailing.driver.screens.dropoffconfirmation.DropoffConfirmationActivity
+import com.ridehailing.driver.utils.Constant
 
 class PickupConfirmationUiViewModel : ViewModel() {
 
@@ -45,6 +49,13 @@ class PickupConfirmationUiViewModel : ViewModel() {
     }
 
     fun onSwipeToConfirm(context: Context) {
-
+        val intent = Intent(context, DropoffConfirmationActivity::class.java)
+        intent.putExtra(Constant.BUNDLE_TRIP_INFO, currentTripInfo)
+        context.startActivity(intent)
+        context.findActivity()?.finish()
+        context.findActivity()?.overridePendingTransition(
+            R.anim.slide_in_right,
+            R.anim.slide_out_left
+        )
     }
 }
