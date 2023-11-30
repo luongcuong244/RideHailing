@@ -6,11 +6,17 @@ const driverModel = require("../../models/driverModel");
 const asyncHandler = require("express-async-handler");
 
 const checkExistingDriver = asyncHandler(async (req, res) => {
-  const { phoneNumber } = req.query;
-  const check = await driverModel.findOne({ phoneNumber });
-  return res.status(200).json({
-    data: check ? true : false,
-  });
+  try {
+    console.log("a");
+    const { phoneNumber } = req.query;
+    const check = await driverModel.findOne({ phoneNumber });
+    return res.status(200).json({
+      data: check ? true : false,
+    });
+  } catch (error) {
+    res.status(400);
+    throw new Error(error);
+  }
 });
 
 const register = asyncHandler(async (req, res) => {
