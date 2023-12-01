@@ -9,10 +9,6 @@ import com.ridehailing.driver.screens.confirmlocation.ConfirmLocationActivity
 
 class InfoTabUiViewModel(application: Application) : AndroidViewModel(application) {
 
-    init {
-        CurrentLocation.fetchAddress(application)
-    }
-
     fun clickChangeLocation(context: Context) {
         val intent = Intent(context, ConfirmLocationActivity::class.java)
         context.startActivity(intent)

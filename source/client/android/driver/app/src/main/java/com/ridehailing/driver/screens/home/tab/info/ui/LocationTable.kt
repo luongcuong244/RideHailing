@@ -19,6 +19,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.ridehailing.driver.R
@@ -130,9 +132,13 @@ private fun RowInfo(
                 fontSize = 10.ssp
             )
             AppText(
+                modifier = Modifier
+                    .padding(start = 10.sdp),
                 text = content,
                 color = colorResource(id = R.color.table_content_text_color),
-                fontSize = 10.ssp
+                fontSize = 10.ssp,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
             )
         }
         Divider()

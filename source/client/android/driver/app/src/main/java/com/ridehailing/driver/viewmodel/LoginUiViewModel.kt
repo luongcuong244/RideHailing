@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.ViewModel
+import com.ridehailing.driver.extensions.findActivity
 import com.ridehailing.driver.globalstate.CurrentDriver
 import com.ridehailing.driver.models.Driver
 import com.ridehailing.driver.models.api.FetchDriverResponse
@@ -80,6 +81,8 @@ class LoginUiViewModel : ViewModel() {
 //                Toast.makeText(context, t.message, Toast.LENGTH_SHORT).show()
 //            }
 //        })
+
+        context.findActivity()?.finish()
     }
 
     private fun saveAccessToken(context: Context, accessToken: String) {

@@ -8,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
 import com.ridehailing.driver.core.BaseActivity
+import com.ridehailing.driver.globalstate.CurrentLocation
 import com.ridehailing.driver.screens.home.bottombar.BottomBar
 import com.ridehailing.driver.screens.home.bottombar.BottomNavGraph
 import com.ridehailing.driver.theme.AppTheme
@@ -19,6 +20,8 @@ class HomeActivity : BaseActivity() {
         setContent {
             Screen()
         }
+
+        CurrentLocation.fetchAddress(application)
     }
 }
 
