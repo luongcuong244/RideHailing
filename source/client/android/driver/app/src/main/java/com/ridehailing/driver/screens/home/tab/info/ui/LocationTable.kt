@@ -15,6 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -48,11 +49,11 @@ fun LocationTable() {
         ) {
             RowInfo(
                 stringResource(id = R.string.address_text),
-                CurrentLocation.getAddress()
+                CurrentLocation.address.value
             )
             RowInfo(
                 stringResource(id = R.string.coordinate_text),
-                CurrentLocation.getLatitude().toString() + ", " + CurrentLocation.getLongitude().toString()
+                CurrentLocation.latLng.value.latitude.toString() + ", " + CurrentLocation.latLng.value.longitude.toString()
             )
 
             ChangeButton()
@@ -81,6 +82,9 @@ private fun Header() {
 private fun ChangeButton(
     infoTabUiViewModel: InfoTabUiViewModel = viewModel()
 ) {
+
+    val context = LocalContext.current
+
     TouchableOpacityButton(
         modifier = Modifier
             .padding(top = 10.sdp)
@@ -89,7 +93,7 @@ private fun ChangeButton(
             .padding(vertical = 6.sdp)
             .padding(horizontal = 16.sdp),
         onClick = {
-            infoTabUiViewModel.clickChangeLocation()
+            infoTabUiViewModel.clickChangeLocation(context)
         }
     ) {
         AppText(

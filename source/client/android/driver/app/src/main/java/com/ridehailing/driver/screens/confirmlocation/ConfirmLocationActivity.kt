@@ -1,44 +1,44 @@
-package com.ridehailing.driver.screens.home
+package com.ridehailing.driver.screens.confirmlocation
 
 import android.os.Bundle
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.navigation.compose.rememberNavController
 import com.ridehailing.driver.core.BaseActivity
-import com.ridehailing.driver.screens.home.bottombar.BottomBar
-import com.ridehailing.driver.screens.home.bottombar.BottomNavGraph
+import com.ridehailing.driver.screens.confirmlocation.ui.BackButton
+import com.ridehailing.driver.screens.confirmlocation.ui.BottomView
+import com.ridehailing.driver.screens.confirmlocation.ui.MapView
 import com.ridehailing.driver.theme.AppTheme
 
-class HomeActivity : BaseActivity() {
+class ConfirmLocationActivity : BaseActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        setupViewModel()
 
         setContent {
             Screen()
         }
     }
+
+    private fun setupViewModel() {
+
+    }
 }
 
 @Composable
 private fun Screen() {
-    val navController = rememberNavController()
-
     AppTheme {
-        Column(
+        Box(
             modifier = Modifier
                 .fillMaxSize()
         ) {
-
-            BottomNavGraph(
-                navController,
-                modifier = Modifier
-                    .weight(1f)
-            )
-
-            BottomBar(navController = navController)
+            MapView()
+            BottomView()
+            BackButton()
         }
     }
 }
