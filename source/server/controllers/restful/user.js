@@ -46,7 +46,7 @@ const addAddress = asyncHandler(async (req, res) => {
   );
   return res.json({
     data: response ? true : false,
-    createdBlog: response ? response : "Cannot create new address.",
+    // createdBlog: response ? response : "Cannot create new address.",
   });
 });
 

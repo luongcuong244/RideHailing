@@ -23,6 +23,9 @@ var userSchema = new mongoose.Schema(
       type: String,
       default: "user",
     },
+    socketId: {
+      type: String,
+    },
     refreshToken: {
       type: String,
     },

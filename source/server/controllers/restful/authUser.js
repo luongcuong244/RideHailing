@@ -15,7 +15,8 @@ const checkExistingUser = asyncHandler(async (req, res) => {
       data: check ? true : false,
     });
   } catch (error) {
-    return res.status(400).send("error.");
+    res.status(400);
+    throw new Error(error);
   }
 });
 

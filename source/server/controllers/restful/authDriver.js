@@ -30,12 +30,12 @@ const register = asyncHandler(async (req, res) => {
   if (driver) throw new Error("Driver has existed!");
   else {
     const newDriver = await driverModel.create(req.body);
-    return res.status(200).json({
-      sucess: newDriver ? true : false,
-      mes: newDriver
-        ? "Register is sucessfully. Please go login."
-        : "Something went wrong",
-    });
+    if (newDriver) {
+      return res.status(200).send("Registered successfully.");
+    } else {
+      res.status(400);
+      throw new Error("Registered failed.");
+    }
   }
 });
 
@@ -43,20 +43,19 @@ const register = asyncHandler(async (req, res) => {
 //access token => xac thuc va phan quyen nguoi dung
 const login = asyncHandler(async (req, res) => {
   const { phoneNumber, password } = req.body;
-  if (!phoneNumber || !password)
-    return res.status(400).json({
-      sucess: false,
-      mes: "Missing input",
-    });
+  if (!phoneNumber || !password) {
+    res.status(400);
+    throw new Error("Missing input!");
+  }
 
   const response = await driverModel.findOne({ phoneNumber });
 
   if (response && (await response.isCorrectPassword(password))) {
     // tách pw và role ra khỏi response
-    const { password, role, ...driverData } = response.toObject();
+    const { password, role, ...driver } = response.toObject();
     const accessToken = generateAccessToken(response._id, role);
     const refreshToken = generateRefreshToken(response._id);
-    const driver = await driverModel
+    const driverData = await driverModel
       .findByIdAndUpdate(response._id, { refreshToken }, { new: true })
       .select("-password -role");
     res.cookie("refreshToken", refreshToken, {
@@ -64,11 +63,12 @@ const login = asyncHandler(async (req, res) => {
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
     return res.status(200).json({
-      sucess: true,
       accessToken,
-      driver,
+      refreshToken,
+      driverData,
     });
   } else {
+    res.status(400);
     throw new Error("Invalid credenttials!");
   }
 });
@@ -83,12 +83,13 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
     _id: rs._id,
     refreshToken: cookie.refreshToken,
   });
-  return res.status(200).json({
-    succes: response ? true : false,
-    newAccessToken: response
-      ? generateAccessToken(response._id, response.role)
-      : "Refresh token matched",
-  });
+  if (response) {
+    return res.status(200).json({
+      newAccessToken: generateAccessToken(response._id, response.role),
+    });
+  } else {
+    res.status(400).send("error.");
+  }
 });
 
 module.exports = {
