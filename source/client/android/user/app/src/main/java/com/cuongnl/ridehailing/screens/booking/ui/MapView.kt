@@ -41,12 +41,14 @@ fun MapView(
             state = MarkerState(position = bookingActivityUiViewModel.destinationLocationLatLng.value)
         )
 
-        Polyline(
-            points = bookingActivityUiViewModel.points,
-            color = colorResource(id = R.color.map_route_primary_color),
-            width = 12f,
-            jointType = JointType.ROUND,
-        )
+        if (bookingActivityUiViewModel.bookingsInfo[bookingActivityUiViewModel.selectedBookingIndex.value].directionPoints != null) {
+            Polyline(
+                points = bookingActivityUiViewModel.bookingsInfo[bookingActivityUiViewModel.selectedBookingIndex.value].directionPoints!!,
+                color = colorResource(id = R.color.map_route_primary_color),
+                width = 12f,
+                jointType = JointType.ROUND,
+            )
+        }
 
         MarkerComposable(
             state = MarkerState(position = bookingActivityUiViewModel.pickupLocationLatLng.value)

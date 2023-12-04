@@ -21,23 +21,29 @@ const checkExistingUser = asyncHandler(async (req, res) => {
 });
 
 const register = asyncHandler(async (req, res) => {
-  const { password, phoneNumber, userName, email } = req.body;
-  if (!userName || !password || !phoneNumber || !email) {
-    res.status(400);
-    throw new Error("Missing input.");
+  const { password, phoneNumber, userName } = req.body;
+  if (!userName || !password || !phoneNumber) {
+    return res.status(400).json({
+      success: false,
+      message: "Missing input",
+    });
   }
+
   const user = await userModel.findOne({ phoneNumber });
   if (user) {
-    res.status(400);
-    throw new Error("User has existed!");
+    return res.status(400).json({
+      success: false,
+      message: "User already exists",
+    });
   } else {
     const newUser = await userModel.create(req.body);
-    if (newUser) {
-      return res.status(200).send("Registered successfully.");
-    } else {
-      res.status(400);
-      throw new Error("Registered failed.");
-    }
+
+    return res.status(200).json({
+      success: newUser ? true : false,
+      message: newUser
+        ? "Registration successful. Please proceed to login."
+        : "Something went wrong",
+    });
   }
 });
 
@@ -46,55 +52,69 @@ const register = asyncHandler(async (req, res) => {
 const login = asyncHandler(async (req, res) => {
   const { phoneNumber, password } = req.body;
   if (!phoneNumber || !password) {
-    res.status(400);
-    throw new Error("Missing input!");
+    return res.status(400).json({
+      success: false,
+      message: "Missing input",
+    });
   }
 
-  const response = await userModel.findOne({ phoneNumber });
+  const user = await userModel.findOne({ phoneNumber });
 
-  if (response && (await response.isCorrectPassword(password))) {
-    // tách pw và role ra khỏi response
-    // const { password, role, ...user } = response.toObject();
-    // tạo access token
-    const accessToken = generateAccessToken(response._id, role);
-    // tạo refresh token
-    const refreshToken = generateRefreshToken(response._id);
-    //Lưu refresh token vào database
-    const userData = await userModel
-      .findByIdAndUpdate(response._id, { refreshToken }, { new: true })
-      .select("-password -role");
-    // Lưu refresh token vào cookie
+  if (user && (await user.isCorrectPassword(password))) {
+    const { password: _, role, ...userData } = user.toObject();
+    const accessToken = generateAccessToken(user._id, role);
+    const refreshToken = generateRefreshToken(user._id);
+
+    await userModel.findByIdAndUpdate(
+      user._id,
+      { refreshToken },
+      { new: true }
+    );
+
     res.cookie("refreshToken", refreshToken, {
       httpOnly: true,
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
+
     return res.status(200).json({
+      success: true,
       accessToken,
       refreshToken,
-      userData,
+      userData: {
+        phoneNumber: userData.phoneNumber,
+        userName: userData.userName,
+        email: userData.email,
+      },
     });
   } else {
-    res.status(400);
-    throw new Error("Invalid credenttials!");
+    return res.status(401).json({
+      success: false,
+    });
   }
 });
 
 const refreshAccessToken = asyncHandler(async (req, res) => {
-  const cookie = req.cookies;
-  if (!cookie && !cookie.refreshToken)
-    throw new Error("No refresh token in cookies");
-  const rs = await jwt.verify(cookie.refreshToken, process.env.JWT_SECRET);
+  const { refreshToken } = req.cookies;
 
-  const response = await userModel.findOne({
-    _id: rs._id,
-    refreshToken: cookie.refreshToken,
-  });
-  if (response) {
-    return res.status(200).json({
-      newAccessToken: generateAccessToken(response._id, response.role),
+  if (!refreshToken) {
+    return res.status(401).json({ error: "No refresh token in cookies" });
+  }
+
+  try {
+    const decodedToken = await jwt.verify(refreshToken, process.env.JWT_SECRET);
+    const response = await userModel.findOne({
+      _id: decodedToken._id,
+      refreshToken,
     });
-  } else {
-    res.status(400).send("error.");
+
+    if (!response) {
+      return res.status(401).json({ error: "Invalid refresh token" });
+    }
+
+    const newAccessToken = generateAccessToken(response._id, response.role);
+    return res.status(200).json({ success: true, newAccessToken });
+  } catch (error) {
+    return res.status(401).json({ error: "Invalid refresh token" });
   }
 });
 
