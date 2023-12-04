@@ -3,14 +3,14 @@ const driverModel = require("../../models/driverModel");
 const asyncHandler = require("express-async-handler");
 
 const getBookingInfo = asyncHandler(async (req, res) => {
-  const { _id } = req.user;
+  // const { _id } = req.user;
   const {
     startLatitude,
     startLongitude,
     endLatitude,
     endLongitude,
     travelMode,
-    tripLength,
+    distanceInKilometers,
   } = req.body;
 
   function degreesToRadians(degrees) {
@@ -43,7 +43,7 @@ const getBookingInfo = asyncHandler(async (req, res) => {
     !endLatitude ||
     !endLongitude ||
     !travelMode ||
-    !tripLength
+    !distanceInKilometers
   )
     throw new Error("Missing inputs");
   // const response = await userModel
@@ -57,24 +57,24 @@ const getBookingInfo = asyncHandler(async (req, res) => {
   let fareAmount = 0;
   let minutesToDriverArrival = 0;
   if (travelMode === "TAXI") {
-    fareAmount = tripLength * taxiPrices;
-    // minutesToDriverArrival = tripLength * taxiMinutes;
+    fareAmount = distanceInKilometers * taxiPrices;
+    // minutesToDriverArrival = distanceInKilometers * taxiMinutes;
   } else {
-    fareAmount = tripLength * bikePrices;
+    fareAmount = distanceInKilometers * bikePrices;
   }
 
   // đoạn html trả về từ server
   const fareCalculationInfo = `
     <body>
       <h1>Cách tính tiền chuyến xe:</h1>
-      <p>1. Quãng đường: ${tripLength}km</p>
+      <p>1. Quãng đường: ${distanceInKilometers}km</p>
       <p>2. Loại phương tiện di chuyển: ${travelMode}</p>
       <p>3. Số tiền phải trả trên 1km của dịch vụ: ${
         travelMode === "TAXI" ? taxiPrices : bikePrices
       }$</p>
       <p>2. Sô tiền khách hàng phải trả: ${
         travelMode === "TAXI" ? taxiPrices : bikePrices
-      }$ * ${tripLength}km = ${fareAmount}$</p>
+      }$ * ${distanceInKilometers}km = ${fareAmount}$</p>
     </body>
   `;
 
@@ -116,6 +116,36 @@ const getBookingInfo = asyncHandler(async (req, res) => {
   });
 });
 
+const createBill = asyncHandler(async (req, res) => {
+  try {
+    const {
+      startLatitude,
+      startLongitude,
+      endLatitude,
+      endLongitude,
+      travelMode,
+      distanceInKilometers,
+      idUser,
+      idDriver,
+    } = req.body;
+    await orderModel.create({
+      startLatitude,
+      startLongitude,
+      endLatitude,
+      endLongitude,
+      travelMode,
+      distanceInKilometers,
+      user: idUser,
+      createByDriver: idDriver,
+      status: "waiting",
+    });
+    return res.status(200);
+  } catch (error) {
+    return res.status(400).json({ error });
+  }
+});
+
 module.exports = {
   getBookingInfo,
+  createBill,
 };

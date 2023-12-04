@@ -21,8 +21,7 @@ const getCurrent = asyncHandler(async (req, res) => {
     .findById(_id)
     .select("-refreshToken -password -role");
   return res.status(200).json({
-    succes: driver ? true : false,
-    rs: driver ? driver : "Driver not found!",
+    data: driver ? driver : "Driver not found!",
   });
 });
 

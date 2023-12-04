@@ -24,14 +24,22 @@ var userSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
-    userName: {
+    distanceInKilometersth: {
+      type: Number,
+      required: true,
+    },
+    user: {
       type: mongoose.Types.ObjectId,
       ref: "User",
       required: true,
     },
-    driverName: {
+    createByDriver: {
       type: mongoose.Types.ObjectId,
       ref: "Driver",
+      required: true,
+    },
+    status: {
+      type: String,
       required: true,
     },
   },
