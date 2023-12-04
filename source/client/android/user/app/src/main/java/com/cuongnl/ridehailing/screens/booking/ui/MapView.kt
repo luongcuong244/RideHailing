@@ -12,6 +12,7 @@ import com.cuongnl.ridehailing.utils.Constant
 import com.cuongnl.ridehailing.viewmodel.BookingActivityUiViewModel
 import com.cuongnl.ridehailing.viewmodel.MapViewModel
 import com.google.android.gms.maps.model.JointType
+import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.Marker
 import com.google.maps.android.compose.MarkerComposable
@@ -48,6 +49,15 @@ fun MapView(
                 width = 12f,
                 jointType = JointType.ROUND,
             )
+        }
+
+        bookingActivityUiViewModel.getCurrentBookingInfo().bookingInfoResponse?.let {
+            it.driversNearbyLocation.forEach { latLng ->
+                Marker(
+                    icon = context.bitmapDescriptorFromVector(bookingActivityUiViewModel.getCurrentBookingInfo().transportationType.icon, Constant.MARKER_SIZE_IN_PIXEL),
+                    state = MarkerState(position = LatLng(latLng.latitude, latLng.longitude))
+                )
+            }
         }
 
         MarkerComposable(

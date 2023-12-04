@@ -10,9 +10,14 @@ import com.ridehailing.driver.extensions.findActivity
 import com.ridehailing.driver.globalstate.CurrentDriver
 import com.ridehailing.driver.models.Driver
 import com.ridehailing.driver.models.api.FetchDriverResponse
+import com.ridehailing.driver.models.api.LoginRequest
+import com.ridehailing.driver.models.api.LoginResponse
 import com.ridehailing.driver.network.retrofit.repository.AuthRepository
 import com.ridehailing.driver.screens.home.HomeActivity
 import com.ridehailing.driver.utils.LocalStorageUtils
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class LoginUiViewModel : ViewModel() {
 
@@ -45,42 +50,34 @@ class LoginUiViewModel : ViewModel() {
             return
         }
 
-        val driver = Driver()
-            .apply {
-                setPhoneNumber(phoneNumberTextField.value.text)
+        val loginRequest = LoginRequest(
+            phoneNumber = phoneNumberTextField.value.text,
+            password = passwordTextField.value.text
+        )
+
+        authRepository.login(loginRequest, object : Callback<LoginResponse> {
+
+            override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
+                if (response.isSuccessful) {
+                    val accessToken = response.body()?.accessToken
+                    val driverData = response.body()?.driverData
+
+                    if (accessToken != null && driverData != null) {
+                        saveAccessToken(context, accessToken)
+                        setCurrentDriver(driverData)
+                        navigateToHomeActivity(context)
+                    } else if (accessToken == null) {
+                        Toast.makeText(context, "No access token provided!", Toast.LENGTH_SHORT).show()
+                    } else {
+                        Toast.makeText(context, "No user data provided!", Toast.LENGTH_SHORT).show()
+                    }
+                }
             }
-        CurrentDriver.setDriver(driver)
-        navigateToHomeActivity(context)
 
-
-//        val loginRequest = LoginRequest(
-//            phoneNumber = phoneNumberTextField.value.text,
-//            password = passwordTextField.value.text
-//        )
-//
-//        authRepository.login(loginRequest, object : Callback<LoginResponse> {
-//
-//            override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
-//                if (response.isSuccessful) {
-//                    val accessToken = response.body()?.accessToken
-//                    val driverData = response.body()?.driverData
-//
-//                    if (accessToken != null && driverData != null) {
-//                        saveAccessToken(context, accessToken)
-//                        setCurrentDriver(driverData)
-//                        navigateToHomeActivity(context)
-//                    } else if (accessToken == null) {
-//                        Toast.makeText(context, "No access token provided!", Toast.LENGTH_SHORT).show()
-//                    } else {
-//                        Toast.makeText(context, "No user data provided!", Toast.LENGTH_SHORT).show()
-//                    }
-//                }
-//            }
-//
-//            override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
-//                Toast.makeText(context, t.message, Toast.LENGTH_SHORT).show()
-//            }
-//        })
+            override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
+                Toast.makeText(context, t.message, Toast.LENGTH_SHORT).show()
+            }
+        })
 
         context.findActivity()?.finish()
     }
@@ -97,7 +94,7 @@ class LoginUiViewModel : ViewModel() {
                 setDriverAvatar(fetchDriverResponse.driverAvatar)
                 setLicensePlate(fetchDriverResponse.licensePlate)
                 setVehicleBrand(fetchDriverResponse.vehicleBrand)
-                setVehicleType(fetchDriverResponse.vehicleType)
+                setTravelMode(fetchDriverResponse.travelMode)
             }
         CurrentDriver.setDriver(driver)
     }

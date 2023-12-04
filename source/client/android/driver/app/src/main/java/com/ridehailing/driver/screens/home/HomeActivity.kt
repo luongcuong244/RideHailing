@@ -8,7 +8,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
 import com.ridehailing.driver.core.BaseActivity
+import com.ridehailing.driver.globalstate.CurrentDriver
 import com.ridehailing.driver.globalstate.CurrentLocation
+import com.ridehailing.driver.models.api.DriverConnectToSocket
+import com.ridehailing.driver.network.socketio.BookingSocket
 import com.ridehailing.driver.screens.home.bottombar.BottomBar
 import com.ridehailing.driver.screens.home.bottombar.BottomNavGraph
 import com.ridehailing.driver.theme.AppTheme
@@ -22,6 +25,20 @@ class HomeActivity : BaseActivity() {
         }
 
         CurrentLocation.fetchAddress(application)
+
+        BookingSocket.connect()
+        BookingSocket.emitDriverConnectToSocket(
+            DriverConnectToSocket(
+                CurrentDriver.getDriver().phoneNumber.value,
+                CurrentLocation.latLng.value.latitude,
+                CurrentLocation.latLng.value.longitude,
+            ).toJson()
+        )
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        BookingSocket.disconnect()
     }
 }
 

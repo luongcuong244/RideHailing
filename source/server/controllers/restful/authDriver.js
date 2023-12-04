@@ -7,7 +7,6 @@ const asyncHandler = require("express-async-handler");
 
 const checkExistingDriver = asyncHandler(async (req, res) => {
   try {
-    console.log("a");
     const { phoneNumber } = req.query;
     const check = await driverModel.findOne({ phoneNumber });
     return res.status(200).json({
@@ -20,15 +19,17 @@ const checkExistingDriver = asyncHandler(async (req, res) => {
 });
 
 const register = asyncHandler(async (req, res) => {
-  const { password, phoneNumber, driverName } = req.body;
-  if (!driverName || !password || !phoneNumber)
+  const { password, phoneNumber } = req.body;
+  if (!password || !phoneNumber)
     return res.status(400).json({
-      sucess: false,
+      success: false,
       mes: "Missing input",
     });
   const driver = await driverModel.findOne({ phoneNumber });
-  if (driver) throw new Error("Driver has existed!");
-  else {
+  if (driver) {
+    res.status(400);
+    throw new Error("Driver has existed!");
+  } else {
     const newDriver = await driverModel.create(req.body);
     if (newDriver) {
       return res.status(200).send("Registered successfully.");

@@ -2,7 +2,6 @@ package com.cuongnl.ridehailing.viewmodel
 
 import android.content.Context
 import android.content.Intent
-import android.util.Log
 import android.widget.Toast
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateListOf
@@ -20,7 +19,6 @@ import com.cuongnl.ridehailing.network.retrofit.repository.BookingRepository
 import com.cuongnl.ridehailing.screens.findingdriver.FindingDriverActivity
 import com.cuongnl.ridehailing.screens.notefordriver.NoteForDriverActivity
 import com.cuongnl.ridehailing.utils.Constant
-import com.cuongnl.ridehailing.utils.MapUtils
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.model.DirectionsResult
 import com.google.maps.model.TravelMode
@@ -153,7 +151,7 @@ class BookingActivityUiViewModel : ViewModel() {
                 }
 
                 override fun onFailure(call: Call<GetBookingInfoResponse>, t: Throwable) {
-                    Toast.makeText(context, "Cannot get booking info, ${t.message}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "${t.message}", Toast.LENGTH_SHORT).show()
                 }
             })
         }

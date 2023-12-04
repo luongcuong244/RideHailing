@@ -5,6 +5,7 @@ import android.widget.Toast
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import com.google.android.gms.maps.model.LatLng
+import com.ridehailing.driver.network.socketio.BookingSocket
 import com.ridehailing.driver.utils.MapUtils
 
 object CurrentLocation {
@@ -29,8 +30,9 @@ object CurrentLocation {
         )
     }
 
-    fun setLatLng(latLng: LatLng) {
+    fun setLatLngAndUpdateToServer(latLng: LatLng) {
         _latLng.value = latLng
+        BookingSocket.emitToUpdateDriverLocation()
     }
 
     fun setAddress(address: String) {

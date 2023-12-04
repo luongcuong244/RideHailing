@@ -2,22 +2,28 @@ package com.ridehailing.driver.viewmodel
 
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
+import com.ridehailing.driver.globalstate.CurrentDriver
+import com.ridehailing.driver.globalstate.CurrentLocation
 import com.ridehailing.driver.models.Address
 import com.ridehailing.driver.models.TripInfo
 import com.ridehailing.driver.models.UserInfo
+import com.ridehailing.driver.models.api.DriverConnectToSocket
+import com.ridehailing.driver.network.socketio.BookingSocket
+import com.ridehailing.driver.network.socketio.BookingSocket.emitDriverConnectToSocket
 import com.ridehailing.driver.network.socketio.SocketClient
 import com.ridehailing.driver.screens.pickupconfirmation.PickupConfirmationActivity
 import com.ridehailing.driver.utils.Constant
+import org.json.JSONObject
 
 class TripTabUiViewModel : ViewModel() {
 
     private companion object {
-        private const val NAMESPACE = "/booking"
-        private const val EVENT_REQUEST_A_RIDE = "request-a-ride"
+        const val EVENT_SEND_REQUESTING_A_RIDE = "send-requesting-a-ride-to-drivers"
     }
 
     private val trips = mutableStateListOf<TripInfo>()
@@ -148,10 +154,12 @@ class TripTabUiViewModel : ViewModel() {
 
     val selectedTrip: State<TripInfo?> = _selectedTrip
 
-    private val mSocket = SocketClient.getSocket(NAMESPACE)
+    private val mSocket = BookingSocket.socket
 
     fun setupListeners(context: Context) {
-
+        mSocket?.on(EVENT_SEND_REQUESTING_A_RIDE) {
+            Log.d("DDDDDDDD", it.toString())
+        }
     }
 
     fun getTrips(): List<TripInfo> {

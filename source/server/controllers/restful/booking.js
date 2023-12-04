@@ -98,12 +98,13 @@ const getBookingInfo = asyncHandler(async (req, res) => {
   const response = {
     fareAmount: parseInt(fareAmount),
     fareCalculationInfo: fareCalculationInfo,
-    minutesToDriverArrival: minutesToDriverArrival,
+    minutesToDriverArrival: parseInt(minutesToDriverArrival),
     kilometersToDriverArrival: 0.4,
     driversNearbyLocation: drivers.map((driver) => {
       return {
         latitude: driver.currentLatitude,
         longitude: driver.currentLongitude,
+        socketId: driver.socketId,
       };
     }),
   };

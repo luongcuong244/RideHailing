@@ -5,7 +5,7 @@ var driverSchema = new mongoose.Schema(
   {
     driverName: {
       type: String,
-      required: true,
+      default: "Test name",
     },
     // email: {
     //   type: String,

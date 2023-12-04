@@ -1,36 +1,69 @@
 const driverModel = require("../../models/driverModel");
 const userModel = require("../../models/userModel");
+const tripBookingRecordModel = require("../../models/TripBookingRecordModel");
 
 module.exports = function (io) {
   io.of("/booking").on("connection", (socket) => {
     console.log("New client connected: " + socket.id);
 
     // tìm tài xế
-    socket.on("findDriver", async (data) => {
+    socket.on("find-a-driver", async (data) => {
       try {
-        // console.log(data);
         const {
-          fareAmount,
-          idUser,
-          drivers,
-          startLatitude,
-          startLongitude,
-          endLatitude,
-          endLongitude,
+          driverSocketIds,
+          pickupAddress,
+          destinationAddress,
+          distanceInKilometers,
+          durationInMinutes,
+          minutesToDriverArrival,
+          kilometersToDriverArrival,
+          paymentMethod,
+          noteForDriver,
+          cost,
         } = data;
-        //   console.log(listDriver);
-        const listSocketId = await driverModel
-          .find({ _id: drivers, activeStatus: true })
-          .select("socketId -_id");
-        listSocketId.map((e) => {
-          // console.log(fareAmount, e.socketId);
-          io.to(e.socketId).emit("receive-data", {
-            idUser,
-            fareAmount,
-            startLatitude,
-            startLongitude,
-            endLatitude,
-            endLongitude,
+        
+        let userInfo = await userModel.findOne({ socketId: socket.id });
+
+        if (!userInfo) {
+          console.log("User not found");
+          return;
+        }
+
+        let socketIds = driverSocketIds.map(function (element) {
+          return element.socketId;
+        });
+
+        let tripBookingRecord = await tripBookingRecordModel.create({
+          pickupAddress,
+          destinationAddress,
+          distanceInKilometers,
+          durationInMinutes,
+          minutesToDriverArrival,
+          kilometersToDriverArrival,
+          paymentMethod,
+          noteForDriver,
+          socketIdDriversReceived: socketIds,
+          cost,
+          userId: userInfo._id,
+          status: "PENDING",
+        });
+
+        socketIds.map((e) => {
+          io.of("/booking").to(e).emit("send-requesting-a-ride-to-drivers", {
+            id: tripBookingRecord._id,
+            pickupAddress,
+            destinationAddress,
+            distanceInKilometers,
+            durationInMinutes,
+            minutesToDriverArrival,
+            kilometersToDriverArrival,
+            paymentMethod,
+            noteForDriver,
+            cost,
+            userInfo: {
+              userName: userInfo.userName,
+              phoneNumber: userInfo.phoneNumber,
+            },
           });
         });
       } catch (err) {
@@ -50,7 +83,6 @@ module.exports = function (io) {
           .find({ _id: drivers, activeStatus: true })
           .select("socketId -_id");
         listSocketId.map((e) => {
-          // console.log(fareAmount, e.socketId);
           io.to(e.socketId).emit("delete-data", {
             idUser,
           });
@@ -78,39 +110,40 @@ module.exports = function (io) {
       }
     });
 
-    socket.on("receive-application", async (data) => {
+    socket.on("update-driver-location", async (data) => {
       try {
-        const { idDriver, currentLatitude, currentLongitude, socketId } = data;
-        const response = await driverModel.findOneAndUpdate(
-          { _id: idDriver },
+        const { currentLatitude, currentLongitude } = data;
+        await driverModel.findOneAndUpdate(
+          { socketId: socket.id },
           {
-            socketId,
+            currentLatitude,
+            currentLongitude,
+          }
+        );
+
+        console.log("Driver updated location: " + socket.id);
+
+      } catch (err) {
+        console.error("Error saving socket ID:", err);
+      }
+    });
+
+    socket.on("driver-connect-socket", async (data) => {
+      try {
+        const { phoneNumber, currentLatitude, currentLongitude } = data;
+        await driverModel.findOneAndUpdate(
+          { phoneNumber },
+          {
+            socketId: socket.id,
             currentLatitude,
             currentLongitude,
             activeStatus: true,
           },
           { new: true }
         );
-        // console.log(response);
-      } catch (err) {
-        console.error("Error saving socket ID:", err);
-      }
-    });
 
-    socket.on("disconnect-driver", async (data) => {
-      try {
-        const { idDriver } = data;
-        await driverModel.findOneAndUpdate(
-          { _id: idDriver },
-          {
-            socketId: null,
-            currentLatitude: null,
-            currentLongitude: null,
-            activeStatus: false,
-          },
-          { new: true }
-        );
-        // console.log(respone);
+        console.log("Driver connected socket: " + socket.id);
+
       } catch (err) {
         console.error("Error saving socket ID:", err);
       }
@@ -118,31 +151,40 @@ module.exports = function (io) {
 
     socket.on("user-connect-socket", async (data) => {
       try {
-        const { idUser, socketId } = data;
-        const response = await userModel.findOneAndUpdate(
-          { _id: idUser },
+        const { phoneNumber } = data;
+        await userModel.findOneAndUpdate(
+          { phoneNumber },
           {
-            socketId,
+            socketId: socket.id,
           },
           { new: true }
         );
-        // console.log(response);
+
+        console.log("User connected socket: " + socket.id);
+
       } catch (err) {
         console.error("Error saving socket ID:", err);
       }
     });
 
-    socket.on("disconnect-user", async (data) => {
+    socket.on("disconnect", async (data) => {
       try {
-        const { idUser } = data;
         await userModel.findOneAndUpdate(
-          { _id: idUser },
+          { socketId: socket.id },
           {
             socketId: null,
-          },
-          { new: true }
+          }
         );
-        // console.log(respone);
+        await driverModel.findOneAndUpdate(
+          { socketId: socket.id },
+          {
+            socketId: null,
+            activeStatus: false,
+          }
+        );
+
+        console.log("Client disconnected: " + socket.id);
+
       } catch (err) {
         console.error("Error saving socket ID:", err);
       }

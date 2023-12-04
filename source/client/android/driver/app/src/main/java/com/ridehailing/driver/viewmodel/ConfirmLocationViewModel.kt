@@ -46,7 +46,7 @@ class ConfirmLocationViewModel : ViewModel() {
     }
 
     fun clickConfirmButton(context: Context) {
-        CurrentLocation.setLatLng(locationLatLng.value)
+        CurrentLocation.setLatLngAndUpdateToServer(locationLatLng.value)
         CurrentLocation.setAddress(locationAddress.value)
         context.findActivity()?.finish()
     }

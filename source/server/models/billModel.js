@@ -24,7 +24,7 @@ var userSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
-    distanceInKilometersth: {
+    distanceInKilometers: {
       type: Number,
       required: true,
     },
