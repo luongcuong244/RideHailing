@@ -75,18 +75,69 @@ module.exports = function (io) {
       }
     });
 
-    socket.on("delete-orders", async (data) => {
+    socket.on("driver-accept-request", async (data) => {
       try {
-        // console.log(data);
-        const { idUser, drivers } = data;
-        //   console.log(listDriver);
-        const listSocketId = await driverModel
-          .find({ _id: drivers, activeStatus: true })
-          .select("socketId -_id");
-        listSocketId.map((e) => {
-          io.to(e.socketId).emit("delete-data", {
-            idUser,
+        const { id } = data;
+
+        let driverAccepted = await driverModel.findOne({ socketId: socket.id });
+
+        let tripBookingRecord = await tripBookingRecordModel.findOne({ _id: id });
+
+        if (!tripBookingRecord || tripBookingRecord.status !== "PENDING") {
+          socket.emit("notify-accept-request", {
+            id: tripBookingRecord._id,
+            success: false,
           });
+          console.log("Trip booking record not found: " + id);
+          return;
+        }
+
+        tripBookingRecord = await tripBookingRecordModel.findOneAndUpdate(
+          { _id: id },
+          {
+            status: "ARRIVED_AT_PICKUP",
+            driverId: driverAccepted._id,
+          },
+          { new: true }
+        );
+
+        let userRequested = await userModel.findOne({
+          _id: tripBookingRecord.userId,
+        });
+
+        console.log(
+          "Trip booking record updated ARRIVED_AT_PICKUP: " +
+            tripBookingRecord._id
+        );
+
+        io.of("/booking")
+          .to(userRequested.socketId)
+          .emit("notify-accept-request", {
+            driverInfo: {
+              driverName: driverAccepted.driverName,
+              phoneNumber: driverAccepted.phoneNumber,
+              driverAvatar: driverAccepted.driverAvatar,
+              licensePlate: driverAccepted.licensePlate,
+              vehicleBrand: driverAccepted.vehicleBrand,
+              travelMode: driverAccepted.travelMode,
+              currentLatitude: driverAccepted.currentLatitude,
+              currentLongitude: driverAccepted.currentLongitude,
+              totalRating: driverAccepted.totalRating,
+            },
+          });
+
+        socket.emit("notify-accept-request", {
+          id: tripBookingRecord._id,
+          success: true,
+        });
+
+        // notify to drivers
+        tripBookingRecord.socketIdDriversReceived.map((e) => {
+          if (e !== socket.id) {
+            io.of("/booking").to(e).emit("notify-delete-trip-record", {
+              id: tripBookingRecord._id,
+            });
+          }
         });
       } catch (err) {
         console.error("Error saving socket ID:", err);
@@ -133,13 +184,18 @@ module.exports = function (io) {
     socket.on("user-connect-socket", async (data) => {
       try {
         const { phoneNumber } = data;
-        await userModel.findOneAndUpdate(
+        let user = await userModel.findOneAndUpdate(
           { phoneNumber },
           {
             socketId: socket.id,
           },
           { new: true }
         );
+
+        if (!user) {
+          console.log("User not found: " + phoneNumber);
+          return;
+        }
 
         console.log("User connected socket: " + socket.id);
       } catch (err) {
@@ -152,8 +208,15 @@ module.exports = function (io) {
         let user = await userModel.findOne({ socketId: socket.id });
         if (user) {
           // delete trip booking records if exist
-          let a = await tripBookingRecordModel.deleteMany({ userId: user._id });
-          console.log("Trip booking records deleted: " + a);
+          let deletedTrip = await tripBookingRecordModel.findOneAndDelete({ userId: user._id });
+          console.log("Trip booking records deleted: " + deletedTrip._id);
+
+          // notify to drivers
+          deletedTrip.socketIdDriversReceived.map((e) => {
+            io.of("/booking").to(e).emit("notify-delete-trip-record", {
+              id: deletedTrip._id,
+            });
+          });
         }
 
         await userModel.findOneAndUpdate(

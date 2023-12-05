@@ -72,7 +72,7 @@ const getBookingInfo = asyncHandler(async (req, res) => {
   const bikeMinutes = 7;
 
   let drivers = await driverModel
-    .find({ activeStatus: true, travelMode })
+    .find({ activeStatus: true, travelMode: travelMode })
     .select("_id currentLatitude currentLongitude socketId ");
 
   drivers = drivers.map((e) => {

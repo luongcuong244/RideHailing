@@ -1,14 +1,17 @@
 package com.cuongnl.ridehailing.viewmodel
 
 import android.content.Context
+import android.content.Intent
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.cuongnl.ridehailing.enums.PaymentMethod
 import com.cuongnl.ridehailing.enums.TransportationType
-import com.cuongnl.ridehailing.globalstate.CurrentUser
-import com.cuongnl.ridehailing.network.socketio.SocketClient
+import com.cuongnl.ridehailing.models.api.DriverInfoResponse
+import com.cuongnl.ridehailing.network.socketio.BookingSocket
+import com.cuongnl.ridehailing.screens.waitingdriver.WaitingDriverActivity
+import com.cuongnl.ridehailing.utils.Constant
 import com.google.android.gms.maps.model.LatLng
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -20,18 +23,15 @@ import org.json.JSONObject
 class FindingDriverViewModel : ViewModel() {
 
     private companion object {
-        private const val TAG = "BookingActivitySocketViewModel"
-        private const val NAMESPACE = "/booking"
-        private const val EVENT_FIND_A_DRIVER = "find-a-driver"
         private const val EVENT_DRIVER_ACCEPTED_TRIP = "driver-accepted-trip"
         private const val EVENT_RECEIVE_TRIP_BOOKING_RECORD_ID = "receive-trip-booking-record"
-        private const val EVENT_USER_CONNECT_SOCKET = "user-connect-socket"
+        private const val EVENT_NOTIFY_ACCEPT_REQUEST = "notify-accept-request"
     }
 
     private var _dotCount: MutableState<Int> = mutableStateOf(0)
     val dotCount: State<Int> = _dotCount
 
-    private val mSocket = SocketClient.getSocket(NAMESPACE)
+    private val mSocket = BookingSocket.socket
 
     private lateinit var pickupLatLng: LatLng
     private lateinit var transportationType: TransportationType
@@ -63,31 +63,26 @@ class FindingDriverViewModel : ViewModel() {
             val json = JSONObject(it[0].toString())
             tripBookingRecordIdJson = json
         }
+        mSocket?.on(EVENT_NOTIFY_ACCEPT_REQUEST) {
+            val response = JSONObject(it[0].toString())
+
+            val driverInfo = DriverInfoResponse.fromJson(JSONObject(response.getString("driverInfo")))
+
+            val intent = Intent(context, WaitingDriverActivity::class.java)
+            intent.putExtra(Constant.BUNDLE_DRIVER_INFO_RESPONSE, driverInfo)
+
+            navigateToWaitingDriverActivity(context, intent)
+        }
+    }
+
+    private fun navigateToWaitingDriverActivity(context: Context, intent: Intent) {
+        context.startActivity(intent)
     }
 
     fun offListeners() {
         mSocket?.off(EVENT_DRIVER_ACCEPTED_TRIP)
         mSocket?.off(EVENT_RECEIVE_TRIP_BOOKING_RECORD_ID)
-    }
-
-    fun emitUserConnectSocket() {
-
-        val json = JSONObject()
-        json.put("phoneNumber", CurrentUser.getUser()?.phoneNumber)
-
-        mSocket?.emit(EVENT_USER_CONNECT_SOCKET, json)
-    }
-
-    fun emitFindADriver(data: JSONObject) {
-        mSocket?.emit(EVENT_FIND_A_DRIVER, data)
-    }
-
-    fun connect() {
-        mSocket?.connect()
-    }
-
-    fun disconnect() {
-        mSocket?.disconnect()
+        mSocket?.off(EVENT_NOTIFY_ACCEPT_REQUEST)
     }
 
     fun setDotCount(dotCount: Int) {

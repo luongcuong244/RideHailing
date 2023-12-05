@@ -25,9 +25,11 @@ var userSchema = new mongoose.Schema(
     },
     socketId: {
       type: String,
+      default: null,
     },
     refreshToken: {
       type: String,
+      default: null,
     },
     notifications: [
       {

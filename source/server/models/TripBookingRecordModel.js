@@ -62,7 +62,7 @@ var TripBookingRecordModel = new mongoose.Schema(
     status: {
       type: String,
       required: true,
-      enum: ["PENDING", "ACCEPTED", "COMPLETED"],
+      enum: ["PENDING", "ARRIVED_AT_PICKUP", "ARRIVED_AT_DESTINATION"]
     },
   },
   {
