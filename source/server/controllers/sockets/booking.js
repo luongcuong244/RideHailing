@@ -4,12 +4,12 @@ const tripBookingRecordModel = require("../../models/TripBookingRecordModel");
 
 module.exports = function (io) {
   io.of("/booking").on("connection", (socket) => {
-    console.log("New client connected: " + socket.id);
 
     // tìm tài xế
     socket.on("find-a-driver", async (data) => {
       try {
         const {
+          phoneNumber,
           driverSocketIds,
           pickupAddress,
           destinationAddress,
@@ -21,8 +21,8 @@ module.exports = function (io) {
           noteForDriver,
           cost,
         } = data;
-        
-        let userInfo = await userModel.findOne({ socketId: socket.id });
+
+        let userInfo = await userModel.findOne({ phoneNumber });
 
         if (!userInfo) {
           console.log("User not found");
@@ -48,23 +48,27 @@ module.exports = function (io) {
           status: "PENDING",
         });
 
+        console.log("Trip booking record created: " + tripBookingRecord._id);
+
         socketIds.map((e) => {
-          io.of("/booking").to(e).emit("send-requesting-a-ride-to-drivers", {
-            id: tripBookingRecord._id,
-            pickupAddress,
-            destinationAddress,
-            distanceInKilometers,
-            durationInMinutes,
-            minutesToDriverArrival,
-            kilometersToDriverArrival,
-            paymentMethod,
-            noteForDriver,
-            cost,
-            userInfo: {
-              userName: userInfo.userName,
-              phoneNumber: userInfo.phoneNumber,
-            },
-          });
+          io.of("/booking")
+            .to(e)
+            .emit("send-requesting-a-ride-to-drivers", {
+              id: tripBookingRecord._id,
+              pickupAddress,
+              destinationAddress,
+              distanceInKilometers,
+              durationInMinutes,
+              minutesToDriverArrival,
+              kilometersToDriverArrival,
+              paymentMethod,
+              noteForDriver,
+              cost,
+              userInfo: {
+                userName: userInfo.userName,
+                phoneNumber: userInfo.phoneNumber,
+              },
+            });
         });
       } catch (err) {
         console.error("Error saving socket ID:", err);
@@ -74,10 +78,7 @@ module.exports = function (io) {
     socket.on("delete-orders", async (data) => {
       try {
         // console.log(data);
-        const {
-          idUser,
-          drivers,
-        } = data;
+        const { idUser, drivers } = data;
         //   console.log(listDriver);
         const listSocketId = await driverModel
           .find({ _id: drivers, activeStatus: true })
@@ -87,24 +88,6 @@ module.exports = function (io) {
             idUser,
           });
         });
-      } catch (err) {
-        console.error("Error saving socket ID:", err);
-      }
-    });
-
-    socket.on("notification-order", async (data) => {
-      try {
-        // console.log(data);
-        const {
-          idUser
-        } = data;
-        //   console.log(listDriver);
-        const user = await userModel
-          .find({ _id: idUser })
-          .select("socketId -_id");
-        
-          io.to(user.socketId).emit("notification-data", "The driver is coming to pick you up.");
-      
       } catch (err) {
         console.error("Error saving socket ID:", err);
       }
@@ -122,7 +105,6 @@ module.exports = function (io) {
         );
 
         console.log("Driver updated location: " + socket.id);
-
       } catch (err) {
         console.error("Error saving socket ID:", err);
       }
@@ -143,7 +125,6 @@ module.exports = function (io) {
         );
 
         console.log("Driver connected socket: " + socket.id);
-
       } catch (err) {
         console.error("Error saving socket ID:", err);
       }
@@ -161,7 +142,6 @@ module.exports = function (io) {
         );
 
         console.log("User connected socket: " + socket.id);
-
       } catch (err) {
         console.error("Error saving socket ID:", err);
       }
@@ -169,6 +149,13 @@ module.exports = function (io) {
 
     socket.on("disconnect", async (data) => {
       try {
+        let user = await userModel.findOne({ socketId: socket.id });
+        if (user) {
+          // delete trip booking records if exist
+          let a = await tripBookingRecordModel.deleteMany({ userId: user._id });
+          console.log("Trip booking records deleted: " + a);
+        }
+
         await userModel.findOneAndUpdate(
           { socketId: socket.id },
           {
@@ -184,7 +171,6 @@ module.exports = function (io) {
         );
 
         console.log("Client disconnected: " + socket.id);
-
       } catch (err) {
         console.error("Error saving socket ID:", err);
       }

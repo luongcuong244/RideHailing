@@ -10,12 +10,14 @@ const AddressSchema = mongoose.Schema({
 var TripBookingRecordModel = new mongoose.Schema(
   {
     pickupAddress: {
-      type: AddressSchema,
-      required: true,
+      address: String,
+      latitude: Number,
+      longitude: Number,
     },
     destinationAddress: {
-      type: AddressSchema,
-      required: true,
+      address: String,
+      latitude: Number,
+      longitude: Number,
     },
     distanceInKilometers: {
       type: Number,
@@ -48,9 +50,9 @@ var TripBookingRecordModel = new mongoose.Schema(
       required: true,
     },
     socketIdDriversReceived: {
-        type: [String],
-        default: [],
-        required: true,
+      type: [String],
+      default: [],
+      required: true,
     },
     driverId: {
       type: mongoose.Schema.Types.ObjectId,

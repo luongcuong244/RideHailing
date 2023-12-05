@@ -11,6 +11,7 @@ import com.cuongnl.ridehailing.enums.PaymentMethod
 import com.cuongnl.ridehailing.enums.TransportationType
 import com.cuongnl.ridehailing.extensions.findActivity
 import com.cuongnl.ridehailing.globalstate.CurrentLocation
+import com.cuongnl.ridehailing.globalstate.CurrentUser
 import com.cuongnl.ridehailing.models.api.GetBookingInfoRequest
 import com.cuongnl.ridehailing.models.api.GetBookingInfoResponse
 import com.cuongnl.ridehailing.models.api.RequestARideRequest
@@ -257,6 +258,8 @@ class BookingActivityUiViewModel : ViewModel() {
             kilometersToDriverArrival = bookingInfo.bookingInfoResponse!!.kilometersToDriverArrival,
             durationInMinutes = bookingInfo.travelTimeInMinutes ?: 0,
             minutesToDriverArrival = bookingInfo.bookingInfoResponse!!.minutesToDriverArrival,
+            driverSocketIds = bookingInfo.bookingInfoResponse!!.driversNearbyLocation.map { it.socketId },
+            phoneNumber = CurrentUser.getUser()?.phoneNumber?.value!!
         )
         intent.putExtra(Constant.BUNDLE_REQUEST_A_RIDE_REQUEST, requestARideRequest)
         context.startActivity(intent)

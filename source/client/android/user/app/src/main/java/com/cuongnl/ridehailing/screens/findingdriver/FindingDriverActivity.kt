@@ -46,7 +46,8 @@ class FindingDriverActivity : BaseActivity() {
         findingDriverViewModel.setTransportationType(requestData.transportationType)
         findingDriverViewModel.setPaymentMethod(requestData.paymentMethod)
         findingDriverViewModel.setCost(requestData.cost)
-        findingDriverViewModel.emitRequestARide(requestData.toJson())
+        findingDriverViewModel.emitUserConnectSocket()
+        findingDriverViewModel.emitFindADriver(requestData.toJson())
 
         mapViewModel = ViewModelProvider(this)[MapViewModel::class.java]
         mapViewModel.setCameraPositionState(
@@ -58,6 +59,7 @@ class FindingDriverActivity : BaseActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
+        findingDriverViewModel.offListeners()
         findingDriverViewModel.disconnect()
     }
 }

@@ -73,9 +73,7 @@ const getBookingInfo = asyncHandler(async (req, res) => {
 
   let drivers = await driverModel
     .find({ activeStatus: true, travelMode })
-    .select("_id currentLatitude currentLongitude ");
-
-  console.log(drivers);
+    .select("_id currentLatitude currentLongitude socketId ");
 
   drivers = drivers.map((e) => {
     const distance = getDistanceInKm(

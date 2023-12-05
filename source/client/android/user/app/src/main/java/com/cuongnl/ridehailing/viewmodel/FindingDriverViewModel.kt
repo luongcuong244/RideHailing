@@ -7,6 +7,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.cuongnl.ridehailing.enums.PaymentMethod
 import com.cuongnl.ridehailing.enums.TransportationType
+import com.cuongnl.ridehailing.globalstate.CurrentUser
 import com.cuongnl.ridehailing.network.socketio.SocketClient
 import com.google.android.gms.maps.model.LatLng
 import kotlinx.coroutines.CoroutineScope
@@ -21,7 +22,10 @@ class FindingDriverViewModel : ViewModel() {
     private companion object {
         private const val TAG = "BookingActivitySocketViewModel"
         private const val NAMESPACE = "/booking"
-        private const val EVENT_REQUEST_A_RIDE = "request-a-ride"
+        private const val EVENT_FIND_A_DRIVER = "find-a-driver"
+        private const val EVENT_DRIVER_ACCEPTED_TRIP = "driver-accepted-trip"
+        private const val EVENT_RECEIVE_TRIP_BOOKING_RECORD_ID = "receive-trip-booking-record"
+        private const val EVENT_USER_CONNECT_SOCKET = "user-connect-socket"
     }
 
     private var _dotCount: MutableState<Int> = mutableStateOf(0)
@@ -33,6 +37,8 @@ class FindingDriverViewModel : ViewModel() {
     private lateinit var transportationType: TransportationType
     private lateinit var paymentMethod: PaymentMethod
     private var cost: Int = 0
+
+    private var tripBookingRecordIdJson : JSONObject? = null
 
     init {
         runDotAnimation()
@@ -50,13 +56,30 @@ class FindingDriverViewModel : ViewModel() {
     }
 
     fun setupListeners(context: Context) {
-        mSocket?.on("response-a-ride") {
+        mSocket?.on(EVENT_DRIVER_ACCEPTED_TRIP) {
 
+        }
+        mSocket?.on(EVENT_RECEIVE_TRIP_BOOKING_RECORD_ID) {
+            val json = JSONObject(it[0].toString())
+            tripBookingRecordIdJson = json
         }
     }
 
-    fun emitRequestARide(data: JSONObject) {
-        mSocket?.emit(EVENT_REQUEST_A_RIDE, data)
+    fun offListeners() {
+        mSocket?.off(EVENT_DRIVER_ACCEPTED_TRIP)
+        mSocket?.off(EVENT_RECEIVE_TRIP_BOOKING_RECORD_ID)
+    }
+
+    fun emitUserConnectSocket() {
+
+        val json = JSONObject()
+        json.put("phoneNumber", CurrentUser.getUser()?.phoneNumber)
+
+        mSocket?.emit(EVENT_USER_CONNECT_SOCKET, json)
+    }
+
+    fun emitFindADriver(data: JSONObject) {
+        mSocket?.emit(EVENT_FIND_A_DRIVER, data)
     }
 
     fun connect() {
