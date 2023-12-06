@@ -92,9 +92,15 @@
         <activity
             android:name=".screens.notefordriver.NoteForDriverActivity"
             android:exported="false"/>
+
         <activity
             android:name=".screens.findingdriver.FindingDriverActivity"
             android:exported="false"/>
+
+        <activity
+            android:name=".screens.waitingdriver.WaitingDriverActivity"
+            android:exported="false"/>
+
         <service
             android:name=".services.LocationService"
             android:foregroundServiceType="location" />

@@ -42,11 +42,14 @@ class FindingDriverActivity : BaseActivity() {
         val requestData = intent.getSerializableExtra(Constant.BUNDLE_REQUEST_A_RIDE_REQUEST) as RequestARideRequest
 
         val pickupLatLng = LatLng(requestData.pickupLatitude, requestData.pickupLongitude)
+        val destinationLatLng = LatLng(requestData.destinationLatitude, requestData.destinationLongitude)
 
         findingDriverViewModel.setPickupLatLng(pickupLatLng)
         findingDriverViewModel.setTransportationType(requestData.transportationType)
         findingDriverViewModel.setPaymentMethod(requestData.paymentMethod)
         findingDriverViewModel.setCost(requestData.cost)
+        findingDriverViewModel.setDestinationLatLng(destinationLatLng)
+        findingDriverViewModel.setMinutesToDriverArrival(requestData.minutesToDriverArrival)
 
         mapViewModel = ViewModelProvider(this)[MapViewModel::class.java]
         mapViewModel.setCameraPositionState(

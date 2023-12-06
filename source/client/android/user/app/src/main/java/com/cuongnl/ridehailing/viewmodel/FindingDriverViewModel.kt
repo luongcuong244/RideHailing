@@ -23,8 +23,6 @@ import org.json.JSONObject
 class FindingDriverViewModel : ViewModel() {
 
     private companion object {
-        private const val EVENT_DRIVER_ACCEPTED_TRIP = "driver-accepted-trip"
-        private const val EVENT_RECEIVE_TRIP_BOOKING_RECORD_ID = "receive-trip-booking-record"
         private const val EVENT_NOTIFY_ACCEPT_REQUEST = "notify-accept-request"
     }
 
@@ -34,11 +32,11 @@ class FindingDriverViewModel : ViewModel() {
     private val mSocket = BookingSocket.socket
 
     private lateinit var pickupLatLng: LatLng
+    private lateinit var destinationLatLng: LatLng
     private lateinit var transportationType: TransportationType
     private lateinit var paymentMethod: PaymentMethod
+    private var minutesToDriverArrival: Int = 1
     private var cost: Int = 0
-
-    private var tripBookingRecordIdJson : JSONObject? = null
 
     init {
         runDotAnimation()
@@ -56,13 +54,6 @@ class FindingDriverViewModel : ViewModel() {
     }
 
     fun setupListeners(context: Context) {
-        mSocket?.on(EVENT_DRIVER_ACCEPTED_TRIP) {
-
-        }
-        mSocket?.on(EVENT_RECEIVE_TRIP_BOOKING_RECORD_ID) {
-            val json = JSONObject(it[0].toString())
-            tripBookingRecordIdJson = json
-        }
         mSocket?.on(EVENT_NOTIFY_ACCEPT_REQUEST) {
             val response = JSONObject(it[0].toString())
 
@@ -70,6 +61,8 @@ class FindingDriverViewModel : ViewModel() {
 
             val intent = Intent(context, WaitingDriverActivity::class.java)
             intent.putExtra(Constant.BUNDLE_DRIVER_INFO_RESPONSE, driverInfo)
+            intent.putExtra(Constant.BUNDLE_MINUTES_TO_ARRIVE, minutesToDriverArrival)
+            intent.putExtra(Constant.BUNDLE_DESTINATION_LAT_LNG, destinationLatLng)
 
             navigateToWaitingDriverActivity(context, intent)
         }
@@ -80,8 +73,6 @@ class FindingDriverViewModel : ViewModel() {
     }
 
     fun offListeners() {
-        mSocket?.off(EVENT_DRIVER_ACCEPTED_TRIP)
-        mSocket?.off(EVENT_RECEIVE_TRIP_BOOKING_RECORD_ID)
         mSocket?.off(EVENT_NOTIFY_ACCEPT_REQUEST)
     }
 
@@ -119,5 +110,21 @@ class FindingDriverViewModel : ViewModel() {
 
     fun setCost(cost: Int) {
         this.cost = cost
+    }
+
+    fun getMinutesToDriverArrival(): Int {
+        return minutesToDriverArrival
+    }
+
+    fun setMinutesToDriverArrival(minutesToDriverArrival: Int) {
+        this.minutesToDriverArrival = minutesToDriverArrival
+    }
+
+    fun getDestinationLatLng(): LatLng {
+        return destinationLatLng
+    }
+
+    fun setDestinationLatLng(destinationLatLng: LatLng) {
+        this.destinationLatLng = destinationLatLng
     }
 }
