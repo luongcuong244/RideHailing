@@ -1,4 +1,3 @@
-const userModel = require("../../models/userModel");
 const driverModel = require("../../models/driverModel");
 const asyncHandler = require("express-async-handler");
 
@@ -112,36 +111,39 @@ const getBookingInfo = asyncHandler(async (req, res) => {
   return res.status(200).json(response);
 });
 
-const createBill = asyncHandler(async (req, res) => {
+const ratingDriver = asyncHandler(async (req, res) => {
   try {
-    const {
-      startLatitude,
-      startLongitude,
-      endLatitude,
-      endLongitude,
-      travelMode,
-      distanceInKilometers,
-      idUser,
-      idDriver,
-    } = req.body;
-    await orderModel.create({
-      startLatitude,
-      startLongitude,
-      endLatitude,
-      endLongitude,
-      travelMode,
-      distanceInKilometers,
-      user: idUser,
-      createByDriver: idDriver,
-      status: "waiting",
+    const { _id } = req.user;
+
+    const { driverId, star } = req.body;
+
+    let driver = await driverModel.findById(driverId).select("ratings");
+
+    let newRatings = [
+      ...driver.ratings,
+      {
+        star: star,
+        postedBy: _id,
+        comment: "empty",
+      },
+    ];
+    // let newTotalRating =
+    //   driver.ratings.reduce((a, b) => a + b.star, 0) / driver.ratings.length;
+    await driverModel.findByIdAndUpdate(driverId, {
+      totalRating: 4.9,
+      ratings: newRatings,
     });
-    return res.status(200);
+
+    console.log("Rating driver successfully");
+
+    return res.status(200).send("Rating driver successfully");
   } catch (error) {
-    return res.status(400).json({ error });
+    console.log("Rating driver failed with error: ", error);
+    return res.status(400).send(error.message);
   }
 });
 
 module.exports = {
   getBookingInfo,
-  createBill,
+  ratingDriver,
 };

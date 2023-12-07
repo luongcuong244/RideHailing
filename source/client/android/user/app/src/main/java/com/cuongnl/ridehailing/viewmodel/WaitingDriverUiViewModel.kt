@@ -8,9 +8,9 @@ import androidx.lifecycle.ViewModel
 import com.cuongnl.ridehailing.R
 import com.cuongnl.ridehailing.enums.TransportationType
 import com.cuongnl.ridehailing.extensions.findActivity
+import com.cuongnl.ridehailing.extensions.showDialog
 import com.cuongnl.ridehailing.models.api.DriverAcceptResponse
 import com.cuongnl.ridehailing.network.socketio.BookingSocket
-import com.cuongnl.ridehailing.screens.home.HomeActivity
 import com.cuongnl.ridehailing.screens.triptracking.TripTrackingActivity
 import com.cuongnl.ridehailing.utils.Constant
 import org.json.JSONObject
@@ -69,11 +69,15 @@ class WaitingDriverUiViewModel : ViewModel() {
     }
 
     fun clickBackButton(context: Context) {
-        val intent = Intent(context, HomeActivity::class.java)
-        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-        context.startActivity(intent)
-        context.findActivity()?.finish()
-        context.findActivity()?.overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
+        context.showDialog(
+            title = context.getString(R.string.warning_text),
+            message = context.getString(R.string.do_you_want_cancel_the_trip),
+            textOfNegativeButton = context.getString(R.string.cancel_text),
+            textOfPositiveButton = context.getString(R.string.ok_text),
+            positiveButtonFunction = {
+                BookingSocket.emitUserCancelTrip(_driverAcceptResponse.tripId)
+            }
+        )
     }
 
     private fun navigationToTripTrackingActivity(context: Context) {

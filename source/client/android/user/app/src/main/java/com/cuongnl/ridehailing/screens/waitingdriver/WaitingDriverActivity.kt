@@ -71,6 +71,10 @@ class WaitingDriverActivity : BaseActivity() {
             )
         )
     }
+
+    override fun onBackPressed() {
+        waitingDriverUiViewModel.clickBackButton(this)
+    }
 }
 
 @Composable

@@ -100,7 +100,9 @@ private fun RatingBar(
 
             NoRippleButton(
                 onClick = {
-                    tripDetailsUiViewModel.setStarNumber(it + 1)
+                    if (!tripDetailsUiViewModel.isRated.value) {
+                        tripDetailsUiViewModel.setStarNumber(it + 1)
+                    }
                 }
             ) {
                 Image(

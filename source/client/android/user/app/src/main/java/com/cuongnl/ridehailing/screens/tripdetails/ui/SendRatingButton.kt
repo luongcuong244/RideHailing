@@ -23,7 +23,7 @@ import ir.kaaveh.sdpcompose.ssp
 fun SendRatingButton(
     tripDetailsUiViewModel: TripDetailsUiViewModel = viewModel()
 ) {
-    if (tripDetailsUiViewModel.starNumber.value > 0) {
+    if (tripDetailsUiViewModel.starNumber.value > 0 && !tripDetailsUiViewModel.isRated.value) {
 
         val context = LocalContext.current
 

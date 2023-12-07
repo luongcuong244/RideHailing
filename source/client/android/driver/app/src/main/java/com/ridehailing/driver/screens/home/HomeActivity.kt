@@ -41,7 +41,7 @@ class HomeActivity : BaseActivity() {
 
         CurrentLocation.fetchAddress(application)
 
-        BookingSocket.connect()
+        BookingSocket.connect(this)
         BookingSocket.emitDriverConnectToSocket(
             DriverConnectToSocket(
                 CurrentDriver.getDriver().phoneNumber.value,

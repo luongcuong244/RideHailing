@@ -5,6 +5,7 @@ import org.json.JSONObject
 import java.io.Serializable
 
 data class DriverAcceptResponse(
+    @SerializedName("tripId") val tripId: String,
     @SerializedName("driverInfo") val driverInfo: DriverInfoResponse,
     @SerializedName("pickupAddress") val pickupAddress: String,
     @SerializedName("pickupLatitude") val pickupLatitude: Double,
@@ -19,6 +20,7 @@ data class DriverAcceptResponse(
             val driverInfo = DriverInfoResponse.fromJson(JSONObject(json.getString("driverInfo")))
 
             return DriverAcceptResponse(
+                json.getString("tripId"),
                 driverInfo,
                 json.getString("pickupAddress"),
                 json.getDouble("pickupLatitude"),

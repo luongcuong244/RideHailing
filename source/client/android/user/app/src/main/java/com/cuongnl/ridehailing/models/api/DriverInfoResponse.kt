@@ -5,6 +5,7 @@ import org.json.JSONObject
 import java.io.Serializable
 
 data class DriverInfoResponse(
+    @SerializedName("id") val id: String,
     @SerializedName("driverName") val driverName: String,
     @SerializedName("phoneNumber") val phoneNumber: String,
     @SerializedName("driverAvatar") val driverAvatar: String?,
@@ -18,6 +19,7 @@ data class DriverInfoResponse(
     companion object {
         fun fromJson(json: JSONObject): DriverInfoResponse {
             return DriverInfoResponse(
+                id = json.getString("id"),
                 driverName = json.getString("driverName"),
                 phoneNumber = json.getString("phoneNumber"),
                 driverAvatar = json.getString("driverAvatar"),

@@ -117,7 +117,9 @@ module.exports = function (io) {
         );
 
         let driverAcceptResponse = {
+          tripId: tripBookingRecord._id,
           driverInfo: {
+            id: driverAccepted._id,
             driverName: driverAccepted.driverName,
             phoneNumber: driverAccepted.phoneNumber,
             driverAvatar: driverAccepted.driverAvatar,
@@ -241,6 +243,66 @@ module.exports = function (io) {
       });
     });
 
+    socket.on("user-cancel-trip", async (data) => {
+      const { id } = data;
+
+      let deletedTrip = await TripBookingRecordModel.findOneAndDelete({
+        _id: id,
+      });
+
+      if (deletedTrip) {
+        let driver = await driverModel.findOne({
+          _id: deletedTrip.driverId,
+        });
+
+        if (driver && driver.socketId) {
+          io.of("/booking").to(driver.socketId).emit("notify-cancel-trip", {
+            id: deletedTrip._id,
+            success: true,
+          });
+        }
+
+        socket.emit("notify-cancel-trip", {
+          success: true,
+        });
+      } else {
+        socket.emit("notify-cancel-trip", {
+          success: false,
+        });
+      }
+    });
+
+    socket.on("driver-cancel-trip", async (data) => {
+      const { id } = data;
+
+      let deletedTrip = await TripBookingRecordModel.findOneAndDelete({
+        _id: id,
+      });
+
+      if (deletedTrip) {
+        let userRequested = await userModel.findOne({
+          _id: deletedTrip.userId,
+        });
+
+        if (userRequested && userRequested.socketId) {
+          io.of("/booking")
+            .to(userRequested.socketId)
+            .emit("notify-cancel-trip", {
+              id: deletedTrip._id,
+              success: true,
+            });
+        }
+
+        socket.emit("notify-cancel-trip", {
+          success: true,
+        });
+      } else {
+        socket.emit("notify-cancel-trip", {
+          success: false,
+        });
+      }
+    });
+
     socket.on("trip-completed", async (data) => {
       try {
         const { id } = data;
@@ -294,12 +356,13 @@ module.exports = function (io) {
           _id: tripBookingRecord.userId,
         });
 
-        io.of("/booking").to(userRequested.socketId).emit("notify-trip-completed", {
-          id: tripBookingRecord._id,
-          cost: tripBookingRecord.cost,
-          success: true,
-        });
-
+        io.of("/booking")
+          .to(userRequested.socketId)
+          .emit("notify-trip-completed", {
+            id: tripBookingRecord._id,
+            cost: tripBookingRecord.cost,
+            success: true,
+          });
       } catch (err) {
         console.error("Error saving socket ID:", err);
       }
@@ -372,14 +435,17 @@ module.exports = function (io) {
           let deletedTrip = await TripBookingRecordModel.findOneAndDelete({
             userId: user._id,
           });
-          console.log("Trip booking records deleted: " + deletedTrip._id);
 
-          // notify to drivers
-          deletedTrip.socketIdDriversReceived.map((e) => {
-            io.of("/booking").to(e).emit("notify-delete-trip-record", {
-              id: deletedTrip._id,
+          if (deletedTrip) {
+            console.log("Trip booking records deleted: " + deletedTrip._id);
+
+            // notify to drivers
+            deletedTrip.socketIdDriversReceived.map((e) => {
+              io.of("/booking").to(e).emit("notify-delete-trip-record", {
+                id: deletedTrip._id,
+              });
             });
-          });
+          }
         }
 
         await userModel.findOneAndUpdate(

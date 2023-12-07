@@ -70,6 +70,10 @@ class TripTrackingActivity : BaseActivity() {
         super.onDestroy()
         tripTrackingUiViewModel.removeListeners()
     }
+
+    override fun onBackPressed() {
+
+    }
 }
 
 @Composable

@@ -63,7 +63,7 @@ class FindingDriverActivity : BaseActivity() {
 
         val requestData = intent.getSerializableExtra(Constant.BUNDLE_REQUEST_A_RIDE_REQUEST) as RequestARideRequest
 
-        BookingSocket.connect()
+        BookingSocket.connect(this)
         BookingSocket.emitUserConnectSocket()
         BookingSocket.emitFindADriver(requestData.toJson())
     }

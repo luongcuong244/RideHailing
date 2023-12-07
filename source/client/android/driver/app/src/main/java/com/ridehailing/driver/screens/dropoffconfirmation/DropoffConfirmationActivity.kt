@@ -53,6 +53,10 @@ class DropoffConfirmationActivity : BaseActivity() {
         super.onDestroy()
         dropoffConfirmationUiViewModel.removeListeners()
     }
+
+    override fun onBackPressed() {
+
+    }
 }
 
 @Composable

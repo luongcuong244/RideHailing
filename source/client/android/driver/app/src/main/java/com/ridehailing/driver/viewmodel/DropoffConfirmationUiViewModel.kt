@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import com.ridehailing.driver.R
 import com.ridehailing.driver.extensions.findActivity
+import com.ridehailing.driver.extensions.showDialog
 import com.ridehailing.driver.models.TripInfo
 import com.ridehailing.driver.network.socketio.BookingSocket
 import com.ridehailing.driver.screens.dropoffconfirmation.DropoffConfirmationActivity
@@ -78,7 +79,15 @@ class DropoffConfirmationUiViewModel : ViewModel() {
     }
 
     fun onClickCancelTripButton(context: Context) {
-
+        context.showDialog(
+            title = context.getString(R.string.warning_text),
+            message = context.getString(R.string.do_you_want_cancel_the_trip),
+            textOfNegativeButton = context.getString(R.string.cancel_text),
+            textOfPositiveButton = context.getString(R.string.ok_text),
+            positiveButtonFunction = {
+                BookingSocket.emitDriverCancelTrip(currentTripInfo.id)
+            }
+        )
     }
 
     fun navigationToPaymentConfirmationActivity(context: Context) {

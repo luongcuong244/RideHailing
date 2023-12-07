@@ -53,6 +53,10 @@ class PickupConfirmationActivity : BaseActivity() {
         super.onDestroy()
         pickupConfirmationViewModel.removeListeners()
     }
+
+    override fun onBackPressed() {
+
+    }
 }
 
 @Composable

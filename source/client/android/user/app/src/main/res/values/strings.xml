@@ -100,4 +100,8 @@
     <string name="send_rating">Gửi đánh giá</string>
     <string name="charge_by_cash">Trả qua tiền mặt</string>
     <string name="time_text">Thời gian</string>
+    <string name="rating_driver_successfully">Đánh giá tài xế thành công</string>
+    <string name="warning_text">Cảnh báo</string>
+    <string name="do_you_want_cancel_the_trip">Bạn có chắc chắn muốn huỷ chuyến?</string>
+    <string name="the_trip_has_been_canceled">Chuyến xe đã bị huỷ</string>
 </resources>
