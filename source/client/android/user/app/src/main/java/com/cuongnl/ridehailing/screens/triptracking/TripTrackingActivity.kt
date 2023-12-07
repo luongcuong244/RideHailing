@@ -65,6 +65,11 @@ class TripTrackingActivity : BaseActivity() {
             )
         )
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        tripTrackingUiViewModel.removeListeners()
+    }
 }
 
 @Composable

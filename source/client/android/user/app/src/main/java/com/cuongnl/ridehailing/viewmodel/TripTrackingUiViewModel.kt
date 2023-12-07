@@ -10,6 +10,7 @@ import com.cuongnl.ridehailing.extensions.findActivity
 import com.cuongnl.ridehailing.models.api.DriverAcceptResponse
 import com.cuongnl.ridehailing.network.socketio.BookingSocket
 import com.google.android.gms.maps.model.LatLng
+import org.json.JSONObject
 
 class TripTrackingUiViewModel : ViewModel() {
 
@@ -28,16 +29,22 @@ class TripTrackingUiViewModel : ViewModel() {
     fun setupListeners(context: Context) {
         mSocket?.on(EVENT_NOTIFY_ARRIVED_AT_DESTINATION) {
             val response = it[0].toString()
-            val isSuccessful = response.toBoolean()
+            val isSuccessful = JSONObject(response).getBoolean("success")
 
             if (isSuccessful) {
-
+                context.findActivity()?.runOnUiThread {
+                    Toast.makeText(context, "Arrived at destination", Toast.LENGTH_SHORT).show()
+                }
             } else {
                 context.findActivity()?.runOnUiThread {
                     Toast.makeText(context, "Cannot notify arrived at pickup", Toast.LENGTH_SHORT).show()
                 }
             }
         }
+    }
+
+    fun removeListeners() {
+        mSocket?.off(EVENT_NOTIFY_ARRIVED_AT_DESTINATION)
     }
 
     fun setDriverAcceptResponseAndUpdateDriverLocation(driverAcceptResponse: DriverAcceptResponse) {
