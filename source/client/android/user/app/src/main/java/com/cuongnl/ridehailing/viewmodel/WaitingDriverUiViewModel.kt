@@ -11,6 +11,9 @@ import com.cuongnl.ridehailing.extensions.findActivity
 import com.cuongnl.ridehailing.models.api.DriverAcceptResponse
 import com.cuongnl.ridehailing.network.socketio.BookingSocket
 import com.cuongnl.ridehailing.screens.home.HomeActivity
+import com.cuongnl.ridehailing.screens.triptracking.TripTrackingActivity
+import com.cuongnl.ridehailing.utils.Constant
+import org.json.JSONObject
 
 class WaitingDriverUiViewModel : ViewModel() {
 
@@ -25,12 +28,14 @@ class WaitingDriverUiViewModel : ViewModel() {
     fun setupListeners(context: Context) {
         mSocket?.on(EVENT_NOTIFY_ARRIVED_AT_PICKUP) {
             val response = it[0].toString()
-            val isSuccessful = response.toBoolean()
+            val isSuccessful = JSONObject(response).getBoolean("success")
 
             if (isSuccessful) {
-
+                navigationToTripTrackingActivity(context)
             } else {
-                Toast.makeText(context, "Cannot notify arrived at pickup", Toast.LENGTH_SHORT).show()
+                context.findActivity()?.runOnUiThread {
+                    Toast.makeText(context, "Cannot notify arrived at pickup", Toast.LENGTH_SHORT).show()
+                }
             }
         }
     }
@@ -69,5 +74,13 @@ class WaitingDriverUiViewModel : ViewModel() {
         context.startActivity(intent)
         context.findActivity()?.finish()
         context.findActivity()?.overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
+    }
+
+    private fun navigationToTripTrackingActivity(context: Context) {
+        val intent = Intent(context, TripTrackingActivity::class.java)
+        intent.putExtra(Constant.BUNDLE_DRIVER_ACCEPT_RESPONSE, _driverAcceptResponse)
+        context.findActivity()?.finish()
+        context.startActivity(intent)
+        context.findActivity()?.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
     }
 }

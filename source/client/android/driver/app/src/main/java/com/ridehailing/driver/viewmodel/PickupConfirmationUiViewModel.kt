@@ -44,7 +44,9 @@ class PickupConfirmationUiViewModel : ViewModel() {
                     R.anim.slide_out_left
                 )
             } else {
-                Toast.makeText(context, "Cannot notify arrived at pickup", Toast.LENGTH_SHORT).show()
+                context.findActivity()?.runOnUiThread {
+                    Toast.makeText(context, "Cannot notify arrived at pickup", Toast.LENGTH_SHORT).show()
+                }
             }
         }
     }
