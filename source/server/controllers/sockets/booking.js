@@ -1,10 +1,10 @@
 const driverModel = require("../../models/driverModel");
 const userModel = require("../../models/userModel");
 const TripBookingRecordModel = require("../../models/TripBookingRecordModel");
+const BillModel = require("../../models/billModel");
 
 module.exports = function (io) {
   io.of("/booking").on("connection", (socket) => {
-
     // tìm tài xế
     socket.on("find-a-driver", async (data) => {
       try {
@@ -20,6 +20,7 @@ module.exports = function (io) {
           paymentMethod,
           noteForDriver,
           cost,
+          travelMode,
         } = data;
 
         let userInfo = await userModel.findOne({ phoneNumber });
@@ -45,14 +46,13 @@ module.exports = function (io) {
           socketIdDriversReceived: socketIds,
           cost,
           userId: userInfo._id,
+          travelMode,
           status: "PENDING",
         });
 
-        await tripBookingRecord.save()
+        await tripBookingRecord.save();
 
-        console.log(
-          "Trip booking record created: " + tripBookingRecord
-        );
+        console.log("Trip booking record created: " + tripBookingRecord);
 
         socketIds.map((e) => {
           io.of("/booking")
@@ -161,9 +161,7 @@ module.exports = function (io) {
       }
     });
 
-    socket.on("driver-decline-request", async (data) => {
-
-    });
+    socket.on("driver-decline-request", async (data) => {});
 
     socket.on("driver-arrived-at-pickup", async (data) => {
       const { id } = data;
@@ -172,7 +170,10 @@ module.exports = function (io) {
         _id: id,
       });
 
-      if (!tripBookingRecord || tripBookingRecord.status !== "DRIVER_ACCEPTED") {
+      if (
+        !tripBookingRecord ||
+        tripBookingRecord.status !== "DRIVER_ACCEPTED"
+      ) {
         socket.emit("notify-arrived-at-pickup", {
           id: tripBookingRecord._id,
           success: false,
@@ -187,11 +188,11 @@ module.exports = function (io) {
           status: "ARRIVED_AT_PICKUP",
         },
         { new: true }
-      )
-
-      let userRequested = await userModel.findOne(
-        { _id: tripBookingRecord.userId }
       );
+
+      let userRequested = await userModel.findOne({
+        _id: tripBookingRecord.userId,
+      });
 
       socket.emit("notify-arrived-at-pickup", {
         id: tripBookingRecord._id,
@@ -204,7 +205,7 @@ module.exports = function (io) {
         .emit("notify-arrived-at-pickup", {
           id: tripBookingRecord._id,
           success: true,
-      });
+        });
     });
 
     socket.on("driver-arrived-at-destination", async (data) => {
@@ -214,7 +215,10 @@ module.exports = function (io) {
         _id: id,
       });
 
-      if (!tripBookingRecord || tripBookingRecord.status !== "ARRIVED_AT_PICKUP") {
+      if (
+        !tripBookingRecord ||
+        tripBookingRecord.status !== "ARRIVED_AT_PICKUP"
+      ) {
         socket.emit("notify-arrived-at-destination", {
           id: tripBookingRecord._id,
           success: false,
@@ -229,24 +233,75 @@ module.exports = function (io) {
           status: "ARRIVED_AT_DESTINATION",
         },
         { new: true }
-      )
-
-      let userRequested = await userModel.findOne(
-        { _id: tripBookingRecord.userId }
       );
 
       socket.emit("notify-arrived-at-destination", {
         id: tripBookingRecord._id,
         success: true,
       });
+    });
 
-      // notify to the user
-      io.of("/booking")
-        .to(userRequested.socketId)
-        .emit("notify-arrived-at-destination", {
+    socket.on("trip-completed", async (data) => {
+      try {
+        const { id } = data;
+
+        let tripBookingRecord = await TripBookingRecordModel.findOne({
+          _id: id,
+        });
+
+        if (
+          !tripBookingRecord ||
+          tripBookingRecord.status !== "ARRIVED_AT_DESTINATION"
+        ) {
+          socket.emit("notify-trip-completed", {
+            id: tripBookingRecord._id,
+            success: false,
+          });
+          console.log("Trip booking record not found: " + id);
+          return;
+        }
+
+        // create a bill
+        let bill = new BillModel({
+          pickupAddress: tripBookingRecord.pickupAddress,
+          destinationAddress: tripBookingRecord.destinationAddress,
+          distanceInKilometers: tripBookingRecord.distanceInKilometers,
+          durationInMinutes: tripBookingRecord.durationInMinutes,
+          paymentMethod: tripBookingRecord.paymentMethod,
+          noteForDriver: tripBookingRecord.noteForDriver,
+          cost: tripBookingRecord.cost,
+          travelMode: tripBookingRecord.travelMode,
+          userId: tripBookingRecord.userId,
+          driverId: tripBookingRecord.driverId,
+        });
+
+        await bill.save();
+
+        console.log("Bill created: " + bill);
+
+        // delete trip booking record
+        await TripBookingRecordModel.findOneAndDelete({
+          _id: tripBookingRecord._id,
+        });
+
+        socket.emit("notify-trip-completed", {
           id: tripBookingRecord._id,
           success: true,
-      });
+        });
+
+        // notify to the user
+        let userRequested = await userModel.findOne({
+          _id: tripBookingRecord.userId,
+        });
+
+        io.of("/booking").to(userRequested.socketId).emit("notify-trip-completed", {
+          id: tripBookingRecord._id,
+          success: true,
+        });
+
+      } catch (err) {
+        console.error("Error saving socket ID:", err);
+      }
     });
 
     socket.on("update-driver-location", async (data) => {

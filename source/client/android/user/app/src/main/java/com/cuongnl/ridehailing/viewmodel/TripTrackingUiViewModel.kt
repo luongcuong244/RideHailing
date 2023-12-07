@@ -1,6 +1,7 @@
 package com.cuongnl.ridehailing.viewmodel
 
 import android.content.Context
+import android.content.Intent
 import android.widget.Toast
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
@@ -9,13 +10,14 @@ import com.cuongnl.ridehailing.enums.TransportationType
 import com.cuongnl.ridehailing.extensions.findActivity
 import com.cuongnl.ridehailing.models.api.DriverAcceptResponse
 import com.cuongnl.ridehailing.network.socketio.BookingSocket
+import com.cuongnl.ridehailing.screens.tripdetails.TripDetailsActivity
 import com.google.android.gms.maps.model.LatLng
 import org.json.JSONObject
 
 class TripTrackingUiViewModel : ViewModel() {
 
     companion object {
-        private const val EVENT_NOTIFY_ARRIVED_AT_DESTINATION = "notify-arrived-at-destination"
+        private const val EVENT_NOTIFY_TRIP_COMPLETED = "notify-trip-completed"
     }
 
     private var mSocket = BookingSocket.socket
@@ -27,14 +29,12 @@ class TripTrackingUiViewModel : ViewModel() {
     val driverLocation: State<LatLng> = _driverLocation
 
     fun setupListeners(context: Context) {
-        mSocket?.on(EVENT_NOTIFY_ARRIVED_AT_DESTINATION) {
+        mSocket?.on(EVENT_NOTIFY_TRIP_COMPLETED) {
             val response = it[0].toString()
             val isSuccessful = JSONObject(response).getBoolean("success")
 
             if (isSuccessful) {
-                context.findActivity()?.runOnUiThread {
-                    Toast.makeText(context, "Arrived at destination", Toast.LENGTH_SHORT).show()
-                }
+                navigateToTripDetailsActivity(context)
             } else {
                 context.findActivity()?.runOnUiThread {
                     Toast.makeText(context, "Cannot notify arrived at pickup", Toast.LENGTH_SHORT).show()
@@ -44,7 +44,7 @@ class TripTrackingUiViewModel : ViewModel() {
     }
 
     fun removeListeners() {
-        mSocket?.off(EVENT_NOTIFY_ARRIVED_AT_DESTINATION)
+        mSocket?.off(EVENT_NOTIFY_TRIP_COMPLETED)
     }
 
     fun setDriverAcceptResponseAndUpdateDriverLocation(driverAcceptResponse: DriverAcceptResponse) {
@@ -72,5 +72,10 @@ class TripTrackingUiViewModel : ViewModel() {
 
     fun setDriverLocation(latLng: LatLng) {
         _driverLocation.value = latLng
+    }
+
+    fun navigateToTripDetailsActivity(context: Context) {
+        val intent = Intent(context, TripDetailsActivity::class.java)
+        context.startActivity(intent)
     }
 }

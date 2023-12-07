@@ -1,46 +1,66 @@
 const mongoose = require("mongoose"); // Erase if already required
 
 // Declare the Schema of the Mongo model
-var userSchema = new mongoose.Schema(
+var billSchema = new mongoose.Schema(
   {
-    travelMode: {
-      type: String,
-      enum: ["TAXI", "BIKE"],
-      required: true,
+    pickupAddress: {
+      address: {
+        type: String,
+        required: true,
+      },
+      latitude: {
+        type: Number,
+        required: true,
+      },
+      longitude: {
+        type: Number,
+        required: true,
+      },
     },
-    startLatitude: {
-      type: Number,
-      required: true,
-    },
-    startLongitude: {
-      type: Number,
-      required: true,
-    },
-    endLatitude: {
-      type: Number,
-      required: true,
-    },
-    endLongitude: {
-      type: Number,
-      required: true,
+    destinationAddress: {
+      address: {
+        type: String,
+        required: true,
+      },
+      latitude: {
+        type: Number,
+        required: true,
+      },
+      longitude: {
+        type: Number,
+        required: true,
+      },
     },
     distanceInKilometers: {
       type: Number,
       required: true,
     },
-    user: {
-      type: mongoose.Types.ObjectId,
-      ref: "User",
+    durationInMinutes: {
+      type: Number,
       required: true,
     },
-    createByDriver: {
-      type: mongoose.Types.ObjectId,
-      ref: "Driver",
-      required: true,
-    },
-    status: {
+    paymentMethod: {
       type: String,
       required: true,
+    },
+    noteForDriver: String,
+    cost: {
+      type: Number,
+      required: true,
+    },
+    travelMode: {
+      type: String,
+      required: true,
+    },
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "UserModel",
+      required: true,
+    },
+    driverId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "DriverModel",
+      default: null,
     },
   },
   {
@@ -49,4 +69,4 @@ var userSchema = new mongoose.Schema(
 );
 
 //Export the model
-module.exports = mongoose.model("User", userSchema);
+module.exports = mongoose.model("Bill", billSchema);

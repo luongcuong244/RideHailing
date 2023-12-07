@@ -47,10 +47,8 @@ class HomeUiViewModel : ViewModel() {
             val isSuccessful = json.getBoolean("success")
             if (isSuccessful) {
                 navigateToPickupConfirmationActivity(context)
-            } else {
-                removeTripById(tripId)
-                setSelectedTrip(null)
             }
+            removeCurrentTripById(tripId)
         }
     }
 
@@ -62,12 +60,13 @@ class HomeUiViewModel : ViewModel() {
         trips.add(0, trip)
     }
 
-    fun removeTrip(trip: TripInfo) {
-        trips.remove(trip)
-    }
-
     fun removeTripById(tripId: String) {
         trips.removeIf { trip -> trip.id == tripId }
+    }
+
+    fun removeCurrentTripById(tripId: String) {
+        removeTripById(tripId)
+        setSelectedTrip(null)
     }
 
     fun setSelectedTrip(trip: TripInfo?) {
