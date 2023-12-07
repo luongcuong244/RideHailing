@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Ride Hailing</string>
     <string name="header_req_per">Sử dụng vị trí của bạn và cho phép nhận thông báo</string>
-    <string name="des_req_per">Cho phép Ride Hailing sử dụng vị trí của bạn và nhận thông báo phục vụ việc đặt xe được tốt hơn.\nBạn hoàn toàn có thể thay đổi cấp quyền trong phần Cài đặt điện thoại bất cứ lúc nào.</string>
+    <string name="des_req_per">Cho phép Ride Hailing sử dụng vị trí của bạn và nhận thông báo phục vụ việc đặt xe được tốt hơn.\nBạn hoàn toàn có thể thay đổi cấp quyền trong phần Cài đặt điện thoờiại bất cứ lúc nào.</string>
     <string name="continue_text">Tiếp tục</string>
     <string name="dialog_permission_rationale_header">Xin quyền truy cập vị trí</string>
     <string name="dialog_permission_rationale_des">Ứng dụng cần xin quyền truy cập vị trí để tự động xác định điểm đón khách</string>
@@ -94,4 +94,10 @@
     <string name="texting">Nhắn tin</string>
     <string name="calling">Gọi điện</string>
     <string name="on_the_way">Đang đến</string>
+    <string name="thanks_for_choosing">Cảm ơn vì đã chọn Cam SM</string>
+    <string name="rating_driver">Đánh giá tài xế</string>
+    <string name="how_do_you_rate_your_driver">Bạn đánh giá tài xế của bạn như thế nào?</string>
+    <string name="send_rating">Gửi đánh giá</string>
+    <string name="charge_by_cash">Trả qua tiền mặt</string>
+    <string name="time_text">Thời gian</string>
 </resources>

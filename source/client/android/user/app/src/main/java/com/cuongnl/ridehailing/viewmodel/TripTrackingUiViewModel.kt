@@ -11,6 +11,7 @@ import com.cuongnl.ridehailing.extensions.findActivity
 import com.cuongnl.ridehailing.models.api.DriverAcceptResponse
 import com.cuongnl.ridehailing.network.socketio.BookingSocket
 import com.cuongnl.ridehailing.screens.tripdetails.TripDetailsActivity
+import com.cuongnl.ridehailing.utils.Constant
 import com.google.android.gms.maps.model.LatLng
 import org.json.JSONObject
 
@@ -23,6 +24,7 @@ class TripTrackingUiViewModel : ViewModel() {
     private var mSocket = BookingSocket.socket
 
     private lateinit var _driverAcceptResponse: DriverAcceptResponse
+    private var cost = 0
 
     private var _driverLocation = mutableStateOf(LatLng(0.0, 0.0))
 
@@ -32,6 +34,7 @@ class TripTrackingUiViewModel : ViewModel() {
         mSocket?.on(EVENT_NOTIFY_TRIP_COMPLETED) {
             val response = it[0].toString()
             val isSuccessful = JSONObject(response).getBoolean("success")
+            cost = JSONObject(response).getInt("cost")
 
             if (isSuccessful) {
                 navigateToTripDetailsActivity(context)
@@ -76,6 +79,8 @@ class TripTrackingUiViewModel : ViewModel() {
 
     fun navigateToTripDetailsActivity(context: Context) {
         val intent = Intent(context, TripDetailsActivity::class.java)
+        intent.putExtra(Constant.BUNDLE_DRIVER_ACCEPT_RESPONSE, _driverAcceptResponse)
+        intent.putExtra(Constant.BUNDLE_COST, cost)
         context.startActivity(intent)
     }
 }

@@ -296,6 +296,7 @@ module.exports = function (io) {
 
         io.of("/booking").to(userRequested.socketId).emit("notify-trip-completed", {
           id: tripBookingRecord._id,
+          cost: tripBookingRecord.cost,
           success: true,
         });
 
