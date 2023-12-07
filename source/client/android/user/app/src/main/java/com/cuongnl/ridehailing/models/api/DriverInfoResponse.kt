@@ -7,7 +7,7 @@ import java.io.Serializable
 data class DriverInfoResponse(
     @SerializedName("driverName") val driverName: String,
     @SerializedName("phoneNumber") val phoneNumber: String,
-    @SerializedName("driverAvatar") val driverAvatar: String,
+    @SerializedName("driverAvatar") val driverAvatar: String?,
     @SerializedName("licensePlate") val licensePlate: String,
     @SerializedName("vehicleBrand") val vehicleBrand: String,
     @SerializedName("travelMode") val travelMode: String,

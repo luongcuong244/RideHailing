@@ -1,6 +1,6 @@
 const driverModel = require("../../models/driverModel");
 const userModel = require("../../models/userModel");
-const tripBookingRecordModel = require("../../models/TripBookingRecordModel");
+const TripBookingRecordModel = require("../../models/TripBookingRecordModel");
 
 module.exports = function (io) {
   io.of("/booking").on("connection", (socket) => {
@@ -33,9 +33,9 @@ module.exports = function (io) {
           return element.socketId;
         });
 
-        let tripBookingRecord = await tripBookingRecordModel.create({
-          pickupAddress,
-          destinationAddress,
+        let tripBookingRecord = new TripBookingRecordModel({
+          pickupAddress: JSON.parse(pickupAddress),
+          destinationAddress: JSON.parse(destinationAddress),
           distanceInKilometers,
           durationInMinutes,
           minutesToDriverArrival,
@@ -48,7 +48,11 @@ module.exports = function (io) {
           status: "PENDING",
         });
 
-        console.log("Trip booking record created: " + tripBookingRecord._id);
+        await tripBookingRecord.save()
+
+        console.log(
+          "Trip booking record created: " + tripBookingRecord
+        );
 
         socketIds.map((e) => {
           io.of("/booking")
@@ -81,7 +85,9 @@ module.exports = function (io) {
 
         let driverAccepted = await driverModel.findOne({ socketId: socket.id });
 
-        let tripBookingRecord = await tripBookingRecordModel.findOne({ _id: id });
+        let tripBookingRecord = await TripBookingRecordModel.findOne({
+          _id: id,
+        });
 
         if (!tripBookingRecord || tripBookingRecord.status !== "PENDING") {
           socket.emit("notify-accept-request", {
@@ -92,7 +98,7 @@ module.exports = function (io) {
           return;
         }
 
-        tripBookingRecord = await tripBookingRecordModel.findOneAndUpdate(
+        tripBookingRecord = await TripBookingRecordModel.findOneAndUpdate(
           { _id: id },
           {
             status: "ARRIVED_AT_PICKUP",
@@ -110,21 +116,32 @@ module.exports = function (io) {
             tripBookingRecord._id
         );
 
+        let driverAcceptResponse = {
+          driverInfo: {
+            driverName: driverAccepted.driverName,
+            phoneNumber: driverAccepted.phoneNumber,
+            driverAvatar: driverAccepted.driverAvatar,
+            licensePlate: driverAccepted.licensePlate,
+            vehicleBrand: driverAccepted.vehicleBrand,
+            travelMode: driverAccepted.travelMode,
+            currentLatitude: driverAccepted.currentLatitude,
+            currentLongitude: driverAccepted.currentLongitude,
+            totalRating: driverAccepted.totalRating,
+          },
+          pickupAddress: tripBookingRecord.pickupAddress.address,
+          pickupLatitude: tripBookingRecord.pickupAddress.latitude,
+          pickupLongitude: tripBookingRecord.pickupAddress.longitude,
+          destinationAddress: tripBookingRecord.destinationAddress.address,
+          destinationLatitude: tripBookingRecord.destinationAddress.latitude,
+          destinationLongitude: tripBookingRecord.destinationAddress.longitude,
+          minutesToDriverArrival: tripBookingRecord.minutesToDriverArrival,
+        };
+
+        console.log(driverAcceptResponse);
+
         io.of("/booking")
           .to(userRequested.socketId)
-          .emit("notify-accept-request", {
-            driverInfo: {
-              driverName: driverAccepted.driverName,
-              phoneNumber: driverAccepted.phoneNumber,
-              driverAvatar: driverAccepted.driverAvatar,
-              licensePlate: driverAccepted.licensePlate,
-              vehicleBrand: driverAccepted.vehicleBrand,
-              travelMode: driverAccepted.travelMode,
-              currentLatitude: driverAccepted.currentLatitude,
-              currentLongitude: driverAccepted.currentLongitude,
-              totalRating: driverAccepted.totalRating,
-            },
-          });
+          .emit("notify-accept-request", driverAcceptResponse);
 
         socket.emit("notify-accept-request", {
           id: tripBookingRecord._id,
@@ -208,7 +225,9 @@ module.exports = function (io) {
         let user = await userModel.findOne({ socketId: socket.id });
         if (user) {
           // delete trip booking records if exist
-          let deletedTrip = await tripBookingRecordModel.findOneAndDelete({ userId: user._id });
+          let deletedTrip = await TripBookingRecordModel.findOneAndDelete({
+            userId: user._id,
+          });
           console.log("Trip booking records deleted: " + deletedTrip._id);
 
           // notify to drivers

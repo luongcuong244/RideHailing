@@ -168,7 +168,8 @@ private fun Address(
             modifier = Modifier
                 .padding(start = 10.sdp)
                 .weight(1f),
-            overflow = TextOverflow.Ellipsis
+            overflow = TextOverflow.Ellipsis,
+            maxLines = 1
         )
     }
 

@@ -36,6 +36,7 @@ var driverSchema = new mongoose.Schema(
     },
     driverAvatar: {
       type: String,
+      default: null,
     },
     licensePlate: {
       type: String,

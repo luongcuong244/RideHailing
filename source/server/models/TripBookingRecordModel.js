@@ -1,23 +1,35 @@
 const mongoose = require("mongoose"); // Erase if already required
 
-const AddressSchema = mongoose.Schema({
-  address: String,
-  latitude: Number,
-  longitude: Number,
-});
-
 // Declare the Schema of the Mongo model
 var TripBookingRecordModel = new mongoose.Schema(
   {
     pickupAddress: {
-      address: String,
-      latitude: Number,
-      longitude: Number,
+      address: {
+        type: String,
+        required: true,
+      },
+      latitude: {
+        type: Number,
+        required: true,
+      },
+      longitude: {
+        type: Number,
+        required: true,
+      },
     },
     destinationAddress: {
-      address: String,
-      latitude: Number,
-      longitude: Number,
+      address: {
+        type: String,
+        required: true,
+      },
+      latitude: {
+        type: Number,
+        required: true,
+      },
+      longitude: {
+        type: Number,
+        required: true,
+      },
     },
     distanceInKilometers: {
       type: Number,
@@ -62,7 +74,7 @@ var TripBookingRecordModel = new mongoose.Schema(
     status: {
       type: String,
       required: true,
-      enum: ["PENDING", "ARRIVED_AT_PICKUP", "ARRIVED_AT_DESTINATION"]
+      enum: ["PENDING", "ARRIVED_AT_PICKUP", "ARRIVED_AT_DESTINATION"],
     },
   },
   {

@@ -1,36 +1,52 @@
 package com.cuongnl.ridehailing.viewmodel
 
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import androidx.lifecycle.ViewModel
-import com.cuongnl.ridehailing.models.api.DriverInfoResponse
-import com.google.android.gms.maps.model.LatLng
+import com.cuongnl.ridehailing.R
+import com.cuongnl.ridehailing.enums.TransportationType
+import com.cuongnl.ridehailing.extensions.findActivity
+import com.cuongnl.ridehailing.models.api.DriverAcceptResponse
+import com.cuongnl.ridehailing.screens.home.HomeActivity
 
 class WaitingDriverUiViewModel : ViewModel() {
 
-    private lateinit var _driverInfoResponse: DriverInfoResponse
-    private var _destinationLatLng: LatLng = LatLng(0.0, 0.0)
-    private var _minutesToDriverArrival: Int = 1
+    private lateinit var _driverAcceptResponse: DriverAcceptResponse
 
-    fun setDriverInfoResponse(driverInfoResponse: DriverInfoResponse) {
-        this._driverInfoResponse = driverInfoResponse
+    fun setDriverAcceptResponse(driverAcceptResponse: DriverAcceptResponse) {
+        this._driverAcceptResponse = driverAcceptResponse
     }
 
-    fun getDriverInfoResponse(): DriverInfoResponse {
-        return _driverInfoResponse
+    fun getDriverAcceptResponse(): DriverAcceptResponse {
+        return _driverAcceptResponse
     }
 
-    fun setDestinationLatLng(destinationLatLng: LatLng) {
-        this._destinationLatLng = destinationLatLng
+    fun onClickTextingButton(context: Context) {
+        val intent = Intent(Intent.ACTION_VIEW)
+        intent.data = Uri.parse("smsto:${_driverAcceptResponse.driverInfo.phoneNumber}")
+        context.startActivity(intent)
     }
 
-    fun getDestinationLatLng(): LatLng {
-        return _destinationLatLng
+    fun getVehicleIconId(): Int {
+        return when(_driverAcceptResponse.driverInfo.travelMode) {
+            TransportationType.TAXI.name -> TransportationType.TAXI.icon
+            TransportationType.BIKE.name -> TransportationType.BIKE.icon
+            else -> TransportationType.BIKE.icon
+        }
     }
 
-    fun setMinutesToDriverArrival(minutesToDriverArrival: Int) {
-        this._minutesToDriverArrival = minutesToDriverArrival
+    fun onClickCallButton(context: Context) {
+        val intent = Intent(Intent.ACTION_DIAL)
+        intent.data = Uri.parse("tel:${_driverAcceptResponse.driverInfo.phoneNumber}")
+        context.startActivity(intent)
     }
 
-    fun getMinutesToDriverArrival(): Int {
-        return _minutesToDriverArrival
+    fun clickBackButton(context: Context) {
+        val intent = Intent(context, HomeActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+        context.startActivity(intent)
+        context.findActivity()?.finish()
+        context.findActivity()?.overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
     }
 }

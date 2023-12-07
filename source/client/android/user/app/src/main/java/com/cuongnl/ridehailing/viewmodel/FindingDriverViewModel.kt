@@ -8,7 +8,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.cuongnl.ridehailing.enums.PaymentMethod
 import com.cuongnl.ridehailing.enums.TransportationType
-import com.cuongnl.ridehailing.models.api.DriverInfoResponse
+import com.cuongnl.ridehailing.models.api.DriverAcceptResponse
 import com.cuongnl.ridehailing.network.socketio.BookingSocket
 import com.cuongnl.ridehailing.screens.waitingdriver.WaitingDriverActivity
 import com.cuongnl.ridehailing.utils.Constant
@@ -57,12 +57,10 @@ class FindingDriverViewModel : ViewModel() {
         mSocket?.on(EVENT_NOTIFY_ACCEPT_REQUEST) {
             val response = JSONObject(it[0].toString())
 
-            val driverInfo = DriverInfoResponse.fromJson(JSONObject(response.getString("driverInfo")))
+            val driverAcceptResponse = DriverAcceptResponse.fromJson(response)
 
             val intent = Intent(context, WaitingDriverActivity::class.java)
-            intent.putExtra(Constant.BUNDLE_DRIVER_INFO_RESPONSE, driverInfo)
-            intent.putExtra(Constant.BUNDLE_MINUTES_TO_ARRIVE, minutesToDriverArrival)
-            intent.putExtra(Constant.BUNDLE_DESTINATION_LAT_LNG, destinationLatLng)
+            intent.putExtra(Constant.BUNDLE_DRIVER_ACCEPT_RESPONSE, driverAcceptResponse)
 
             navigateToWaitingDriverActivity(context, intent)
         }
