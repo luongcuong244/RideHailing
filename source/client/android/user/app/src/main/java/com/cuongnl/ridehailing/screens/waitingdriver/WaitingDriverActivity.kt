@@ -42,6 +42,7 @@ class WaitingDriverActivity : BaseActivity() {
 
         val driverAcceptResponse = intent.getSerializableExtra(Constant.BUNDLE_DRIVER_ACCEPT_RESPONSE) as DriverAcceptResponse
 
+        waitingDriverUiViewModel.setupListeners(this)
         waitingDriverUiViewModel.setDriverAcceptResponse(driverAcceptResponse)
 
         mapViewModel = ViewModelProvider(this)[MapViewModel::class.java]

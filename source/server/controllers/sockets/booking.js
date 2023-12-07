@@ -101,7 +101,7 @@ module.exports = function (io) {
         tripBookingRecord = await TripBookingRecordModel.findOneAndUpdate(
           { _id: id },
           {
-            status: "ARRIVED_AT_PICKUP",
+            status: "DRIVER_ACCEPTED",
             driverId: driverAccepted._id,
           },
           { new: true }
@@ -112,7 +112,7 @@ module.exports = function (io) {
         });
 
         console.log(
-          "Trip booking record updated ARRIVED_AT_PICKUP: " +
+          "Trip booking record updated DRIVER_ACCEPTED: " +
             tripBookingRecord._id
         );
 
@@ -159,6 +159,94 @@ module.exports = function (io) {
       } catch (err) {
         console.error("Error saving socket ID:", err);
       }
+    });
+
+    socket.on("driver-decline-request", async (data) => {
+
+    });
+
+    socket.on("driver-arrived-at-pickup", async (data) => {
+      const { id } = data;
+
+      let tripBookingRecord = await TripBookingRecordModel.findOne({
+        _id: id,
+      });
+
+      if (!tripBookingRecord || tripBookingRecord.status !== "DRIVER_ACCEPTED") {
+        socket.emit("notify-arrived-at-pickup", {
+          id: tripBookingRecord._id,
+          success: false,
+        });
+        console.log("Trip booking record not found: " + id);
+        return;
+      }
+
+      tripBookingRecord = await TripBookingRecordModel.findOneAndUpdate(
+        { _id: id },
+        {
+          status: "ARRIVED_AT_PICKUP",
+        },
+        { new: true }
+      )
+
+      let userRequested = await userModel.findOne(
+        { _id: tripBookingRecord.userId }
+      );
+
+      socket.emit("notify-arrived-at-pickup", {
+        id: tripBookingRecord._id,
+        success: true,
+      });
+
+      // notify to the user
+      io.of("/booking")
+        .to(userRequested.socketId)
+        .emit("notify-arrived-at-pickup", {
+          id: tripBookingRecord._id,
+          success: true,
+      });
+    });
+
+    socket.on("driver-arrived-at-destination", async (data) => {
+      const { id } = data;
+
+      let tripBookingRecord = await TripBookingRecordModel.findOne({
+        _id: id,
+      });
+
+      if (!tripBookingRecord || tripBookingRecord.status !== "ARRIVED_AT_PICKUP") {
+        socket.emit("notify-arrived-at-destination", {
+          id: tripBookingRecord._id,
+          success: false,
+        });
+        console.log("Trip booking record not found: " + id);
+        return;
+      }
+
+      tripBookingRecord = await TripBookingRecordModel.findOneAndUpdate(
+        { _id: id },
+        {
+          status: "ARRIVED_AT_DESTINATION",
+        },
+        { new: true }
+      )
+
+      let userRequested = await userModel.findOne(
+        { _id: tripBookingRecord.userId }
+      );
+
+      socket.emit("notify-arrived-at-destination", {
+        id: tripBookingRecord._id,
+        success: true,
+      });
+
+      // notify to the user
+      io.of("/booking")
+        .to(userRequested.socketId)
+        .emit("notify-arrived-at-destination", {
+          id: tripBookingRecord._id,
+          success: true,
+      });
     });
 
     socket.on("update-driver-location", async (data) => {
