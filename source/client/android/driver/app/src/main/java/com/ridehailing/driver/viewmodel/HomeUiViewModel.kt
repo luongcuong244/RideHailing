@@ -39,7 +39,7 @@ class HomeUiViewModel : ViewModel() {
         mSocket?.on(EVENT_DELETE_TRIP_RECORD) {
             val json = JSONObject(it[0].toString())
             val id = json.getString("id")
-            removeTripById(id)
+            removeCurrentTripById(id)
         }
         mSocket?.on(EVENT_NOTIFY_ACCEPT_REQUEST) {
             val json = JSONObject(it[0].toString())
@@ -50,6 +50,12 @@ class HomeUiViewModel : ViewModel() {
             }
             removeCurrentTripById(tripId)
         }
+    }
+
+    fun removeListeners() {
+        mSocket?.off(EVENT_SEND_REQUESTING_A_RIDE)
+        mSocket?.off(EVENT_DELETE_TRIP_RECORD)
+        mSocket?.off(EVENT_NOTIFY_ACCEPT_REQUEST)
     }
 
     fun getTrips(): List<TripInfo> {

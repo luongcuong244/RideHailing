@@ -55,6 +55,7 @@ class HomeActivity : BaseActivity() {
     override fun onDestroy() {
         super.onDestroy()
         BookingSocket.disconnect()
+        homeUiViewModel.removeListeners()
     }
 }
 
