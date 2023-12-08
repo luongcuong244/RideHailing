@@ -208,6 +208,8 @@ module.exports = function (io) {
           id: tripBookingRecord._id,
           success: true,
         });
+
+      console.log("Trip booking record updated ARRIVED_AT_PICKUP: " + id);
     });
 
     socket.on("driver-arrived-at-destination", async (data) => {
@@ -241,6 +243,8 @@ module.exports = function (io) {
         id: tripBookingRecord._id,
         success: true,
       });
+
+      console.log("Trip booking record updated ARRIVED_AT_DESTINATION: " + id);
     });
 
     socket.on("user-cancel-trip", async (data) => {
@@ -270,6 +274,8 @@ module.exports = function (io) {
           success: false,
         });
       }
+
+      console.log("Trip booking record deleted by user: " + deletedTrip._id);
     });
 
     socket.on("driver-cancel-trip", async (data) => {
@@ -301,6 +307,8 @@ module.exports = function (io) {
           success: false,
         });
       }
+
+      console.log("Trip booking record deleted by driver: " + deletedTrip._id);
     });
 
     socket.on("trip-completed", async (data) => {

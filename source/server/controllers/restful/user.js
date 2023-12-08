@@ -69,9 +69,11 @@ const deleteAddress = asyncHandler(async (req, res) => {
 const getAddresses = asyncHandler(async (req, res) => {
   const { _id } = req.user;
   const response = await userModel.findByIdAndUpdate(_id);
-  if (user) {
+  if (response) {
+    console.log("Addresses: " + response.address);
+
     return res.status(200).json({
-      addresses: response.address
+      addresses: response.address ? response.address : [],
     });
   } else {
     res.status(400);
