@@ -12,9 +12,12 @@ import com.cuongnl.ridehailing.enums.SelectingLocationType
 import com.cuongnl.ridehailing.extensions.findActivity
 import com.cuongnl.ridehailing.globalstate.CurrentLocation
 import com.cuongnl.ridehailing.globalstate.CurrentUser
+import com.cuongnl.ridehailing.models.Address
 import com.cuongnl.ridehailing.screens.addingaddress.AddingAddressActivity
+import com.cuongnl.ridehailing.screens.confirmlocation.ConfirmLocationActivity
 import com.cuongnl.ridehailing.screens.selectinglocation.SelectingLocationActivity
 import com.cuongnl.ridehailing.utils.Constant
+import com.google.android.gms.maps.model.LatLng
 
 class BookingTabUiViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -59,6 +62,16 @@ class BookingTabUiViewModel(application: Application) : AndroidViewModel(applica
         intent.putExtra(Constant.BUNDLE_PICKUP_LAT_LNG, CurrentLocation.getLatLng())
         intent.putExtra(Constant.BUNDLE_PICKUP_ADDRESS, CurrentLocation.getFullAddress())
         intent.putExtra(Constant.BUNDLE_SELECTING_LOCATION_TYPE, SelectingLocationType.DESTINATION_LOCATION)
+
+        context.startActivity(intent)
+        context.findActivity()?.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+    }
+
+    fun onClickAddressItem(context: Context, address: Address) {
+        val intent = Intent(context, ConfirmLocationActivity::class.java)
+
+        intent.putExtra(Constant.BUNDLE_DESTINATION_LAT_LNG, LatLng(address.latitude, address.longitude))
+        intent.putExtra(Constant.BUNDLE_DESTINATION_ADDRESS, address.fullName)
 
         context.startActivity(intent)
         context.findActivity()?.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)

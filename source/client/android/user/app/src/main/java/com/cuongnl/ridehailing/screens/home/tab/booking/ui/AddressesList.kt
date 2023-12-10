@@ -74,7 +74,12 @@ fun AddressesList(bookingTabUiViewModel: BookingTabUiViewModel = viewModel()) {
 }
 
 @Composable
-private fun AddressItem(item: Address) {
+private fun AddressItem(
+    item: Address,
+    bookingTabUiViewModel: BookingTabUiViewModel = viewModel()
+) {
+
+    val context = LocalContext.current
 
     val icon = when (item.addressType) {
         AddressType.HOME -> painterResource(id = R.drawable.ic_homeplace)
@@ -95,7 +100,7 @@ private fun AddressItem(item: Address) {
     }
 
     ItemContent(icon, title, description) {
-
+        bookingTabUiViewModel.onClickAddressItem(context, item)
     }
 }
 
