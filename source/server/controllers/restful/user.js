@@ -44,10 +44,10 @@ const addAddress = asyncHandler(async (req, res) => {
     },
     { new: true }
   );
-  return res.json({
-    data: response ? true : false,
-    // createdBlog: response ? response : "Cannot create new address.",
-  });
+
+  if (!response) res.status(400).send("Something went wrong.");
+
+  return res.status(200).send("success.");
 });
 
 const deleteAddress = asyncHandler(async (req, res) => {

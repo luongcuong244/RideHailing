@@ -13,7 +13,7 @@ const { verifyAccessToken } = require("../middlewares/verifyToken");
 router.get("/current", verifyAccessToken, getCurrent);
 router.get("/get-addresses", verifyAccessToken, getAddresses);
 router.post("/change-password", forgotPassword);
-router.put("/add-address", verifyAccessToken, addAddress);
-router.put("/delete-address/:did", verifyAccessToken, deleteAddress);
+router.post("/add-address", verifyAccessToken, addAddress);
+router.post("/delete-address/:did", verifyAccessToken, deleteAddress);
 
 module.exports = router;

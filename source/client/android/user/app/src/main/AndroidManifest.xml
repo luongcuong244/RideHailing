@@ -109,6 +109,10 @@
             android:name=".screens.tripdetails.TripDetailsActivity"
             android:exported="false" />
 
+        <activity
+            android:name=".screens.addingaddress.AddingAddressActivity"
+            android:exported="false" />
+
         <service
             android:name=".services.LocationService"
             android:foregroundServiceType="location" />

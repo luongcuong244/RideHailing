@@ -53,7 +53,7 @@ fun ColumnScope.MapView(
         ) {
 
             Marker(
-                icon = context.bitmapDescriptorFromVector(R.drawable.icons_dropoffmarker, Constant.MARKER_SIZE_IN_PIXEL),
+                icon = context.bitmapDescriptorFromVector(R.drawable.ic_map_ic_pick, Constant.MARKER_SIZE_IN_PIXEL),
                 state = MarkerState(position = pickupLocationLatLng)
             )
 
