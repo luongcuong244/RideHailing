@@ -1,8 +1,6 @@
 package com.cuongnl.ridehailing.screens.selectinglocation
 
 import android.os.Bundle
-import android.os.Handler
-import android.widget.Toast
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -12,7 +10,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
@@ -23,13 +20,13 @@ import com.cuongnl.ridehailing.R
 import com.cuongnl.ridehailing.activitybehavior.ISelectingLocationActivityBehavior
 import com.cuongnl.ridehailing.core.BaseActivity
 import com.cuongnl.ridehailing.enums.SelectingLocationType
+import com.cuongnl.ridehailing.enums.TransportationType
 import com.cuongnl.ridehailing.screens.selectinglocation.ui.AppBar
 import com.cuongnl.ridehailing.screens.selectinglocation.ui.FetchAddressResponses
 import com.cuongnl.ridehailing.screens.selectinglocation.ui.SavedAddresses
 import com.cuongnl.ridehailing.screens.selectinglocation.ui.SearchingLocation
 import com.cuongnl.ridehailing.theme.AppTheme
 import com.cuongnl.ridehailing.utils.Constant
-import com.cuongnl.ridehailing.utils.MapUtils
 import com.cuongnl.ridehailing.viewmodel.SelectingLocationUiViewModel
 import com.google.android.gms.maps.model.LatLng
 import ir.kaaveh.sdpcompose.sdp
@@ -61,6 +58,7 @@ class SelectingLocationActivity : BaseActivity(), ISelectingLocationActivityBeha
         val pickupLocationLatLng = intent.getParcelableExtra<LatLng>(Constant.BUNDLE_PICKUP_LAT_LNG)
         val pickupLocationAddress = intent.getStringExtra(Constant.BUNDLE_PICKUP_ADDRESS)
         val selectingLocationType = intent.getSerializableExtra(Constant.BUNDLE_SELECTING_LOCATION_TYPE) as? SelectingLocationType
+        val transportationType = intent.getSerializableExtra(Constant.BUNDLE_TRAVEL_MODE) as? TransportationType
 
         if (destinationLocationLatLng != null) {
             selectingLocationUiViewModel.setDestinationLocationLatLng(destinationLocationLatLng)
@@ -80,6 +78,10 @@ class SelectingLocationActivity : BaseActivity(), ISelectingLocationActivityBeha
 
         if (selectingLocationType != null) {
             selectingLocationUiViewModel.setCurrentAddressType(selectingLocationType)
+        }
+
+        if (transportationType != null) {
+            selectingLocationUiViewModel.setTransportationType(transportationType)
         }
     }
 

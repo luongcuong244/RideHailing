@@ -12,6 +12,7 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.AndroidViewModel
 import com.cuongnl.ridehailing.enums.SelectingLocationType
+import com.cuongnl.ridehailing.enums.TransportationType
 import com.cuongnl.ridehailing.globalstate.CurrentLocation
 import com.cuongnl.ridehailing.models.Address
 import com.cuongnl.ridehailing.screens.booking.BookingActivity
@@ -33,6 +34,8 @@ class SelectingLocationUiViewModel(application: Application) : AndroidViewModel(
 
     private val placesClient = Places.createClient(application)
     private var cancellationTokenSource = CancellationTokenSource()
+
+    private var _transportationType: TransportationType? = null
 
     val addressPredictions = mutableStateListOf<AutocompletePrediction>()
     private val _isFetchingAddressPredictions = mutableStateOf(false)
@@ -175,6 +178,10 @@ class SelectingLocationUiViewModel(application: Application) : AndroidViewModel(
         intent.putExtra(Constant.BUNDLE_DESTINATION_ADDRESS, destinationTextField.value.text)
         intent.putExtra(Constant.BUNDLE_PICKUP_ADDRESS, pickupTextField.value.text)
 
+        if (_transportationType != null) {
+            intent.putExtra(Constant.BUNDLE_TRAVEL_MODE, _transportationType)
+        }
+
         context.startActivity(intent)
     }
 
@@ -184,6 +191,10 @@ class SelectingLocationUiViewModel(application: Application) : AndroidViewModel(
 
     fun setCurrentAddressType(addressType: SelectingLocationType) {
         _currentAddressType.value = addressType
+    }
+
+    fun setTransportationType(transportationType: TransportationType) {
+        _transportationType = transportationType
     }
 
     fun setAddressResponsesVisibleAndCancelFetching(isVisible: Boolean) {

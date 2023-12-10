@@ -9,6 +9,7 @@ import androidx.lifecycle.AndroidViewModel
 import com.cuongnl.ridehailing.R
 import com.cuongnl.ridehailing.enums.AddressType
 import com.cuongnl.ridehailing.enums.SelectingLocationType
+import com.cuongnl.ridehailing.enums.TransportationType
 import com.cuongnl.ridehailing.extensions.findActivity
 import com.cuongnl.ridehailing.globalstate.CurrentLocation
 import com.cuongnl.ridehailing.globalstate.CurrentUser
@@ -72,6 +73,20 @@ class BookingTabUiViewModel(application: Application) : AndroidViewModel(applica
 
         intent.putExtra(Constant.BUNDLE_DESTINATION_LAT_LNG, LatLng(address.latitude, address.longitude))
         intent.putExtra(Constant.BUNDLE_DESTINATION_ADDRESS, address.fullName)
+
+        context.startActivity(intent)
+        context.findActivity()?.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+    }
+
+    fun onClickVehicleItem(context: Context, transportationType: TransportationType) {
+        val intent = Intent(context, SelectingLocationActivity::class.java)
+
+        intent.putExtra(Constant.BUNDLE_DESTINATION_LAT_LNG, CurrentLocation.getLatLng())
+        intent.putExtra(Constant.BUNDLE_DESTINATION_ADDRESS, CurrentLocation.getFullAddress())
+        intent.putExtra(Constant.BUNDLE_PICKUP_LAT_LNG, CurrentLocation.getLatLng())
+        intent.putExtra(Constant.BUNDLE_PICKUP_ADDRESS, CurrentLocation.getFullAddress())
+        intent.putExtra(Constant.BUNDLE_SELECTING_LOCATION_TYPE, SelectingLocationType.DESTINATION_LOCATION)
+        intent.putExtra(Constant.BUNDLE_TRAVEL_MODE, transportationType)
 
         context.startActivity(intent)
         context.findActivity()?.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
