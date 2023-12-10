@@ -2,7 +2,6 @@ package com.cuongnl.ridehailing.screens.addingaddress.ui
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -10,7 +9,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
@@ -58,8 +56,7 @@ fun MapView(
             modifier = Modifier.matchParentSize(),
             properties = mapViewModel.properties.value,
             uiSettings = mapViewModel.uiSettings.value,
-            cameraPositionState = cameraPositionState,
-            contentPadding = PaddingValues(bottom = LocalConfiguration.current.screenHeightDp.dp)
+            cameraPositionState = cameraPositionState
         )
 
         Image(
