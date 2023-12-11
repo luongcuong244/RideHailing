@@ -102,6 +102,7 @@ const getBills = asyncHandler(async (req, res) => {
       pickupAddress: bills[i].pickupAddress.address,
       pickupLatitude: bills[i].pickupAddress.latitude,
       pickupLongitude: bills[i].pickupAddress.longitude,
+      destinationAddress: bills[i].destinationAddress.address,
       destinationLatitude: bills[i].destinationAddress.latitude,
       destinationLongitude: bills[i].destinationAddress.longitude,
       distanceInKilometers: bills[i].distanceInKilometers,
@@ -122,6 +123,7 @@ const getBills = asyncHandler(async (req, res) => {
         currentLongitude: driver.currentLongitude,
         totalRating: driver.totalRating,
       },
+      createdTime: bills[i].createdAt.getTime(),
     });
   }
 

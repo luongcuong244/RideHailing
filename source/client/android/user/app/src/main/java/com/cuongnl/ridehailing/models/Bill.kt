@@ -17,5 +17,6 @@ data class Bill(
     @SerializedName("noteForDriver") val noteForDriver: String,
     @SerializedName("cost") val cost: Int,
     @SerializedName("travelMode") val travelMode: String,
-    @SerializedName("driverInfo") val driverInfo: DriverInfoResponse
+    @SerializedName("driverInfo") val driverInfo: DriverInfoResponse,
+    @SerializedName("createdTime") val createdTime: Long
 )
