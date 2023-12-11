@@ -4,6 +4,7 @@ import com.cuongnl.ridehailing.models.Address
 import com.cuongnl.ridehailing.models.api.AddressResponse
 import com.cuongnl.ridehailing.models.api.ChangePasswordRequest
 import com.cuongnl.ridehailing.models.api.ChangePasswordResponse
+import com.cuongnl.ridehailing.models.api.GetBillsResponse
 import com.cuongnl.ridehailing.models.api.GetUserResponse
 import retrofit2.Call
 import retrofit2.http.Body
@@ -22,4 +23,7 @@ interface UserApi {
 
     @POST("user/add-address")
     fun addAddress(@Body request: Address): Call<Void>
+
+    @GET("user/get-bills")
+    fun getBills(): Call<GetBillsResponse>
 }

@@ -1,5 +1,6 @@
 const userModel = require("../../models/userModel");
 const driverModel = require("../../models/driverModel");
+const billModel = require("../../models/billModel");  
 const asyncHandler = require("express-async-handler");
 
 const getCurrent = asyncHandler(async (req, res) => {
@@ -81,10 +82,61 @@ const getAddresses = asyncHandler(async (req, res) => {
   }
 });
 
+const getBills = asyncHandler(async (req, res) => {
+  const { _id } = req.user;
+  const bills = await billModel.find({ userId: _id });
+  if (!bills) {
+    res.status(400);
+    throw new Error("error");
+  }
+
+  const billList = [];
+  for (let i = 0; i < bills.length; i++) {
+    const driver = await driverModel.findById(bills[i].driverId);
+    if (!driver) {
+      res.status(400);
+      throw new Error("error");
+    }
+    billList.push({
+      id: bills[i]._id,
+      pickupAddress: bills[i].pickupAddress.address,
+      pickupLatitude: bills[i].pickupAddress.latitude,
+      pickupLongitude: bills[i].pickupAddress.longitude,
+      destinationLatitude: bills[i].destinationAddress.latitude,
+      destinationLongitude: bills[i].destinationAddress.longitude,
+      distanceInKilometers: bills[i].distanceInKilometers,
+      durationInMinutes: bills[i].durationInMinutes,
+      paymentMethod: bills[i].paymentMethod,
+      noteForDriver: bills[i].noteForDriver,
+      cost: bills[i].cost,
+      travelMode: bills[i].travelMode,
+      driverInfo: {
+        id: driver._id,
+        driverName: driver.driverName,
+        phoneNumber: driver.phoneNumber,
+        driverAvatar: driver.driverAvatar,
+        licensePlate: driver.licensePlate,
+        vehicleBrand: driver.vehicleBrand,
+        travelMode: driver.travelMode,
+        currentLatitude: driver.currentLatitude,
+        currentLongitude: driver.currentLongitude,
+        totalRating: driver.totalRating,
+      },
+    });
+  }
+
+  console.log("billList: " + billList);
+
+  return res.status(200).json({
+    bills: billList,
+  });
+});
+
 module.exports = {
   getCurrent,
   forgotPassword,
   addAddress,
   deleteAddress,
   getAddresses,
+  getBills,
 };

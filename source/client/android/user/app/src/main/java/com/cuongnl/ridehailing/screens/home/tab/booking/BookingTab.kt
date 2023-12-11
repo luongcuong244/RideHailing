@@ -75,42 +75,6 @@ private fun getUserAddress(
     userServiceViewModel: UserServiceViewModel,
     bookingTabUiViewModel: BookingTabUiViewModel
 ) {
-
-//    Handler().postDelayed({
-//        CurrentUser.getUser()?.clearAddresses()
-//        CurrentUser.getUser()?.apply {
-//            addAddress(
-//                Address(
-//                    AddressType.HOME,
-//                    "123 Nguyen Van Linh",
-//                    "777 Brockton Avenue, Abington MA 2351",
-//                    10.762622,
-//                    106.660172
-//                )
-//            )
-//            addAddress(
-//                Address(
-//                    AddressType.WORK,
-//                    "123 Nguyen Van Linh",
-//                    "30 Memorial Drive, Avon MA 2322",
-//                    10.762622,
-//                    106.660172
-//                )
-//            )
-//            addAddress(
-//                Address(
-//                    AddressType.OTHER,
-//                    "123 Nguyen Van Linh",
-//                    "337 Russell St, Hadley MA 1035",
-//                    10.762622,
-//                    106.660172
-//                )
-//            )
-//        }
-//        bookingTabUiViewModel.setIsLoadingAddress(false)
-//    }, 2000)
-
-
     userServiceViewModel.getUserAddresses(object : SimpleApiCallback<AddressResponse> {
         override fun onSuccess(call: Call<AddressResponse>, response: Response<AddressResponse>) {
             response.body()?.let {
