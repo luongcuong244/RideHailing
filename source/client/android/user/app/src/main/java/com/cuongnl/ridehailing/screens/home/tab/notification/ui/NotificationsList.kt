@@ -28,8 +28,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.cuongnl.ridehailing.R
-import com.cuongnl.ridehailing.globalstate.CurrentUser
-import com.cuongnl.ridehailing.models.Notification
 import com.cuongnl.ridehailing.models.item.NotificationItem
 import com.cuongnl.ridehailing.screens.home.tab.notification.LocalBehavior
 import com.cuongnl.ridehailing.viewmodel.NotificationTabUiViewModel
@@ -40,7 +38,7 @@ import ir.kaaveh.sdpcompose.sdp
 @Composable
 fun NotificationsList(notificationTabUiViewModel: NotificationTabUiViewModel = viewModel()) {
 
-    val data = notificationTabUiViewModel.listNotifications
+    val data = NotificationTabUiViewModel.listNotifications
 
     LazyColumn(
         modifier = Modifier
