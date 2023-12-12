@@ -108,4 +108,12 @@
     <string name="add_address_home">Thêm nhà</string>
     <string name="add_address_work">Thêm chỗ làm</string>
     <string name="we_know_you_have_many_options">Chúng tôi biết bạn có nhiều lựa chọn.\nCảm ơn bạn đã chọn Cam SM.</string>
+    <string name="membership_class">Hạng thành viên</string>
+    <string name="invite_friends">Giới thiệu bạn bè</string>
+    <string name="payment">Thanh toán</string>
+    <string name="invoice_info">Thông tin hóa đơn</string>
+    <string name="place_saved">Địa chỉ đã lưu</string>
+    <string name="support_center">Trung tâm hỗ trợ</string>
+    <string name="policy">Điều khoản và chính sách</string>
+    <string name="language">Ngôn ngữ</string>
 </resources>
