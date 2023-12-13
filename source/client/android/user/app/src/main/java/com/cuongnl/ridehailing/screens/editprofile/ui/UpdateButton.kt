@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -22,6 +23,9 @@ import ir.kaaveh.sdpcompose.ssp
 fun BoxScope.UpdateButton(
     editProfileUiViewModel: EditProfileUiViewModel = viewModel()
 ) {
+
+    val context = LocalContext.current
+
     Box(
         modifier = Modifier
             .padding(bottom = 10.sdp)
@@ -33,7 +37,7 @@ fun BoxScope.UpdateButton(
                 .fillMaxWidth()
                 .height(37.sdp),
             onClick = {
-
+                editProfileUiViewModel.onClickUpdateButton(context)
             },
             text = stringResource(id = R.string.update_text),
             textSize = 12.ssp,

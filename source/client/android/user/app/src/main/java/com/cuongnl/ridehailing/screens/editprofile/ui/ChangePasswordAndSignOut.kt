@@ -13,13 +13,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import ir.kaaveh.sdpcompose.sdp
 import com.cuongnl.ridehailing.R
+import com.cuongnl.ridehailing.viewmodel.EditProfileUiViewModel
 import com.cuongnl.ridehailing.widgets.AppText
 import com.cuongnl.ridehailing.widgets.NoRippleButton
 import ir.kaaveh.sdpcompose.ssp
@@ -40,10 +43,15 @@ fun ChangePasswordAndSignOut() {
 }
 
 @Composable
-private fun ChangePassword() {
+private fun ChangePassword(
+    editProfileUiViewModel: EditProfileUiViewModel = viewModel()
+) {
+
+    val context = LocalContext.current
+
     NoRippleButton(
         onClick = {
-
+            editProfileUiViewModel.onClickChangePasswordButton(context)
         }
     ) {
         Row(
@@ -82,10 +90,15 @@ private fun Divider() {
 }
 
 @Composable
-private fun SignOut() {
+private fun SignOut(
+    editProfileUiViewModel: EditProfileUiViewModel = viewModel()
+) {
+
+    val context = LocalContext.current
+
     NoRippleButton(
         onClick = {
-
+            editProfileUiViewModel.onClickSignOutButton(context)
         }
     ) {
         Row(

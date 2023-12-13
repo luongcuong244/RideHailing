@@ -10,7 +10,7 @@ object CurrentUser {
         return user
     }
 
-    fun setUser(user: User) {
+    fun setUser(user: User?) {
         this.user = user
     }
 }

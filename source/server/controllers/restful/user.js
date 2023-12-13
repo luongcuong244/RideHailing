@@ -23,9 +23,18 @@ const getCurrent = asyncHandler(async (req, res) => {
 const forgotPassword = asyncHandler(async (req, res) => {
   const { phoneNumber, newPassword } = req.body;
   const user = await userModel.findOne({ phoneNumber });
-  user.password = newPassword;
-  const check = await user.save();
-  if (check) {
+
+  if (!user) {
+    console.log("User not found.");
+    res.status(400);
+    throw new Error("error");
+  }
+
+  let result = await userModel.findByIdAndUpdate(user._id, {
+    password: newPassword,
+  });
+
+  if (result) {
     return res.status(200).send("success.");
   } else {
     res.status(400);
