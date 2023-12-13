@@ -113,6 +113,11 @@
             android:name=".screens.addingaddress.AddingAddressActivity"
             android:exported="false" />
 
+        <activity
+            android:name=".screens.editprofile.EditProfileActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+
         <service
             android:name=".services.LocationService"
             android:foregroundServiceType="location" />

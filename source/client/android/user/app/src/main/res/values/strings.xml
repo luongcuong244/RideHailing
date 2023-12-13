@@ -116,4 +116,8 @@
     <string name="support_center">Trung tâm hỗ trợ</string>
     <string name="policy">Điều khoản và chính sách</string>
     <string name="language">Ngôn ngữ</string>
+    <string name="edit_profile">Chỉnh sửa hồ sơ</string>
+    <string name="change_password">Đổi mật khẩu</string>
+    <string name="sign_out">Đăng xuất</string>
+    <string name="update_text">Cập nhật</string>
 </resources>
