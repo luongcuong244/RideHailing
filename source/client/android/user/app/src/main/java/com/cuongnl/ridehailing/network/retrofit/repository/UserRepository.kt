@@ -6,6 +6,7 @@ import com.cuongnl.ridehailing.models.api.ChangePasswordRequest
 import com.cuongnl.ridehailing.models.api.ChangePasswordResponse
 import com.cuongnl.ridehailing.models.api.GetBillsResponse
 import com.cuongnl.ridehailing.models.api.GetUserResponse
+import com.cuongnl.ridehailing.models.api.UpdateProfileRequest
 import com.cuongnl.ridehailing.network.retrofit.RetrofitClient
 import com.cuongnl.ridehailing.network.retrofit.api.UserApi
 import retrofit2.Callback
@@ -32,5 +33,9 @@ class UserRepository {
 
     fun getBills(callback: Callback<GetBillsResponse>) {
         userApi.getBills().enqueue(callback)
+    }
+
+    fun updateProfile(request: UpdateProfileRequest, callback: Callback<Void>) {
+        userApi.updateProfile(request).enqueue(callback)
     }
 }

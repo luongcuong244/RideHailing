@@ -60,8 +60,8 @@ var userSchema = new mongoose.Schema(
       {
         addressType: {
           type: String,
-          enum: ["Home", "Work", "Other"],
-          default: "Home",
+          enum: ["home", "work", "other"],
+          default: "home",
         },
         shortName: {
           type: String, 

@@ -5,6 +5,7 @@ import android.content.ContextWrapper
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import com.cuongnl.ridehailing.R
 import com.cuongnl.ridehailing.extensions.setAppLocale
 import com.cuongnl.ridehailing.utils.Constant
 import com.cuongnl.ridehailing.utils.LocalStorageUtils
@@ -43,5 +44,10 @@ abstract class BaseActivity : AppCompatActivity() {
                 recreate()
             }
         }
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
     }
 }

@@ -30,13 +30,14 @@ const forgotPassword = asyncHandler(async (req, res) => {
     throw new Error("error");
   }
 
-  let result = await userModel.findByIdAndUpdate(user._id, {
-    password: newPassword,
-  });
+  try {
+    user.password = newPassword;
+    user.save();
 
-  if (result) {
-    return res.status(200).send("success.");
-  } else {
+    console.log("Password changed.");
+    return res.status(200).send({ "message": "success" });
+  } catch (error) {
+    console.log(error);
     res.status(400);
     throw new Error("error");
   }
@@ -57,7 +58,7 @@ const addAddress = asyncHandler(async (req, res) => {
 
   if (!response) res.status(400).send("Something went wrong.");
 
-  return res.status(200).send("success.");
+  return res.status(200).send({ "message": "success" });
 });
 
 const deleteAddress = asyncHandler(async (req, res) => {
@@ -143,6 +144,29 @@ const getBills = asyncHandler(async (req, res) => {
   });
 });
 
+const updateProfile = asyncHandler(async (req, res) => {
+  const { _id } = req.user;
+  const { userName, email } = req.body;
+  const response = await userModel.findByIdAndUpdate(
+    _id,
+    {
+      userName,
+      email,
+    },
+    { new: true }
+  );
+  if (response) {
+    console.log("Profile updated.");
+
+    return res.status(200).json({
+      success: true,
+    });
+  } else {
+    res.status(400);
+    throw new Error("error");
+  }
+});
+
 module.exports = {
   getCurrent,
   forgotPassword,
@@ -150,4 +174,5 @@ module.exports = {
   deleteAddress,
   getAddresses,
   getBills,
+  updateProfile,
 };

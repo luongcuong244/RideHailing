@@ -8,6 +8,7 @@ const {
   deleteAddress,
   getAddresses,
   getBills,
+  updateProfile,
 } = require("../controllers/restful/user");
 const { verifyAccessToken } = require("../middlewares/verifyToken");
 
@@ -17,5 +18,6 @@ router.post("/change-password", forgotPassword);
 router.post("/add-address", verifyAccessToken, addAddress);
 router.post("/delete-address/:did", verifyAccessToken, deleteAddress);
 router.get("/get-bills", verifyAccessToken, getBills)
+router.post("/update-profile", verifyAccessToken, updateProfile);
 
 module.exports = router;
