@@ -118,6 +118,10 @@
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
 
+        <activity
+            android:name=".screens.savedaddress.SavedAddressActivity"
+            android:exported="false" />
+
         <service
             android:name=".services.LocationService"
             android:foregroundServiceType="location" />

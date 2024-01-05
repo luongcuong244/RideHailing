@@ -122,4 +122,5 @@
     <string name="update_text">Cập nhật</string>
     <string name="name_and_email_cannot_be_empty">Tên và email không được để trống!</string>
     <string name="update_successfully">Cập nhật thành công!</string>
+    <string name="saved_address">Địa chỉ đã lưu</string>
 </resources>
