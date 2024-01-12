@@ -17,18 +17,26 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.cuongnl.ridehailing.R
+import com.cuongnl.ridehailing.viewmodel.AccountTabUiViewModel
 import com.cuongnl.ridehailing.widgets.AppText
 import com.cuongnl.ridehailing.widgets.TouchableOpacityButton
 import ir.kaaveh.sdpcompose.sdp
 import ir.kaaveh.sdpcompose.ssp
 
 @Composable
-fun Body() {
+fun Body(
+    accountTabUiViewModel: AccountTabUiViewModel = viewModel()
+) {
+
+    val context = LocalContext.current
+
     Column(
         modifier = Modifier
             .padding(top = 10.sdp)
@@ -74,7 +82,7 @@ fun Body() {
             icon = painterResource(id = R.drawable.icons_iconplacesave_iconplacesave),
             title = stringResource(id = R.string.place_saved),
             onClick = {
-
+                accountTabUiViewModel.navigateToSavedAddress(context)
             },
             true
         )

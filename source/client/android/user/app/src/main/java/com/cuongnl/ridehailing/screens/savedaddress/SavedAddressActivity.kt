@@ -11,6 +11,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import com.cuongnl.ridehailing.core.BaseActivity
 import com.cuongnl.ridehailing.screens.savedaddress.ui.AppBar
+import com.cuongnl.ridehailing.screens.savedaddress.ui.HomeAndWorkPlace
+import com.cuongnl.ridehailing.screens.savedaddress.ui.OtherPlaces
 import com.cuongnl.ridehailing.theme.AppTheme
 
 class SavedAddressActivity : BaseActivity() {
@@ -33,7 +35,8 @@ private fun Screen() {
                 .imePadding()
         ) {
             AppBar()
-
+            HomeAndWorkPlace()
+            OtherPlaces()
         }
     }
 }

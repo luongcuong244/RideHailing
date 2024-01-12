@@ -23,8 +23,7 @@ object FormatterUtils {
         return phoneNumber
     }
 
-    fun getShortAddress(fullAddress: String): String {
-        val commaCount = 3
+    fun getShortAddress(fullAddress: String, commaCount: Int = 3): String {
         var commaIndex = -1
         var foundCount = 0
 
