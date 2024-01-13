@@ -12,12 +12,8 @@ import com.cuongnl.ridehailing.utils.LocalStorageUtils
 
 abstract class BaseActivity : AppCompatActivity() {
 
-    private var activityLang: String? = null
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        activityLang = LocalStorageUtils.readData(this, LocalStorageUtils.KEY_LANGUAGE) as String?
 
         window.decorView.systemUiVisibility = (
                 View.SYSTEM_UI_FLAG_LAYOUT_STABLE
@@ -31,18 +27,6 @@ abstract class BaseActivity : AppCompatActivity() {
             super.attachBaseContext(ContextWrapper(newBase))
         } else {
             super.attachBaseContext(ContextWrapper(newBase.setAppLocale(languageCode)))
-        }
-    }
-
-    override fun onResume() {
-        super.onResume()
-
-        val storedLang: String? = LocalStorageUtils.readData(this, LocalStorageUtils.KEY_LANGUAGE) as String?
-
-        storedLang?.let {
-            if (activityLang != storedLang) {
-                recreate()
-            }
         }
     }
 

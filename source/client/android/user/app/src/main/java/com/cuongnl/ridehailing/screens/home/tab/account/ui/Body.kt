@@ -119,7 +119,7 @@ fun Body(
             icon = painterResource(id = R.drawable.images_languague_ico_languague),
             title = stringResource(id = R.string.language),
             onClick = {
-
+                accountTabUiViewModel.setLanguageBottomSheetVisible(true)
             },
             true
         )

@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.cuongnl.ridehailing.screens.home.tab.account.ui.Body
 import com.cuongnl.ridehailing.screens.home.tab.account.ui.Header
+import com.cuongnl.ridehailing.screens.home.tab.account.ui.LanguageBottomSheet
 
 @Composable
 fun AccountTab() {
@@ -25,5 +26,6 @@ fun AccountTab() {
     ) {
         Header()
         Body()
+        LanguageBottomSheet()
     }
 }

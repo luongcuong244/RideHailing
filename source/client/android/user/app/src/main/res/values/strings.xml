@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Ride Hailing</string>
+    <string name="app_name" translatable="false">Cam SM</string>
     <string name="header_req_per">Sử dụng vị trí của bạn và cho phép nhận thông báo</string>
     <string name="des_req_per">Cho phép Ride Hailing sử dụng vị trí của bạn và nhận thông báo phục vụ việc đặt xe được tốt hơn.\nBạn hoàn toàn có thể thay đổi cấp quyền trong phần Cài đặt điện thoờiại bất cứ lúc nào.</string>
     <string name="continue_text">Tiếp tục</string>
@@ -15,7 +15,7 @@
     <string name="policy_text_part_2">Điều khoản dịch vụ &amp; Chính sách bảo mật</string>
     <string name="select_country_code_text">Chọn mã quốc gia</string>
     <string name="search_text">Tìm kiếm</string>
-    <string name="cannot_connect_to_server">Can\'t connect to the server!</string>
+    <string name="cannot_connect_to_server">Không thể kết nối với server!</string>
     <string name="otp_verification_text">Xác thực mã OTP</string>
     <string name="otp_des_text">đã gửi cho bạn mã OTP 6 số tới số điện thoại</string>
     <string name="send_otp_again">Gửi lại mã OTP</string>
@@ -125,4 +125,6 @@
     <string name="saved_address">Địa chỉ đã lưu</string>
     <string name="home">Nhà</string>
     <string name="work">Nơi làm việc</string>
+    <string name="select_language">Chọn ngôn ngữ</string>
+    <string name="set_your_app_display_language">Thiết lập ngôn ngữ hiển thị trên ứng dụng của bạn</string>
 </resources>
