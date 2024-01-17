@@ -54,6 +54,8 @@ module.exports = function (io) {
 
         console.log("Trip booking record created: " + tripBookingRecord);
 
+        console.log("user socket id: " + socket.id);
+
         socketIds.map((e) => {
           io.of("/booking")
             .to(e)
@@ -72,6 +74,7 @@ module.exports = function (io) {
                 userName: userInfo.userName,
                 phoneNumber: userInfo.phoneNumber,
               },
+              userSocketId: socket.id,
             });
         });
       } catch (err) {
@@ -378,7 +381,7 @@ module.exports = function (io) {
 
     socket.on("update-driver-location", async (data) => {
       try {
-        const { currentLatitude, currentLongitude } = data;
+        const { currentLatitude, currentLongitude, userSocketId } = data;
         await driverModel.findOneAndUpdate(
           { socketId: socket.id },
           {
@@ -386,6 +389,20 @@ module.exports = function (io) {
             currentLongitude,
           }
         );
+
+        if (userSocketId) {
+
+          const latLng = {
+            latitude: currentLatitude,
+            longitude: currentLongitude,
+          };
+
+          io.of("/booking")
+            .to(userSocketId)
+            .emit("notify-update-driver-location", latLng);
+
+          console.log("socket id: " + userSocketId);
+        }
 
         console.log("Driver updated location: " + socket.id);
       } catch (err) {

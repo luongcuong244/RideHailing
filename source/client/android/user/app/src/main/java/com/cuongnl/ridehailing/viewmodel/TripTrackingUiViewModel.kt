@@ -2,6 +2,7 @@ package com.cuongnl.ridehailing.viewmodel
 
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
@@ -19,6 +20,7 @@ class TripTrackingUiViewModel : ViewModel() {
 
     companion object {
         private const val EVENT_NOTIFY_TRIP_COMPLETED = "notify-trip-completed"
+        private const val EVENT_UPDATE_DRIVER_LOCATION = "notify-update-driver-location"
     }
 
     private var mSocket = BookingSocket.socket
@@ -31,6 +33,7 @@ class TripTrackingUiViewModel : ViewModel() {
     val driverLocation: State<LatLng> = _driverLocation
 
     fun setupListeners(context: Context) {
+        Log.d("TripTrackingUiViewModel", "setupListeners: ")
         mSocket?.on(EVENT_NOTIFY_TRIP_COMPLETED) {
             val response = it[0].toString()
             val isSuccessful = JSONObject(response).getBoolean("success")
@@ -44,21 +47,20 @@ class TripTrackingUiViewModel : ViewModel() {
                 }
             }
         }
+        mSocket?.on(EVENT_UPDATE_DRIVER_LOCATION) {
+            val response = it[0].toString()
+            val json = JSONObject(response)
+
+            val driverLocation = LatLng(
+                json.getDouble("latitude"),
+                json.getDouble("longitude")
+            )
+            setDriverLocation(driverLocation)
+        }
     }
 
-    fun removeListeners() {
-        mSocket?.off(EVENT_NOTIFY_TRIP_COMPLETED)
-    }
-
-    fun setDriverAcceptResponseAndUpdateDriverLocation(driverAcceptResponse: DriverAcceptResponse) {
+    fun setDriverAcceptResponse(driverAcceptResponse: DriverAcceptResponse) {
         this._driverAcceptResponse = driverAcceptResponse
-
-        val driverLocation = LatLng(
-            driverAcceptResponse.driverInfo.currentLatitude,
-            driverAcceptResponse.driverInfo.currentLongitude
-        )
-
-        setDriverLocation(driverLocation)
     }
 
     fun getDriverAcceptResponse(): DriverAcceptResponse {

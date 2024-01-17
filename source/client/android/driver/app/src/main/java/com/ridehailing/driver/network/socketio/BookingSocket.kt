@@ -66,14 +66,18 @@ object BookingSocket {
         socket?.emit(EVENT_DRIVER_CONNECT_TO_SOCKET, data)
     }
 
-    fun emitToUpdateDriverLocation() {
+    fun emitToUpdateDriverLocation(data: JSONObject? = null) {
 
-        val data = JSONObject()
+        val json = JSONObject()
 
-        data.put("currentLatitude", CurrentLocation.latLng.value.latitude)
-        data.put("currentLongitude", CurrentLocation.latLng.value.longitude)
+        json.put("currentLatitude", CurrentLocation.latLng.value.latitude)
+        json.put("currentLongitude", CurrentLocation.latLng.value.longitude)
 
-        socket?.emit(EVENT_UPDATE_DRIVER_LOCATION, data)
+        data?.keys()?.forEach {
+            json.put(it, data[it])
+        }
+
+        socket?.emit(EVENT_UPDATE_DRIVER_LOCATION, json)
     }
 
     fun emitDriverCancelTrip(tripId: String) {

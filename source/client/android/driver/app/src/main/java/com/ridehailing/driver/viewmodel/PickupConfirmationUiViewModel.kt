@@ -3,15 +3,25 @@ package com.ridehailing.driver.viewmodel
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.util.Log
 import android.widget.Toast
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
+import com.google.android.gms.maps.model.LatLng
 import com.ridehailing.driver.R
 import com.ridehailing.driver.extensions.findActivity
 import com.ridehailing.driver.extensions.showDialog
+import com.ridehailing.driver.globalstate.CurrentLocation
 import com.ridehailing.driver.models.TripInfo
 import com.ridehailing.driver.network.socketio.BookingSocket
 import com.ridehailing.driver.screens.dropoffconfirmation.DropoffConfirmationActivity
 import com.ridehailing.driver.utils.Constant
+import com.ridehailing.driver.utils.MapUtils
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import org.json.JSONObject
 
 class PickupConfirmationUiViewModel : ViewModel() {
@@ -27,6 +37,9 @@ class PickupConfirmationUiViewModel : ViewModel() {
 
     val currentTripInfo : TripInfo
         get() = _currentTripInfo
+
+    private val _timeTravelInMilliseconds = mutableStateOf(0L)
+    val timeTravelInMilliseconds: MutableState<Long> = _timeTravelInMilliseconds
 
     fun setupListeners(context: Context) {
         mSocket?.on(EVENT_NOTIFY_ARRIVED_AT_PICKUP) {
@@ -100,5 +113,31 @@ class PickupConfirmationUiViewModel : ViewModel() {
         data.put("id", currentTripInfo.id)
 
         mSocket?.emit(EVENT_DRIVER_ARRIVED_AT_PICKUP, data)
+    }
+
+    fun driverMoving() {
+        _timeTravelInMilliseconds.value = 10000L
+        val stepNumber = 20
+
+        val delayTime = timeTravelInMilliseconds.value / stepNumber
+
+        val steps = MapUtils.generateIntermediateLatLngs(
+            LatLng(CurrentLocation.latLng.value.latitude, CurrentLocation.latLng.value.longitude),
+            LatLng(currentTripInfo.pickupAddress.latitude, currentTripInfo.pickupAddress.longitude),
+            stepNumber
+        )
+
+        CoroutineScope(Dispatchers.Main).launch {
+            steps.forEach {
+
+                val data = JSONObject()
+                data.put("userSocketId", currentTripInfo.userSocketId)
+
+                CurrentLocation.setLatLngAndUpdateToServer(it, data)
+                delay(delayTime)
+                _timeTravelInMilliseconds.value -= delayTime
+            }
+            _timeTravelInMilliseconds.value = 0L
+        }
     }
 }

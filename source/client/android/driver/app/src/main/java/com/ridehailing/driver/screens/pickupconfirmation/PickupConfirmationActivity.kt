@@ -8,14 +8,18 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
 import androidx.lifecycle.ViewModelProvider
 import com.ridehailing.driver.R
 import com.ridehailing.driver.core.BaseActivity
+import com.ridehailing.driver.models.Address
 import com.ridehailing.driver.models.TripInfo
+import com.ridehailing.driver.models.UserInfo
 import com.ridehailing.driver.screens.pickupconfirmation.ui.ActionButtons
 import com.ridehailing.driver.screens.pickupconfirmation.ui.CustomerInfo
+import com.ridehailing.driver.screens.pickupconfirmation.ui.DriverMovingButton
 import com.ridehailing.driver.screens.pickupconfirmation.ui.FareAmount
 import com.ridehailing.driver.screens.pickupconfirmation.ui.NoteForDriver
 import com.ridehailing.driver.screens.pickupconfirmation.ui.PickupAddressTextAndDirectionButton
@@ -81,7 +85,13 @@ private fun Screen() {
                 CustomerInfo()
                 NoteForDriver()
             }
-            SwipeButton()
+            Column(
+                modifier = Modifier
+                    .align(Alignment.BottomCenter)
+            ) {
+                SwipeButton()
+                DriverMovingButton()
+            }
         }
     }
 }

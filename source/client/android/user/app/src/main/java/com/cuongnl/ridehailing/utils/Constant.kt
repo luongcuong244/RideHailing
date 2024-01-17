@@ -19,6 +19,7 @@ object Constant {
     const val BUNDLE_NOTE_FOR_DRIVER = "bundle_note_for_driver"
     const val BUNDLE_REQUEST_A_RIDE_REQUEST = "bundle_request_a_ride_request"
     const val BUNDLE_DRIVER_ACCEPT_RESPONSE = "bundle_driver_accept_response"
+    const val BUNDLE_DRIVER_LOCATION = "bundle_driver_location"
     const val BUNDLE_COST = "bundle_cost"
     const val BUNDLE_ADDRESS_TYPE = "bundle_address_type"
     const val OTP_TIMEOUT_IN_SECOND = 40L

@@ -15,7 +15,8 @@ data class TripInfo (
     @SerializedName("paymentMethod") val paymentMethod: String,
     @SerializedName("noteForDriver") val noteForDriver: String,
     @SerializedName("cost") val cost: Int,
-    @SerializedName("userInfo") val userInfo: UserInfo
+    @SerializedName("userInfo") val userInfo: UserInfo,
+    @SerializedName("userSocketId") val userSocketId: String
 ) : Serializable {
     companion object {
         fun fromJson(json: JSONObject): TripInfo {
@@ -45,7 +46,8 @@ data class TripInfo (
                 userInfo = UserInfo(
                     userName = json.getJSONObject("userInfo").getString("userName"),
                     phoneNumber = json.getJSONObject("userInfo").getString("phoneNumber")
-                )
+                ),
+                userSocketId = json.getString("userSocketId")
             )
         }
     }

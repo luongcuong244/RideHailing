@@ -71,7 +71,6 @@ class FindingDriverActivity : BaseActivity() {
     override fun onDestroy() {
         super.onDestroy()
         findingDriverViewModel.offListeners()
-        BookingSocket.disconnect()
     }
 }
 

@@ -7,6 +7,7 @@ import androidx.compose.runtime.mutableStateOf
 import com.google.android.gms.maps.model.LatLng
 import com.ridehailing.driver.network.socketio.BookingSocket
 import com.ridehailing.driver.utils.MapUtils
+import org.json.JSONObject
 
 object CurrentLocation {
 
@@ -30,9 +31,9 @@ object CurrentLocation {
         )
     }
 
-    fun setLatLngAndUpdateToServer(latLng: LatLng) {
+    fun setLatLngAndUpdateToServer(latLng: LatLng, data: JSONObject? = null) {
         _latLng.value = latLng
-        BookingSocket.emitToUpdateDriverLocation()
+        BookingSocket.emitToUpdateDriverLocation(data)
     }
 
     fun setAddress(address: String) {

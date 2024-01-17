@@ -208,4 +208,14 @@ object MapUtils {
 
         return earthRadius * c
     }
+
+    fun generateIntermediateLatLngs(startLatLng: LatLng, endLatLng: LatLng, stepNumber: Int = 100): List<LatLng> {
+        val steps = mutableListOf<LatLng>()
+        val latStep = (endLatLng.latitude - startLatLng.latitude) / stepNumber
+        val lngStep = (endLatLng.longitude - startLatLng.longitude) / stepNumber
+        for (i in 0..stepNumber) {
+            steps.add(LatLng(startLatLng.latitude + latStep * i, startLatLng.longitude + lngStep * i))
+        }
+        return steps
+    }
 }

@@ -6,6 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.lifecycle.ViewModelProvider
 import com.cuongnl.ridehailing.core.BaseActivity
 import com.cuongnl.ridehailing.models.api.DriverAcceptResponse
+import com.cuongnl.ridehailing.network.socketio.BookingSocket
 import com.cuongnl.ridehailing.screens.triptracking.ui.BottomView
 import com.cuongnl.ridehailing.screens.triptracking.ui.MapView
 import com.cuongnl.ridehailing.theme.AppTheme
@@ -38,7 +39,13 @@ class TripTrackingActivity : BaseActivity() {
         val driverAcceptResponse = intent.getSerializableExtra(Constant.BUNDLE_DRIVER_ACCEPT_RESPONSE) as DriverAcceptResponse
 
         tripTrackingUiViewModel.setupListeners(this)
-        tripTrackingUiViewModel.setDriverAcceptResponseAndUpdateDriverLocation(driverAcceptResponse)
+        tripTrackingUiViewModel.setDriverAcceptResponse(driverAcceptResponse)
+        tripTrackingUiViewModel.setDriverLocation(
+            LatLng(
+                driverAcceptResponse.pickupLatitude,
+                driverAcceptResponse.pickupLongitude
+            )
+        )
 
         mapViewModel = ViewModelProvider(this)[MapViewModel::class.java]
 
@@ -68,7 +75,7 @@ class TripTrackingActivity : BaseActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        tripTrackingUiViewModel.removeListeners()
+        BookingSocket.disconnect()
     }
 
     override fun onBackPressed() {

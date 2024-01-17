@@ -33,11 +33,6 @@ fun ColumnScope.MapView(
         waitingDriverUiViewModel.getDriverAcceptResponse().pickupLongitude
     )
 
-    val driverLocationLatLng = LatLng(
-        waitingDriverUiViewModel.getDriverAcceptResponse().driverInfo.currentLatitude,
-        waitingDriverUiViewModel.getDriverAcceptResponse().driverInfo.currentLongitude
-    )
-
     Box(
         modifier = Modifier
             .weight(1f)
@@ -59,7 +54,7 @@ fun ColumnScope.MapView(
 
             Marker(
                 icon = context.bitmapDescriptorFromVector(waitingDriverUiViewModel.getVehicleIconId(), Constant.MARKER_SIZE_IN_PIXEL),
-                state = MarkerState(position = driverLocationLatLng)
+                state = MarkerState(position = waitingDriverUiViewModel.driverLocation.value)
             )
         }
     }

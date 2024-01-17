@@ -28,12 +28,11 @@ import ir.kaaveh.sdpcompose.sdp
 import ir.kaaveh.sdpcompose.ssp
 
 @Composable
-fun BoxScope.SwipeButton(
+fun SwipeButton(
     pickupConfirmationUiViewModel: PickupConfirmationUiViewModel = viewModel()
 ) {
     SwipeableView(
         modifier = Modifier
-            .align(Alignment.BottomCenter)
             .padding(bottom = 10.sdp)
             .padding(horizontal = 10.sdp),
         background = {

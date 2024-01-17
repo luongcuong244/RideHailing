@@ -57,6 +57,8 @@ class WaitingDriverActivity : BaseActivity() {
             waitingDriverUiViewModel.getDriverAcceptResponse().driverInfo.currentLongitude
         )
 
+        waitingDriverUiViewModel.setDriverLocation(driverLocationLatLng)
+
         val zoomLevelFitMap = MapUtils.getZoomLevelFitMap(driverLocationLatLng, pickupLocationLatLng)
         val pickupZoomLevel = zoomLevelFitMap - 1f
         mapViewModel.setCameraPositionState(
