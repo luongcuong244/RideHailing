@@ -1,0 +1,56 @@
+package com.cuongnl.ridehailing.models
+
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
+import com.cuongnl.ridehailing.enums.AddressType
+
+class User {
+
+    private var _userName : MutableState<String?> = mutableStateOf(null)
+    private var _phoneNumber : MutableState<String?> = mutableStateOf(null)
+    private var _email : MutableState<String?> = mutableStateOf(null)
+    private var _addresses = mutableStateListOf<Address>()
+
+    val userName : State<String?> = _userName
+    val phoneNumber : State<String?> = _phoneNumber
+    val email : State<String?> = _email
+    val addresses : List<Address> = _addresses
+
+    fun setUserName(userName: String) {
+        _userName.value = userName
+    }
+
+    fun setPhoneNumber(phoneNumber: String) {
+        _phoneNumber.value = phoneNumber
+    }
+
+    fun setEmail(email: String?) {
+        _email.value = email
+    }
+
+    fun addAddress(address: Address) {
+        _addresses.add(address)
+    }
+
+    fun addAddresses(addresses: List<Address>) {
+        _addresses.addAll(addresses)
+    }
+
+    fun clearAddresses() {
+        _addresses.clear()
+    }
+
+    fun getHomeAddress(): Address? {
+        return _addresses.find { it.addressType == AddressType.HOME }
+    }
+
+    fun getWorkAddress(): Address? {
+        return _addresses.find { it.addressType == AddressType.WORK }
+    }
+
+    fun getOtherAddresses(): List<Address> {
+        return _addresses.filter { it.addressType == AddressType.OTHER }
+    }
+}
