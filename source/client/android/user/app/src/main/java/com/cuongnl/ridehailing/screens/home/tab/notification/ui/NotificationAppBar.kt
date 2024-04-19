@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -19,7 +20,6 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.cuongnl.ridehailing.R
 import com.cuongnl.ridehailing.screens.home.tab.notification.LocalBehavior
-import com.cuongnl.ridehailing.utils.Constant
 import com.cuongnl.ridehailing.viewmodel.NotificationTabUiViewModel
 import com.cuongnl.ridehailing.widgets.AppText
 import com.cuongnl.ridehailing.widgets.TouchableOpacityButton
@@ -30,8 +30,9 @@ fun NotificationAppBar(notificationTabUiViewModel: NotificationTabUiViewModel = 
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .height(Constant.APP_BAR_HEIGHT.sdp)
             .background(Color.White)
+            .statusBarsPadding()
+            .height(38.sdp)
             .padding(horizontal = 10.sdp)
     ) {
         AppText(
@@ -40,13 +41,12 @@ fun NotificationAppBar(notificationTabUiViewModel: NotificationTabUiViewModel = 
             fontWeight = FontWeight.Bold,
             modifier = Modifier
                 .align(Alignment.Center)
-                .padding(top = 10.sdp)
+                .padding(top = 5.sdp)
         )
 
         Box(
             modifier = Modifier
                 .align(Alignment.CenterEnd)
-                .padding(top = 5.sdp)
         ) {
             if (notificationTabUiViewModel.isMoreNotificationsSelected() && notificationTabUiViewModel.isDeleting.value) {
                 DeleteTextButton()

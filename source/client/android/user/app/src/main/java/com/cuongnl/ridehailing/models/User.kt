@@ -4,6 +4,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
+import com.cuongnl.ridehailing.enums.AddressType
 
 class User {
 
@@ -39,5 +40,17 @@ class User {
 
     fun clearAddresses() {
         _addresses.clear()
+    }
+
+    fun getHomeAddress(): Address? {
+        return _addresses.find { it.addressType == AddressType.HOME }
+    }
+
+    fun getWorkAddress(): Address? {
+        return _addresses.find { it.addressType == AddressType.WORK }
+    }
+
+    fun getOtherAddresses(): List<Address> {
+        return _addresses.filter { it.addressType == AddressType.OTHER }
     }
 }

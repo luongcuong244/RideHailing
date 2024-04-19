@@ -5,18 +5,15 @@ import android.content.ContextWrapper
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import com.cuongnl.ridehailing.R
 import com.cuongnl.ridehailing.extensions.setAppLocale
 import com.cuongnl.ridehailing.utils.Constant
 import com.cuongnl.ridehailing.utils.LocalStorageUtils
 
 abstract class BaseActivity : AppCompatActivity() {
 
-    private var activityLang: String? = null
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        activityLang = LocalStorageUtils.readData(this, LocalStorageUtils.KEY_LANGUAGE) as String?
 
         window.decorView.systemUiVisibility = (
                 View.SYSTEM_UI_FLAG_LAYOUT_STABLE
@@ -33,15 +30,8 @@ abstract class BaseActivity : AppCompatActivity() {
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-
-        val storedLang: String? = LocalStorageUtils.readData(this, LocalStorageUtils.KEY_LANGUAGE) as String?
-
-        storedLang?.let {
-            if (activityLang != storedLang) {
-                recreate()
-            }
-        }
+    override fun onBackPressed() {
+        super.onBackPressed()
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
     }
 }

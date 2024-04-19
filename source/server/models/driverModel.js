@@ -1,11 +1,17 @@
 const mongoose = require("mongoose"); // Erase if already required
 const bcrypt = require("bcryptjs");
+const admin = require("./adminModel");
 // Declare the Schema of the Mongo model
 var driverSchema = new mongoose.Schema(
   {
+    user: {
+      type: mongoose.Schema.Types.String,
+      ref: admin,
+      required: true,
+    },
     driverName: {
       type: String,
-      required: true,
+      default: "Test name",
     },
     // email: {
     //   type: String,
@@ -36,6 +42,7 @@ var driverSchema = new mongoose.Schema(
     },
     driverAvatar: {
       type: String,
+      default: null,
     },
     licensePlate: {
       type: String,

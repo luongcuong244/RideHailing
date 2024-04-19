@@ -32,6 +32,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.LayoutDirection
@@ -47,7 +48,9 @@ fun TextFieldWithBorder(
     ref: MutableState<TextFieldValue> = mutableStateOf(
         TextFieldValue("")
     ),
-    focusRequester: FocusRequester = FocusRequester(),
+    focusRequester: FocusRequester = remember {
+        FocusRequester()
+    },
     onValueChange: (TextFieldValue) -> Unit,
     modifier: Modifier = Modifier,
     placeholder: String = "",
@@ -58,6 +61,7 @@ fun TextFieldWithBorder(
     textSize: TextUnit = 13.ssp,
     lineHeight: TextUnit = 24.ssp,
     width: Dp = 0.sdp,
+    fontWeight: FontWeight = FontWeight.Normal,
     height: Dp = 40.sdp,
     contentPadding: PaddingValues = PaddingValues(horizontal = 10.sdp),
     borderRadius: Dp = 8.sdp,
@@ -119,6 +123,7 @@ fun TextFieldWithBorder(
                 fontFamily = beVietNamFamily,
                 color = textColor,
                 lineHeight = lineHeight,
+                fontWeight = fontWeight,
             ),
             decorationBox = { innerTextField ->
                 if (textFieldValue.text.isEmpty() && placeholder.isNotEmpty()) {
@@ -144,6 +149,7 @@ fun TextFieldWithBorder(
                 onClick = {
                     textFieldValue = TextFieldValue("")
                     onValueChange(TextFieldValue(""))
+                    focusRequester.requestFocus()
                 }
             ) {
                 Icon(

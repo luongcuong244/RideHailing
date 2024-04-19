@@ -56,14 +56,25 @@ class ChangePasswordActivity : BaseActivity(), IChangePasswordActivityBehavior {
 
     override fun popActivity() {
         finish()
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
     }
 
     override fun changePassword() {
 
         val phoneNumber = intent.getStringExtra(Constant.BUNDLE_INTERNATIONAL_PHONE_NUMBER)
+
+        if (phoneNumber == null) {
+            Toast.makeText(
+                this,
+                "Phone number must be provided",
+                Toast.LENGTH_SHORT
+            ).show()
+            return
+        }
+
         val newPassword = changePasswordViewModel.getPasswordInputText()
 
-        val changePasswordRequest = ChangePasswordRequest(phoneNumber!!, newPassword)
+        val changePasswordRequest = ChangePasswordRequest(phoneNumber, newPassword)
 
         loaderViewModel.setLoading(true)
 
@@ -94,7 +105,11 @@ class ChangePasswordActivity : BaseActivity(), IChangePasswordActivityBehavior {
                 }
 
                 override fun onFailure(call: Call<ChangePasswordResponse>, t: Throwable) {
-
+                    Toast.makeText(
+                        this@ChangePasswordActivity,
+                        getString(R.string.something_went_wrong),
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
         )

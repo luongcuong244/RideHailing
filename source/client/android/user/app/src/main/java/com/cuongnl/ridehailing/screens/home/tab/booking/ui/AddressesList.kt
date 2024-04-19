@@ -20,6 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -73,7 +74,12 @@ fun AddressesList(bookingTabUiViewModel: BookingTabUiViewModel = viewModel()) {
 }
 
 @Composable
-private fun AddressItem(item: Address) {
+private fun AddressItem(
+    item: Address,
+    bookingTabUiViewModel: BookingTabUiViewModel = viewModel()
+) {
+
+    val context = LocalContext.current
 
     val icon = when (item.addressType) {
         AddressType.HOME -> painterResource(id = R.drawable.ic_homeplace)
@@ -94,19 +100,37 @@ private fun AddressItem(item: Address) {
     }
 
     ItemContent(icon, title, description) {
-
+        bookingTabUiViewModel.onClickAddressItem(context, item)
     }
 }
 
 @Composable
-private fun AddAddressItem() {
+private fun AddAddressItem(
+    bookingTabUiViewModel: BookingTabUiViewModel = viewModel()
+) {
+
+    val context = LocalContext.current
 
     val icon = painterResource(id = R.drawable.ic_placeadd)
 
-    val title = "Thêm địa chỉ"
+    var title = stringResource(id = R.string.add_address)
+
+    val indexOfHome = CurrentUser.getUser()?.addresses?.indexOfFirst {
+        it.addressType == AddressType.HOME
+    }
+
+    val indexOfWork = CurrentUser.getUser()?.addresses?.indexOfFirst {
+        it.addressType == AddressType.WORK
+    }
+
+    if (indexOfHome == -1) {
+        title = stringResource(id = R.string.add_address_home)
+    } else if (indexOfWork == -1) {
+        title = stringResource(id = R.string.add_address_work)
+    }
 
     ItemContent(icon, title, null) {
-
+        bookingTabUiViewModel.onClickAddAddress(context)
     }
 }
 

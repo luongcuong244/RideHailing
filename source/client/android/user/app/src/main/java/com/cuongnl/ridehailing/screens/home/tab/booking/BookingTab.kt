@@ -2,6 +2,7 @@ package com.cuongnl.ridehailing.screens.home.tab.booking
 
 import android.content.Context
 import android.os.Handler
+import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.offset
@@ -13,9 +14,12 @@ import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.cuongnl.ridehailing.R
+import com.cuongnl.ridehailing.callbacks.api.SimpleApiCallback
 import com.cuongnl.ridehailing.enums.AddressType
 import com.cuongnl.ridehailing.globalstate.CurrentUser
 import com.cuongnl.ridehailing.models.Address
+import com.cuongnl.ridehailing.models.api.AddressResponse
 import com.cuongnl.ridehailing.screens.home.tab.booking.behavior.BookingTabBehavior
 import com.cuongnl.ridehailing.screens.home.tab.booking.ui.AddressesList
 import com.cuongnl.ridehailing.screens.home.tab.booking.ui.BannerVouchers
@@ -25,6 +29,8 @@ import com.cuongnl.ridehailing.screens.home.tab.booking.ui.WhereDoYouWantToGo
 import com.cuongnl.ridehailing.viewmodel.BookingTabUiViewModel
 import com.cuongnl.ridehailing.viewmodel.apiservice.UserServiceViewModel
 import ir.kaaveh.sdpcompose.sdp
+import retrofit2.Call
+import retrofit2.Response
 
 val LocalBehavior =
     staticCompositionLocalOf<BookingTabBehavior> { error("No LocalActivityActionsClass provided") }
@@ -69,60 +75,24 @@ private fun getUserAddress(
     userServiceViewModel: UserServiceViewModel,
     bookingTabUiViewModel: BookingTabUiViewModel
 ) {
-
-    Handler().postDelayed({
-        CurrentUser.getUser()?.clearAddresses()
-        CurrentUser.getUser()?.apply {
-            addAddress(
-                Address(
-                    AddressType.HOME,
-                    "123 Nguyen Van Linh",
-                    "777 Brockton Avenue, Abington MA 2351",
-                    10.762622,
-                    106.660172
-                )
-            )
-            addAddress(
-                Address(
-                    AddressType.WORK,
-                    "123 Nguyen Van Linh",
-                    "30 Memorial Drive, Avon MA 2322",
-                    10.762622,
-                    106.660172
-                )
-            )
-            addAddress(
-                Address(
-                    AddressType.OTHER,
-                    "123 Nguyen Van Linh",
-                    "337 Russell St, Hadley MA 1035",
-                    10.762622,
-                    106.660172
-                )
-            )
+    userServiceViewModel.getUserAddresses(object : SimpleApiCallback<AddressResponse> {
+        override fun onSuccess(call: Call<AddressResponse>, response: Response<AddressResponse>) {
+            response.body()?.let {
+                CurrentUser.getUser()?.clearAddresses()
+                CurrentUser.getUser()?.addAddresses(it.addresses)
+            }
         }
-        bookingTabUiViewModel.setIsLoadingAddress(false)
-    }, 2000)
 
+        override fun onFinish() {
+            bookingTabUiViewModel.setIsLoadingAddress(false)
+        }
 
-//    userServiceViewModel.getUserAddresses(object : SimpleApiCallback<AddressResponse> {
-//        override fun onSuccess(call: Call<AddressResponse>, response: Response<AddressResponse>) {
-//            response.body()?.let {
-//                CurrentUser.getUser()?.clearAddresses()
-//                CurrentUser.getUser()?.addAddresses(it.addresses)
-//            }
-//        }
-//
-//        override fun onFinish() {
-//            bookingViewModel.setIsLoadingAddress(false)
-//        }
-//
-//        override fun onError(call: Call<AddressResponse>, response: Response<AddressResponse>) {
-//            Toast.makeText(context, context.getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show()
-//        }
-//
-//        override fun onFailure(call: Call<AddressResponse>, t: Throwable) {
-//            Toast.makeText(context, context.getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show()
-//        }
-//    })
+        override fun onError(call: Call<AddressResponse>, response: Response<AddressResponse>) {
+            Toast.makeText(context, context.getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show()
+        }
+
+        override fun onFailure(call: Call<AddressResponse>, t: Throwable) {
+            Toast.makeText(context, context.getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show()
+        }
+    })
 }

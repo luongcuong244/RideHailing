@@ -31,7 +31,7 @@ fun BoxScope.DeleteButton(
 
     val actions = LocalBehavior.current
 
-    val size = notificationTabUiViewModel.listNotifications.filter { it.isSelected.value }.size
+    val size = NotificationTabUiViewModel.listNotifications.filter { it.isSelected.value }.size
 
     if (size > 0 && notificationTabUiViewModel.isDeleting.value) {
 

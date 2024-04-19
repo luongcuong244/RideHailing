@@ -1,7 +1,7 @@
 <resources>
-    <string name="app_name">Ride Hailing</string>
+    <string name="app_name" translatable="false">Cam SM</string>
     <string name="header_req_per">Sử dụng vị trí của bạn và cho phép nhận thông báo</string>
-    <string name="des_req_per">Cho phép Ride Hailing sử dụng vị trí của bạn và nhận thông báo phục vụ việc đặt xe được tốt hơn.\nBạn hoàn toàn có thể thay đổi cấp quyền trong phần Cài đặt điện thoại bất cứ lúc nào.</string>
+    <string name="des_req_per">Cho phép Ride Hailing sử dụng vị trí của bạn và nhận thông báo phục vụ việc đặt xe được tốt hơn.\nBạn hoàn toàn có thể thay đổi cấp quyền trong phần Cài đặt điện thoờiại bất cứ lúc nào.</string>
     <string name="continue_text">Tiếp tục</string>
     <string name="dialog_permission_rationale_header">Xin quyền truy cập vị trí</string>
     <string name="dialog_permission_rationale_des">Ứng dụng cần xin quyền truy cập vị trí để tự động xác định điểm đón khách</string>
@@ -15,7 +15,7 @@
     <string name="policy_text_part_2">Điều khoản dịch vụ &amp; Chính sách bảo mật</string>
     <string name="select_country_code_text">Chọn mã quốc gia</string>
     <string name="search_text">Tìm kiếm</string>
-    <string name="cannot_connect_to_server">Can\'t connect to the server!</string>
+    <string name="cannot_connect_to_server">Không thể kết nối với server!</string>
     <string name="otp_verification_text">Xác thực mã OTP</string>
     <string name="otp_des_text">đã gửi cho bạn mã OTP 6 số tới số điện thoại</string>
     <string name="send_otp_again">Gửi lại mã OTP</string>
@@ -89,4 +89,42 @@
     <string name="note_for_driver_hint">Nhập ghi chú cho tài xế</string>
     <string name="done">Hoàn tất</string>
     <string name="finding_a_car">ĐANG TÌM XE</string>
+    <string name="the_driver_will_arrive_in">Tài xế sẽ đến trong</string>
+    <string name="arriving">Đang đi đến</string>
+    <string name="texting">Nhắn tin</string>
+    <string name="calling">Gọi điện</string>
+    <string name="on_the_way">Đang đến</string>
+    <string name="thanks_for_choosing">Cảm ơn vì đã chọn Cam SM</string>
+    <string name="rating_driver">Đánh giá tài xế</string>
+    <string name="how_do_you_rate_your_driver">Bạn đánh giá tài xế của bạn như thế nào?</string>
+    <string name="send_rating">Gửi đánh giá</string>
+    <string name="charge_by_cash">Trả qua tiền mặt</string>
+    <string name="time_text">Thời gian</string>
+    <string name="rating_driver_successfully">Đánh giá tài xế thành công</string>
+    <string name="warning_text">Cảnh báo</string>
+    <string name="do_you_want_cancel_the_trip">Bạn có chắc chắn muốn huỷ chuyến?</string>
+    <string name="the_trip_has_been_canceled">Chuyến xe đã bị huỷ</string>
+    <string name="add_address">Thêm địa điểm</string>
+    <string name="add_address_home">Thêm nhà</string>
+    <string name="add_address_work">Thêm chỗ làm</string>
+    <string name="we_know_you_have_many_options">Chúng tôi biết bạn có nhiều lựa chọn.\nCảm ơn bạn đã chọn Cam SM.</string>
+    <string name="membership_class">Hạng thành viên</string>
+    <string name="invite_friends">Giới thiệu bạn bè</string>
+    <string name="payment">Thanh toán</string>
+    <string name="invoice_info">Thông tin hóa đơn</string>
+    <string name="place_saved">Địa chỉ đã lưu</string>
+    <string name="support_center">Trung tâm hỗ trợ</string>
+    <string name="policy">Điều khoản và chính sách</string>
+    <string name="language">Ngôn ngữ</string>
+    <string name="edit_profile">Chỉnh sửa hồ sơ</string>
+    <string name="change_password">Đổi mật khẩu</string>
+    <string name="sign_out">Đăng xuất</string>
+    <string name="update_text">Cập nhật</string>
+    <string name="name_and_email_cannot_be_empty">Tên và email không được để trống!</string>
+    <string name="update_successfully">Cập nhật thành công!</string>
+    <string name="saved_address">Địa chỉ đã lưu</string>
+    <string name="home">Nhà</string>
+    <string name="work">Nơi làm việc</string>
+    <string name="select_language">Chọn ngôn ngữ</string>
+    <string name="set_your_app_display_language">Thiết lập ngôn ngữ hiển thị trên ứng dụng của bạn</string>
 </resources>

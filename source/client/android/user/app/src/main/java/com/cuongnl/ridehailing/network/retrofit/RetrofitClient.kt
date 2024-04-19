@@ -3,6 +3,7 @@ package com.cuongnl.ridehailing.network.retrofit
 import android.content.Context
 import com.cuongnl.ridehailing.computerlocal.ServerAddress
 import com.cuongnl.ridehailing.utils.LocalStorageUtils
+import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import retrofit2.Retrofit
@@ -25,9 +26,13 @@ class RetrofitClient {
         fun createClient(context: Context) {
             val httpClient = setupOkHttpClient(context)
 
+            val gson = GsonBuilder()
+                .setLenient()
+                .create()
+
             retrofit = Retrofit.Builder()
                 .baseUrl(ServerAddress.SERVER_ADDRESS)
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
                 .client(httpClient)
                 .build()
         }

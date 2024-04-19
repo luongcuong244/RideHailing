@@ -25,6 +25,7 @@ import com.cuongnl.ridehailing.utils.Constant
 import com.cuongnl.ridehailing.viewmodel.ConfirmLocationViewModel
 import com.cuongnl.ridehailing.viewmodel.LoaderViewModel
 import com.cuongnl.ridehailing.widgets.FullScreenLoader
+import com.google.android.gms.maps.model.LatLng
 
 val LocalActivityBehavior = androidx.compose.runtime.staticCompositionLocalOf<IConfirmDestinationLocationActivityBehavior> {
     error("No ActivityBehavior provided")
@@ -52,7 +53,18 @@ class ConfirmLocationActivity : BaseActivity(), IConfirmDestinationLocationActiv
         confirmLocationViewModel = ViewModelProvider(this)[ConfirmLocationViewModel::class.java]
         loaderViewModel = ViewModelProvider(this)[LoaderViewModel::class.java]
 
-        confirmLocationViewModel.setDestinationLocationLatLngAndLoadAddress(this, CurrentLocation.getLatLng())
+        val destinationLatLng = intent.getParcelableExtra<LatLng>(Constant.BUNDLE_DESTINATION_LAT_LNG)
+        val destinationAddress = intent.getStringExtra(Constant.BUNDLE_DESTINATION_ADDRESS)
+
+        if (destinationLatLng != null && destinationAddress != null) {
+            confirmLocationViewModel.setDestinationLocationLatLng(destinationLatLng)
+            confirmLocationViewModel.setDestinationAddress(destinationAddress)
+            confirmLocationViewModel.setConfirmLocationState(ConfirmLocationState.CHOOSING_PICKUP_LOCATION)
+            confirmLocationViewModel.setPickupLocationLatLngAndLoadAddress(this, CurrentLocation.getLatLng())
+            confirmLocationViewModel.setDestinationLocationSelectedByDefault(true)
+        } else {
+            confirmLocationViewModel.setDestinationLocationLatLngAndLoadAddress(this, CurrentLocation.getLatLng())
+        }
     }
 
     override fun editLocation() {
@@ -116,7 +128,12 @@ class ConfirmLocationActivity : BaseActivity(), IConfirmDestinationLocationActiv
                 overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
             }
             ConfirmLocationState.CHOOSING_PICKUP_LOCATION -> {
-                confirmLocationViewModel.setConfirmLocationState(ConfirmLocationState.CHOOSING_DESTINATION_LOCATION)
+                if (confirmLocationViewModel.isDestinationLocationSelectedByDefault()) {
+                    finish()
+                    overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
+                } else {
+                    confirmLocationViewModel.setConfirmLocationState(ConfirmLocationState.CHOOSING_DESTINATION_LOCATION)
+                }
             }
         }
     }
