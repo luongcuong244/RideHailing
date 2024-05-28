@@ -10,7 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 
 @OptIn(ExperimentalFoundationApi::class)
-@Composable
+@Composable 
 fun MovableView(
     modifier: Modifier = Modifier,
     iterations: Int = Int.MAX_VALUE,
